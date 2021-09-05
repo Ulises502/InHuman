@@ -1,50 +1,42 @@
 <template>
   <div>
-    <v-app-bar color="white accent-4" dense app>
-      <v-toolbar-title>App Vue</v-toolbar-title>
+    <v-app-bar dark dense elevate-on-scroll app>
+      <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
+      <v-toolbar-title>InHuman</v-toolbar-title>
 
       <v-spacer></v-spacer>
 
-      <v-btn icon>
-        <v-icon>mdi-magnify</v-icon>
+      <v-btn small class="ma-2" :outlined="reset_1_outlined" color="orange" rounded>
+        Soft Reset
       </v-btn>
 
-      <v-badge
-        :value="hover"
-        color="orange accent-4"
-        left
-        bottom
-        offset-y="0.5rem"
-        transition="slide-x-transition"
-      >
-        <template v-slot:badge>
-          {{ usuario }}
-        </template>
-        <v-hover v-model="hover">
-          <v-btn icon>
-            <v-icon>mdi-account</v-icon>
-          </v-btn>
-        </v-hover>
-      </v-badge>
-
-      <v-menu left bottom>
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn icon v-bind="attrs" v-on="on">
-            <v-icon>mdi-dots-vertical</v-icon>
-          </v-btn>
-        </template>
-
-        <v-list>
-          <v-list-item
-            v-for="option in options"
-            :key="option"
-            @click="() => {}"
-          >
-            <v-list-item-title> {{ option }} </v-list-item-title>
-          </v-list-item>
-        </v-list>
-      </v-menu>
+      <v-btn small class="ma-2" :outlined="reset_2_outlined" color="indigo">
+        Collapse
+      </v-btn>
     </v-app-bar>
+
+    <v-navigation-drawer v-model="drawer" absolute temporary>
+      <v-list nav dense>
+        <v-list-item-group
+          v-model="group"
+          active-class="deep-purple--text text--accent-4"
+        >
+          <v-list-item>
+            <v-list-item-icon>
+              <v-icon>mdi-home</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title>Home</v-list-item-title>
+          </v-list-item>
+
+          <v-list-item>
+            <v-list-item-icon>
+              <v-icon>mdi-info</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title>Settings</v-list-item-title>
+          </v-list-item>
+        </v-list-item-group>
+      </v-list>
+    </v-navigation-drawer>
   </div>
 </template>
 
@@ -52,14 +44,12 @@
 export default {
   data() {
     return {
-      options: ["Actualizar", "Opciones", "Ayuda", "Logout"],
-      usuario: "caca",
-      hover: false,
+      reset_1_outlined: false,
+      reset_2_outlined: true,
+
+      drawer: false,
+      group: null,
     };
-  },
-  mounted() {
-    this.usuario =
-      localStorage.getItem("nombre") + " " + localStorage.getItem("apellido");
   },
 };
 </script>
