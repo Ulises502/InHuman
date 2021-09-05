@@ -1,5 +1,5 @@
 <template>
-  <v-footer dark padless app>
+  <v-footer dark padless fixed app>
     <v-col cols="12" class="py-0">
       <v-slider
         v-model="value"
