@@ -1,8 +1,6 @@
 <template>
   <v-app>
-    <Navigation />
     <Navbar />
-
     <!-- Sizes your content based upon application components -->
     <v-main>
       <!-- Provides the application the proper gutter -->
@@ -17,14 +15,12 @@
 </template>
 
 <script>
-import Navigation from "@/components/layout/Navigation.vue";
 import Navbar from "@/components/layout/Navbar.vue";
 import Footer from "@/components/layout/Footer.vue";
 
 export default {
   name: "Base",
   components: {
-    Navigation,
     Navbar,
     Footer,
   },
