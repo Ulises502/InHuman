@@ -8,10 +8,10 @@
     <v-row>
       <!-- WELLBEING -->
       <v-col cols="8" class="d-inline-flex">
-        <div class="text-body-2 text-md-body-1 mt-2">
+        <div class="text-body-2 text-md-body-1 mt-1">
           Wellbeing {{ wellbeing }}
         </div>
-        <v-btn elevation="3" small class="mx-2">
+        <v-btn elevation="3" small class="ms-3">
           <div style="font-size: 10px">
             <p class="ma-0 pa-0">Cost:</p>
             <p class="ma-0 pa-0">{{ wellbeing_cost }} H</p>
@@ -51,8 +51,11 @@
             </td>
             <td class="d-flex flex-column justify-center">
               <!-- MOMENTUM & BONUS -->
-              <p class="text-caption text-md-body-2 ma-0 text-center">
+              <p class="d-none d-sm-flex text-caption text-md-body-2 ma-0 text-center">
                 Momentum: {{ row.momentum }}
+              </p>
+              <p class="d-flex d-sm-none text-caption text-md-body-2 ma-0 text-center">
+                Motm: {{ row.momentum }}
               </p>
               <v-divider />
               <div class="d-flex justify-center">
