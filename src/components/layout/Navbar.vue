@@ -30,7 +30,7 @@
       </v-btn>
     </v-app-bar>
 
-    <v-navigation-drawer v-model="drawer" absolute temporary>
+    <v-navigation-drawer v-model="drawer" fixed temporary app>
       <v-list nav dense>
         <div class="d-flex d-sm-none">
           <v-list-item>
