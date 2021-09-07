@@ -10,6 +10,7 @@
 
       <v-btn
         small
+        elevation="4"
         class="ma-2"
         :outlined="reset_1_outlined"
         color="orange"
@@ -18,7 +19,13 @@
         Soft Reset
       </v-btn>
 
-      <v-btn small class="ma-2" :outlined="reset_2_outlined" color="indigo">
+      <v-btn
+        small
+        class="ma-2"
+        :outlined="reset_2_outlined"
+        color="indigo"
+        elevation="4"
+      >
         Collapse
       </v-btn>
     </v-app-bar>
@@ -64,7 +71,7 @@ export default {
   data() {
     return {
       reset_1_outlined: false,
-      reset_2_outlined: true,
+      reset_2_outlined: false,
 
       drawer: false,
       group: null,
