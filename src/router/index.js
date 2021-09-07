@@ -8,11 +8,11 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    name: 'Base',
     component: Base,
     children: [
       {
         path: '',
+        name: 'Humanity',
         component: HumanityView,
       }
     ]
