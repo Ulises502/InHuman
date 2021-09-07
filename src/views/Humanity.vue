@@ -51,10 +51,24 @@
             </td>
             <td class="d-flex flex-column justify-center">
               <!-- MOMENTUM & BONUS -->
-              <p class="d-none d-sm-flex text-caption text-md-body-2 ma-0 text-center">
+              <p
+                class="
+                  d-none d-sm-flex
+                  text-caption text-md-body-2
+                  ma-0
+                  text-center
+                "
+              >
                 Momentum: {{ row.momentum }}
               </p>
-              <p class="d-flex d-sm-none text-caption text-md-body-2 ma-0 text-center">
+              <p
+                class="
+                  d-flex d-sm-none
+                  text-caption text-md-body-2
+                  ma-0
+                  text-center
+                "
+              >
                 Motm: {{ row.momentum }}
               </p>
               <v-divider />
@@ -80,6 +94,13 @@
         </tbody>
       </template>
     </v-simple-table>
+
+    <!-- BONUS CHIP -->
+    <v-row class="my-2 d-flex justify-center">
+      <v-chip class="ma-2" color="success" small outlined>
+        BONUS: + {{ virtues_bonus }} %
+      </v-chip>
+    </v-row>
   </v-container>
 </template>
 
@@ -91,6 +112,7 @@ export default {
       wellbeing: 0,
       wellbeing_cost: 1234567,
       humanity_gain: 12345,
+      virtues_bonus: 256,
 
       virtues: [
         {
