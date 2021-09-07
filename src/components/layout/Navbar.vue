@@ -2,11 +2,19 @@
   <div>
     <v-app-bar dark dense elevate-on-scroll app>
       <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
-      <v-toolbar-title>InHuman</v-toolbar-title>
+      <v-toolbar-title class="text-body-2 text-sm-body-1 d-none d-sm-block"
+        >InHuman</v-toolbar-title
+      >
 
       <v-spacer></v-spacer>
 
-      <v-btn small class="ma-2" :outlined="reset_1_outlined" color="orange" rounded>
+      <v-btn
+        small
+        class="ma-2"
+        :outlined="reset_1_outlined"
+        color="orange"
+        rounded
+      >
         Soft Reset
       </v-btn>
 
@@ -17,6 +25,17 @@
 
     <v-navigation-drawer v-model="drawer" absolute temporary>
       <v-list nav dense>
+        <div class="d-flex d-sm-none">
+          <v-list-item>
+            <v-list-item-content>
+              <v-list-item-title class="text-subtitle-1">
+                InHuman
+              </v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+
+          <v-divider></v-divider>
+        </div>
         <v-list-item-group
           v-model="group"
           active-class="deep-purple--text text--accent-4"
