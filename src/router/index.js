@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Base from '@/components/layout/Base.vue'
+import HumanityView from '@/views/Humanity.vue'
 
 Vue.use(VueRouter)
 
@@ -8,7 +9,13 @@ const routes = [
   {
     path: '/',
     name: 'Base',
-    component: Base
+    component: Base,
+    children: [
+      {
+        path: '',
+        component: HumanityView,
+      }
+    ]
   },
   /*{
     path: '/about',
