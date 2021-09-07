@@ -56,7 +56,7 @@
                   d-none d-sm-flex
                   text-caption text-md-body-2
                   ma-0
-                  text-center
+                  justify-center
                 "
               >
                 Momentum: {{ row.momentum }}
@@ -66,7 +66,7 @@
                   d-flex d-sm-none
                   text-caption text-md-body-2
                   ma-0
-                  text-center
+                  justify-center
                 "
               >
                 Motm: {{ row.momentum }}
