@@ -8,8 +8,8 @@
       </div>
       <v-row>
         <!-- WELLBEING -->
-        <v-col cols="8" class="d-inline-flex">
-          <div v-show="collapse1">
+        <v-col cols="8">
+          <div v-show="collapse1" class="d-inline-flex">
             <div class="text-body-2 text-md-body-1 mt-1">
               Wellbeing {{ wellbeing }}
             </div>
@@ -49,7 +49,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="row in virtues" :key="row.name" v-show="soft_resets >= row.softreset_cost">
+            <tr v-for="(row, index) in virtues" :key="row.name" v-show="soft_resets >= row.softreset_cost">
               <td>
                 <!-- VIRTUES NAME -->
                 <p class="text-caption text-md-body-2 ma-0 text-center">
@@ -85,7 +85,12 @@
                 <v-divider />
                 </div>
                 <div class="d-flex justify-center">
-                  <v-chip label small class="my-1">x {{ row.bonus }} </v-chip>
+                  <div v-if="(virtues[index+1])">
+                    <v-chip label small :color="virtues[index+1].color" class="my-1">x {{ row.bonus }} </v-chip>
+                  </div>
+                  <div v-else>
+                    <v-chip label small color="success" class="my-1">x {{ row.bonus }} </v-chip>
+                  </div>
                 </div>
               </td>
               <td>
@@ -101,6 +106,7 @@
                   small
                   block
                   class="mx-2"
+                  :color="row.color"
                   :disabled="humanity.lt(row.cost)"
                   @click="buyVirtue(row.name)"
                 >
@@ -181,73 +187,80 @@ export default {
       gameLoopIntervalID: null,
       humanity: new Decimal(10),
       wellbeing: 0,
-      soft_resets: 0,
-      collapses: 0,
+      soft_resets: 10,
+      collapses: 10,
       wellbeing_cost: 1234567,
       virtues_bonus: 256,
 
       virtues: [
         {
           name: "Survival",
+          color: "grey lighten-5",
           quantity: 0,
           momentum: 1,
           bonus: 1,
           h_per_sec: 0,
-          cost: 112,
+          cost: 10,
           softreset_cost: 0,
         },
         {
           name: "Military",
+          color: "grey lighten-4",
           quantity: 0,
           momentum: 1,
           bonus: 1,
           h_per_sec: 0,
-          cost: 4523,
+          cost: 1,
           softreset_cost: 0,
         },
         {
           name: "Knowledge",
+          color: "grey lighten-3",
           quantity: 0,
           momentum: 1,
           bonus: 1,
           h_per_sec: 0,
-          cost: 7587,
+          cost: 1,
           softreset_cost: 0,
         },
         {
           name: "Culture",
+          color: "grey lighten-2",
           quantity: 0,
           momentum: 1,
           bonus: 1,
           h_per_sec: 0,
-          cost: 45,
+          cost: 1,
           softreset_cost: 1,
         },
         {
           name: "Cooperation",
+          color: "grey lighten-1",
           quantity: 0,
           momentum: 1,
           bonus: 1,
           h_per_sec: 0,
-          cost: 12354,
+          cost: 1,
           softreset_cost: 2,
         },
         {
           name: "Faith",
+          color: "grey",
           quantity: 0,
           momentum: 1,
           bonus: 1,
           h_per_sec: 0,
-          cost: 1234,
+          cost: 1,
           softreset_cost: 3,
         },
         {
           name: "Ethics",
+          color: "grey darken-1",
           quantity: 0,
           momentum: 1,
           bonus: 1,
           h_per_sec: 0,
-          cost: 123,
+          cost: 1,
           softreset_cost: 4,
         },
       ],
@@ -315,8 +328,6 @@ export default {
 
   mounted() {
     this.humanity = this.game.humanity;
-    this.virtues[0].cost = this.game.survival_cost;
-
     this.startInterval();
   },
 };
