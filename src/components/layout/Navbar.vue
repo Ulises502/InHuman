@@ -56,6 +56,13 @@
 
           <v-list-item>
             <v-list-item-icon>
+              <v-icon>mdi-trophy</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title>Achievements</v-list-item-title>
+          </v-list-item>
+
+          <v-list-item>
+            <v-list-item-icon>
               <v-icon>mdi-cog</v-icon>
             </v-list-item-icon>
             <v-list-item-title>Settings</v-list-item-title>
