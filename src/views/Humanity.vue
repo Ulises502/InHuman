@@ -9,21 +9,24 @@
       <v-row>
         <!-- WELLBEING -->
         <v-col cols="8" class="d-inline-flex">
-          <div class="text-body-2 text-md-body-1 mt-1">
-            Wellbeing {{ wellbeing }}
-          </div>
-          <v-btn
-            elevation="3"
-            small
-            class="ms-4"
-            :disabled="humanity < wellbeing_cost"
-          >
-            <div style="font-size: 10px">
-              <p class="ma-0 pa-0">Cost:</p>
-              <p class="ma-0 pa-0">{{ wellbeing_cost }} H</p>
+          <div v-show="collapse1">
+            <div class="text-body-2 text-md-body-1 mt-1">
+              Wellbeing {{ wellbeing }}
             </div>
-          </v-btn>
+            <v-btn
+              elevation="3"
+              small
+              class="ms-4"
+              :disabled="humanity < wellbeing_cost"
+            >
+              <div style="font-size: 10px">
+                <p class="ma-0 pa-0">Cost:</p>
+                <p class="ma-0 pa-0">{{ wellbeing_cost }} H</p>
+              </div>
+            </v-btn>
+          </div>
         </v-col>
+        
 
         <v-col cols="4" class="text-center">
           <p class="text-caption text-md-body-2 ma-0">You are making</p>
@@ -33,19 +36,20 @@
         </v-col>
       </v-row>
 
-      <!-- VIRTUES TABLE -->
+      <!-- ************************************************
+        ****************** VIRTUES TABLE ****************** -->
       <v-simple-table>
         <template v-slot:default>
           <thead>
             <tr>
               <th class="text-center">Virtues</th>
-              <th></th>
-              <th class="text-center">Humanity /s</th>
+              <th class="text-center">Momentum/Bonus</th>
+              <th class="text-center">Humanity/s</th>
               <th class="text-center">Buy</th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="row in virtues" :key="row.name">
+            <tr v-for="row in virtues" :key="row.name" v-show="soft_resets >= row.softreset_cost">
               <td>
                 <!-- VIRTUES NAME -->
                 <p class="text-caption text-md-body-2 ma-0 text-center">
@@ -57,7 +61,8 @@
               </td>
               <td class="d-flex flex-column justify-center">
                 <!-- MOMENTUM & BONUS -->
-                <p
+                <div v-show="collapse1">
+                <p 
                   class="
                     d-none d-sm-flex
                     text-caption text-md-body-2
@@ -78,6 +83,7 @@
                   Motm: {{ row.momentum }}
                 </p>
                 <v-divider />
+                </div>
                 <div class="d-flex justify-center">
                   <v-chip label small class="my-1">x {{ row.bonus }} </v-chip>
                 </div>
@@ -110,48 +116,73 @@
       </v-simple-table>
 
       <!-- VIRTUES BONUS -->
-      <v-row class="my-2 d-flex justify-center">
-        <v-chip class="ma-2" color="success" small outlined>
-          BONUS: + {{ virtues_bonus }} %
-        </v-chip>
-      </v-row>
+      <div v-show="collapse1">
+        <v-row class="my-2 d-flex justify-center">
+          <v-chip class="ma-2" color="success" small outlined>
+            BONUS: + {{ virtues_bonus }} %
+          </v-chip>
+        </v-row>
+      </div>
     </v-container>
 
     <v-divider></v-divider>
 
     <v-container>
-      <!-- CHALLENGES MISSIONs -->
-      <div class="text-subtitle-2 text-md-h5 mb-4">Challenges</div>
-      <v-row>
-        <v-col cols="4">
-          <v-btn block elevation="8" large class="text-caption text-md-button">
-            Catastrophe<v-icon class="ms-2">mdi-weather-lightning</v-icon>
-          </v-btn>
-        </v-col>
-        <v-col cols="8"></v-col>
-      </v-row>
-      <v-row>
-        <v-col cols="4">
-          <v-btn block elevation="8" large class="text-caption text-md-button">
-            Ruins<v-icon class="ms-2">mdi-gate-open</v-icon>
-          </v-btn>
-        </v-col>
-        <v-col cols="8"></v-col>
-      </v-row>
+      <!-- **************************************************************
+      ******************** CHALLENGES MISSIONs ************************** -->
+      <div v-show="collapse1">
+        <div class="text-subtitle-2 text-md-h5 mb-4">Challenges</div>
+        <v-row>
+          <v-col cols="4">
+            <v-btn block elevation="8" large class="text-caption text-md-button">
+              Catastrophe<v-icon class="ms-2">mdi-weather-lightning</v-icon>
+            </v-btn>
+          </v-col>
+          <v-col cols="8"></v-col>
+        </v-row>
+        <v-row>
+          <v-col cols="4">
+            <v-btn block elevation="8" large class="text-caption text-md-button">
+              Ruins<v-icon class="ms-2">mdi-gate-open</v-icon>
+            </v-btn>
+          </v-col>
+          <v-col cols="8"></v-col>
+        </v-row>
+      </div>
     </v-container>
   </div>
 </template>
 
 <script>
-import game from "@/init.js";
 import Decimal from "decimal.js";
 
 export default {
   data() {
     return {
+      game: {
+        humanity: new Decimal(10),
+        VIRTUES_NAMES: [
+          null,
+          "Survival",
+          "Military",
+          "Knowledge",
+          "Culture",
+          "Cooperation",
+          "Faith",
+          "Ethics",
+        ],
+
+        survival_cost: new Decimal(10),
+        options: {
+          updateRate: 50,
+        },
+      },
+
       gameLoopIntervalID: null,
       humanity: new Decimal(10),
       wellbeing: 0,
+      soft_resets: 0,
+      collapses: 0,
       wellbeing_cost: 1234567,
       virtues_bonus: 256,
 
@@ -163,6 +194,7 @@ export default {
           bonus: 1,
           h_per_sec: 0,
           cost: 112,
+          softreset_cost: 0,
         },
         {
           name: "Military",
@@ -171,6 +203,7 @@ export default {
           bonus: 1,
           h_per_sec: 0,
           cost: 4523,
+          softreset_cost: 0,
         },
         {
           name: "Knowledge",
@@ -179,6 +212,7 @@ export default {
           bonus: 1,
           h_per_sec: 0,
           cost: 7587,
+          softreset_cost: 0,
         },
         {
           name: "Culture",
@@ -187,6 +221,7 @@ export default {
           bonus: 1,
           h_per_sec: 0,
           cost: 45,
+          softreset_cost: 1,
         },
         {
           name: "Cooperation",
@@ -195,6 +230,7 @@ export default {
           bonus: 1,
           h_per_sec: 0,
           cost: 12354,
+          softreset_cost: 2,
         },
         {
           name: "Faith",
@@ -203,6 +239,7 @@ export default {
           bonus: 1,
           h_per_sec: 0,
           cost: 1234,
+          softreset_cost: 3,
         },
         {
           name: "Ethics",
@@ -211,6 +248,7 @@ export default {
           bonus: 1,
           h_per_sec: 0,
           cost: 123,
+          softreset_cost: 4,
         },
       ],
     };
@@ -218,11 +256,12 @@ export default {
 
 
 
+
   methods: {
     startInterval() {
       this.gameLoopIntervalID = setInterval(
         this.cycle,
-        game.options.updateRate
+        this.game.options.updateRate
       );
     },
 
@@ -233,12 +272,14 @@ export default {
     },
 
     getVirtueProductionPerSec(tier) {
-      var name = game.VIRTUES_NAMES[tier];
+      var name = this.game.VIRTUES_NAMES[tier];
       var quan = new Decimal(
         this.virtues.find((virtue) => virtue.name === name).quantity
       );
-      this.virtues[this.virtues.findIndex((elem) => elem.name === game.VIRTUES_NAMES[tier])].h_per_sec = quan;
-      var updateFor = quan.mul(game.options.updateRate).div(1000);
+      this.virtues[
+        this.virtues.findIndex((elem) => elem.name === this.game.VIRTUES_NAMES[tier])
+      ].h_per_sec = quan;
+      var updateFor = quan.mul(this.game.options.updateRate).div(1000);
       return updateFor;
     },
 
@@ -252,6 +293,7 @@ export default {
 
 
 
+
   computed: {
     total_humanity_persec() {
       var total = new Decimal(0);
@@ -259,13 +301,18 @@ export default {
         total = total.add(this.virtues[i].h_per_sec);
       }
       return total;
+    },
+    collapse1() {
+      return (this.collapses >= 1);
     }
   },
 
 
+
+
   mounted() {
-    this.humanity = game.humanity;
-    this.virtues[0].cost = game.survival_cost;
+    this.humanity = this.game.humanity;
+    this.virtues[0].cost = this.game.survival_cost;
 
     this.startInterval();
   },
