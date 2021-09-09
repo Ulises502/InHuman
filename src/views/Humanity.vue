@@ -4,7 +4,7 @@
       <!-- -->
       <!-- HUMANITY -->
       <div class="text-center text-h6 text-md-h4 mb-2">
-        Humanity {{ humanity.floor() }}
+        Humanity {{ (humanity_with_decimals)? humanity.toFixed(1) : humanity.trunc() }}
       </div>
       <v-row>
         <!-- WELLBEING -->
@@ -295,6 +295,9 @@ export default {
 
 
   computed: {
+    humanity_with_decimals() {
+      return (this.virtues.find((virtue) => virtue.name === 'Survival').quantity < 10);
+    },
     total_humanity_persec() {
       var total = new Decimal(0);
       for (var i = 0; i < 7; i++) {
