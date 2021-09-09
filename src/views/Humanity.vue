@@ -4,7 +4,7 @@
       <!-- -->
       <!-- HUMANITY -->
       <div class="text-center text-h6 text-md-h4 mb-2">
-        Humanity {{ humanity }}
+        Humanity {{ humanity.floor() }}
       </div>
       <v-row>
         <!-- WELLBEING -->
@@ -153,7 +153,6 @@ export default {
       humanity: new Decimal(10),
       wellbeing: 0,
       wellbeing_cost: 1234567,
-      total_humanity_persec: 12345,
       virtues_bonus: 256,
 
       virtues: [
@@ -161,61 +160,63 @@ export default {
           name: "Survival",
           quantity: 0,
           momentum: 1,
-          bonus: 256,
-          h_per_sec: 1234455,
+          bonus: 1,
+          h_per_sec: 0,
           cost: 112,
         },
         {
           name: "Military",
           quantity: 0,
           momentum: 1,
-          bonus: 256,
-          h_per_sec: 1234455,
+          bonus: 1,
+          h_per_sec: 0,
           cost: 4523,
         },
         {
           name: "Knowledge",
           quantity: 0,
           momentum: 1,
-          bonus: 256,
-          h_per_sec: 1234455,
+          bonus: 1,
+          h_per_sec: 0,
           cost: 7587,
         },
         {
           name: "Culture",
           quantity: 0,
           momentum: 1,
-          bonus: 256,
-          h_per_sec: 1234455,
+          bonus: 1,
+          h_per_sec: 0,
           cost: 45,
         },
         {
           name: "Cooperation",
           quantity: 0,
           momentum: 1,
-          bonus: 256,
-          h_per_sec: 1234455,
+          bonus: 1,
+          h_per_sec: 0,
           cost: 12354,
         },
         {
           name: "Faith",
           quantity: 0,
           momentum: 1,
-          bonus: 256,
-          h_per_sec: 1234455,
+          bonus: 1,
+          h_per_sec: 0,
           cost: 1234,
         },
         {
           name: "Ethics",
           quantity: 0,
           momentum: 1,
-          bonus: 256,
-          h_per_sec: 1234455,
+          bonus: 1,
+          h_per_sec: 0,
           cost: 123,
         },
       ],
     };
   },
+
+
 
   methods: {
     startInterval() {
@@ -226,19 +227,19 @@ export default {
     },
 
     cycle() {
-      var i;
-      for (i = 1; i < 8; i++) {
-        this.humanity = this.humanity.plus(this.getVirtueProductionPerSec(i));
+      for (var i = 1; i < 8; i++) {
+        this.humanity = this.humanity.add(this.getVirtueProductionPerSec(i));
       }
     },
 
     getVirtueProductionPerSec(tier) {
       var name = game.VIRTUES_NAMES[tier];
-      var quan = new Decimal(this.virtues.find(
-        (virtue) => virtue.name === name
-      ).quantity);
-      console.log(quan.toNumber());
-      return quan;
+      var quan = new Decimal(
+        this.virtues.find((virtue) => virtue.name === name).quantity
+      );
+      this.virtues[this.virtues.findIndex((elem) => elem.name === game.VIRTUES_NAMES[tier])].h_per_sec = quan;
+      var updateFor = quan.mul(game.options.updateRate).div(1000);
+      return updateFor;
     },
 
     buyVirtue(name) {
@@ -248,6 +249,19 @@ export default {
       this.virtues.find((virtue) => virtue.name === name).quantity++;
     },
   },
+
+
+
+  computed: {
+    total_humanity_persec() {
+      var total = new Decimal(0);
+      for (var i = 0; i < 7; i++) {
+        total = total.add(this.virtues[i].h_per_sec);
+      }
+      return total;
+    }
+  },
+
 
   mounted() {
     this.humanity = game.humanity;
