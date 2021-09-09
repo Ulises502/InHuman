@@ -12,7 +12,12 @@
           <div class="text-body-2 text-md-body-1 mt-1">
             Wellbeing {{ wellbeing }}
           </div>
-          <v-btn elevation="3" small class="ms-4">
+          <v-btn
+            elevation="3"
+            small
+            class="ms-4"
+            :disabled="humanity < wellbeing_cost"
+          >
             <div style="font-size: 10px">
               <p class="ma-0 pa-0">Cost:</p>
               <p class="ma-0 pa-0">{{ wellbeing_cost }} H</p>
@@ -23,7 +28,7 @@
         <v-col cols="4" class="text-center">
           <p class="text-caption text-md-body-2 ma-0">You are making</p>
           <p class="text-caption text-md-body-2 ma-0">
-            {{ humanity_gain }} Humanity /s
+            {{ total_humanity_persec }} Humanity /s
           </p>
         </v-col>
       </v-row>
@@ -84,10 +89,18 @@
                 </p>
               </td>
               <td>
-                <v-btn elevation="5" small block class="mx-2">
+                <!-- BUY VIRTUE BUTTON -->
+                <v-btn
+                  elevation="5"
+                  small
+                  block
+                  class="mx-2"
+                  :disabled="humanity.lt(row.cost)"
+                  @click="buyVirtue(row.name)"
+                >
                   <div style="font-size: 10px">
                     <p class="ma-0 pa-0">Cost:</p>
-                    <p class="ma-0 pa-0">{{ wellbeing_cost }} H</p>
+                    <p class="ma-0 pa-0">{{ row.cost }} H</p>
                   </div>
                 </v-btn>
               </td>
@@ -130,74 +143,117 @@
 </template>
 
 <script>
+import game from "@/init.js";
+import Decimal from "decimal.js";
+
 export default {
   data() {
     return {
-      humanity: 10,
+      gameLoopIntervalID: null,
+      humanity: new Decimal(10),
       wellbeing: 0,
       wellbeing_cost: 1234567,
-      humanity_gain: 12345,
+      total_humanity_persec: 12345,
       virtues_bonus: 256,
 
       virtues: [
         {
           name: "Survival",
-          quantity: 150,
+          quantity: 0,
           momentum: 1,
           bonus: 256,
           h_per_sec: 1234455,
-          cost: 1234453,
+          cost: 112,
         },
         {
           name: "Military",
-          quantity: 150,
+          quantity: 0,
           momentum: 1,
           bonus: 256,
           h_per_sec: 1234455,
-          cost: 1234453,
+          cost: 4523,
         },
         {
           name: "Knowledge",
-          quantity: 150,
+          quantity: 0,
           momentum: 1,
           bonus: 256,
           h_per_sec: 1234455,
-          cost: 1234453,
+          cost: 7587,
         },
         {
           name: "Culture",
-          quantity: 150,
+          quantity: 0,
           momentum: 1,
           bonus: 256,
           h_per_sec: 1234455,
-          cost: 1234453,
+          cost: 45,
         },
         {
           name: "Cooperation",
-          quantity: 150,
+          quantity: 0,
           momentum: 1,
           bonus: 256,
           h_per_sec: 1234455,
-          cost: 1234453,
+          cost: 12354,
         },
         {
           name: "Faith",
-          quantity: 150,
+          quantity: 0,
           momentum: 1,
           bonus: 256,
           h_per_sec: 1234455,
-          cost: 1234453,
+          cost: 1234,
         },
         {
           name: "Ethics",
-          quantity: 150,
+          quantity: 0,
           momentum: 1,
           bonus: 256,
           h_per_sec: 1234455,
-          cost: 1234453,
+          cost: 123,
         },
       ],
     };
+  },
+
+  methods: {
+    startInterval() {
+      this.gameLoopIntervalID = setInterval(
+        this.cycle,
+        game.options.updateRate
+      );
+    },
+
+    cycle() {
+      var i;
+      for (i = 1; i < 8; i++) {
+        this.humanity = this.humanity.plus(this.getVirtueProductionPerSec(i));
+      }
+    },
+
+    getVirtueProductionPerSec(tier) {
+      var name = game.VIRTUES_NAMES[tier];
+      var quan = new Decimal(this.virtues.find(
+        (virtue) => virtue.name === name
+      ).quantity);
+      console.log(quan.toNumber());
+      return quan;
+    },
+
+    buyVirtue(name) {
+      this.humanity = this.humanity.sub(
+        this.virtues.find((virtue) => virtue.name === name).cost
+      );
+      this.virtues.find((virtue) => virtue.name === name).quantity++;
+    },
+  },
+
+  mounted() {
+    this.humanity = game.humanity;
+    this.virtues[0].cost = game.survival_cost;
+
+    this.startInterval();
   },
 };
 </script>
