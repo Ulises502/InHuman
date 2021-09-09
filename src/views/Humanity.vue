@@ -86,10 +86,10 @@
                 </div>
                 <div class="d-flex justify-center">
                   <div v-if="(virtues[index+1])">
-                    <v-chip label small :color="virtues[index+1].color" class="my-1">x {{ row.bonus }} </v-chip>
+                    <v-chip label small :color="virtues[index+1].color" class="my-1">x {{ row.multiplier }} </v-chip>
                   </div>
                   <div v-else>
-                    <v-chip label small color="success" class="my-1">x {{ row.bonus }} </v-chip>
+                    <v-chip label small color="success" class="my-1">x {{ row.multiplier }} </v-chip>
                   </div>
                 </div>
               </td>
@@ -187,8 +187,8 @@ export default {
       gameLoopIntervalID: null,
       humanity: new Decimal(10),
       wellbeing: 0,
-      soft_resets: 10,
-      collapses: 10,
+      soft_resets: 0,
+      collapses: 0,
       wellbeing_cost: 1234567,
       virtues_bonus: 256,
 
@@ -198,7 +198,7 @@ export default {
           color: "grey lighten-5",
           quantity: 0,
           momentum: 1,
-          bonus: 1,
+          multiplier: new Decimal(1),
           h_per_sec: 0,
           cost: 10,
           softreset_cost: 0,
@@ -208,9 +208,9 @@ export default {
           color: "grey lighten-4",
           quantity: 0,
           momentum: 1,
-          bonus: 1,
+          multiplier: new Decimal(1),
           h_per_sec: 0,
-          cost: 1,
+          cost: 100,
           softreset_cost: 0,
         },
         {
@@ -218,9 +218,9 @@ export default {
           color: "grey lighten-3",
           quantity: 0,
           momentum: 1,
-          bonus: 1,
+          multiplier: new Decimal(1),
           h_per_sec: 0,
-          cost: 1,
+          cost: 100000,
           softreset_cost: 0,
         },
         {
@@ -228,7 +228,7 @@ export default {
           color: "grey lighten-2",
           quantity: 0,
           momentum: 1,
-          bonus: 1,
+          multiplier: new Decimal(1),
           h_per_sec: 0,
           cost: 1,
           softreset_cost: 1,
@@ -238,7 +238,7 @@ export default {
           color: "grey lighten-1",
           quantity: 0,
           momentum: 1,
-          bonus: 1,
+          multiplier: new Decimal(1),
           h_per_sec: 0,
           cost: 1,
           softreset_cost: 2,
@@ -248,7 +248,7 @@ export default {
           color: "grey",
           quantity: 0,
           momentum: 1,
-          bonus: 1,
+          multiplier: new Decimal(1),
           h_per_sec: 0,
           cost: 1,
           softreset_cost: 3,
@@ -258,7 +258,7 @@ export default {
           color: "grey darken-1",
           quantity: 0,
           momentum: 1,
-          bonus: 1,
+          multiplier: new Decimal(1),
           h_per_sec: 0,
           cost: 1,
           softreset_cost: 4,
@@ -289,11 +289,19 @@ export default {
       var quan = new Decimal(
         this.virtues.find((virtue) => virtue.name === name).quantity
       );
+
+      var multiplier = this.getVirtueTotalMultiplier(name);
+      // updates humanity per sec from virtue
       this.virtues[
         this.virtues.findIndex((elem) => elem.name === this.game.VIRTUES_NAMES[tier])
-      ].h_per_sec = quan;
-      var updateFor = quan.mul(this.game.options.updateRate).div(1000);
+      ].h_per_sec = quan.mul(multiplier);
+      // calculates h per TICK
+      var updateFor = quan.mul(this.game.options.updateRate).div(1000).mul(multiplier);
       return updateFor;
+    },
+
+    getVirtueTotalMultiplier(name) {
+      return this.virtues.find((virtue) => virtue.name === name).multiplier;
     },
 
     buyVirtue(name) {
@@ -301,6 +309,8 @@ export default {
         this.virtues.find((virtue) => virtue.name === name).cost
       );
       this.virtues.find((virtue) => virtue.name === name).quantity++;
+
+      if (name != 'Survival') this.virtues[this.virtues.findIndex((virtue) => virtue.name === name) -1].multiplier = this.virtues[this.virtues.findIndex((virtue) => virtue.name === name) -1].multiplier.add(0.1);
     },
   },
 
