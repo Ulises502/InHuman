@@ -13,6 +13,14 @@
         ><template v-slot:thumb-label> History </template></v-slider
       >
     </v-col>
+    <v-chip
+      class="ma-1"
+      color="orange darken-3"
+      label
+      style="position: absolute; top: 0; left: 50%;"
+    >
+      {{ 100-value }} %
+    </v-chip>
   </v-footer>
 </template>
 
