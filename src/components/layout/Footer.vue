@@ -14,7 +14,7 @@
       >
     </v-col>
     <v-chip
-      class="ma-1"
+      class="ma-1 mt-2"
       color="orange darken-3"
       label
       style="position: absolute; top: 0; left: 50%;"
