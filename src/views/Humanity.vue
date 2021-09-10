@@ -4,20 +4,22 @@
       <!-- -->
       <!-- HUMANITY -->
       <div class="text-center text-h6 text-md-h4 mb-2">
-        Humanity {{ (humanity_with_decimals)? humanity.toFixed(1) : humanity.trunc() }}
+        Humanity
+        {{ humanity_with_decimals ? humanity.toFixed(1) : humanity.trunc() }}
       </div>
       <v-row>
         <!-- WELLBEING -->
-        <v-col cols="8">
-          <div v-show="collapse1" class="d-inline-flex">
-            <div class="text-body-2 text-md-body-1 mt-1">
+        <v-col cols="8" class="d-inline-flex justify-center">
+          <div class="d-inline-flex">
+            <div class="text-body-2 text-md-body-1 mt-1" v-show="collapse1">
               Wellbeing {{ wellbeing }}
             </div>
             <v-btn
+              v-show="collapse1"
               elevation="3"
               small
               class="ms-4"
-              :disabled="humanity < wellbeing_cost"
+              :disabled="humanity.lessThan(wellbeing_cost)"
             >
               <div style="font-size: 10px">
                 <p class="ma-0 pa-0">Cost:</p>
@@ -26,9 +28,8 @@
             </v-btn>
           </div>
         </v-col>
-        
 
-        <v-col cols="4" class="text-center">
+        <v-col cols="4">
           <p class="text-caption text-md-body-2 ma-0">You are making</p>
           <p class="text-caption text-md-body-2 ma-0">
             {{ total_humanity_persec }} Humanity /s
@@ -49,7 +50,11 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(row, index) in virtues" :key="row.name" v-show="soft_resets >= row.softreset_cost">
+            <tr
+              v-for="(row, index) in virtues"
+              :key="row.name"
+              v-show="soft_resets >= row.softreset_cost"
+            >
               <td>
                 <!-- VIRTUES NAME -->
                 <p class="text-caption text-md-body-2 ma-0 text-center">
@@ -62,34 +67,42 @@
               <td class="d-flex flex-column justify-center">
                 <!-- MOMENTUM & BONUS -->
                 <div v-show="collapse1">
-                <p 
-                  class="
-                    d-none d-sm-flex
-                    text-caption text-md-body-2
-                    ma-0
-                    justify-center
-                  "
-                >
-                  Momentum: {{ row.momentum }}
-                </p>
-                <p
-                  class="
-                    d-flex d-sm-none
-                    text-caption text-md-body-2
-                    ma-0
-                    justify-center
-                  "
-                >
-                  Motm: {{ row.momentum }}
-                </p>
-                <v-divider />
+                  <p
+                    class="
+                      d-none d-sm-flex
+                      text-caption text-md-body-2
+                      ma-0
+                      justify-center
+                    "
+                  >
+                    Momentum: {{ row.momentum }}
+                  </p>
+                  <p
+                    class="
+                      d-flex d-sm-none
+                      text-caption text-md-body-2
+                      ma-0
+                      justify-center
+                    "
+                  >
+                    Motm: {{ row.momentum }}
+                  </p>
+                  <v-divider />
                 </div>
                 <div class="d-flex justify-center">
-                  <div v-if="(virtues[index+1])">
-                    <v-chip label small :color="virtues[index+1].color" class="my-1">x {{ row.multiplier }} </v-chip>
+                  <div v-if="virtues[index + 1]">
+                    <v-chip
+                      label
+                      small
+                      :color="virtues[index + 1].color"
+                      class="my-1"
+                      >x {{ row.multiplier }}
+                    </v-chip>
                   </div>
                   <div v-else>
-                    <v-chip label small color="success" class="my-1">x {{ row.multiplier }} </v-chip>
+                    <v-chip label small color="success" class="my-1"
+                      >x {{ row.multiplier }}
+                    </v-chip>
                   </div>
                 </div>
               </td>
@@ -140,7 +153,12 @@
         <div class="text-subtitle-2 text-md-h5 mb-4">Challenges</div>
         <v-row>
           <v-col cols="4">
-            <v-btn block elevation="8" large class="text-caption text-md-button">
+            <v-btn
+              block
+              elevation="8"
+              large
+              class="text-caption text-md-button"
+            >
               Catastrophe<v-icon class="ms-2">mdi-weather-lightning</v-icon>
             </v-btn>
           </v-col>
@@ -148,7 +166,12 @@
         </v-row>
         <v-row>
           <v-col cols="4">
-            <v-btn block elevation="8" large class="text-caption text-md-button">
+            <v-btn
+              block
+              elevation="8"
+              large
+              class="text-caption text-md-button"
+            >
               Ruins<v-icon class="ms-2">mdi-gate-open</v-icon>
             </v-btn>
           </v-col>
@@ -166,7 +189,7 @@ export default {
   data() {
     return {
       game: {
-        humanity: new Decimal(10),
+        gameLoopIntervalID: null,
         VIRTUES_NAMES: [
           null,
           "Survival",
@@ -177,6 +200,16 @@ export default {
           "Faith",
           "Ethics",
         ],
+        cost_multiplier: [
+          new Decimal(1e3),
+          new Decimal(1e4),
+          new Decimal(1e5),
+          new Decimal(1e6),
+          new Decimal(1e8),
+          new Decimal(1e10),
+          new Decimal(1e12),
+          new Decimal(1e15),
+        ],
 
         survival_cost: new Decimal(10),
         options: {
@@ -184,13 +217,12 @@ export default {
         },
       },
 
-      gameLoopIntervalID: null,
       humanity: new Decimal(10),
-      wellbeing: 0,
-      soft_resets: 0,
-      collapses: 0,
-      wellbeing_cost: 1234567,
-      virtues_bonus: 256,
+      wellbeing: new Decimal(0),
+      soft_resets: new Decimal(0),
+      collapses: new Decimal(0),
+      wellbeing_cost: new Decimal(10000),
+      virtues_bonus: new Decimal(0),
 
       virtues: [
         {
@@ -200,7 +232,7 @@ export default {
           momentum: 1,
           multiplier: new Decimal(1),
           h_per_sec: 0,
-          cost: 10,
+          cost: new Decimal(10),
           softreset_cost: 0,
         },
         {
@@ -210,7 +242,7 @@ export default {
           momentum: 1,
           multiplier: new Decimal(1),
           h_per_sec: 0,
-          cost: 100,
+          cost: new Decimal(100),
           softreset_cost: 0,
         },
         {
@@ -220,7 +252,7 @@ export default {
           momentum: 1,
           multiplier: new Decimal(1),
           h_per_sec: 0,
-          cost: 100000,
+          cost: new Decimal(100000),
           softreset_cost: 0,
         },
         {
@@ -230,7 +262,7 @@ export default {
           momentum: 1,
           multiplier: new Decimal(1),
           h_per_sec: 0,
-          cost: 1,
+          cost: new Decimal(1),
           softreset_cost: 1,
         },
         {
@@ -240,7 +272,7 @@ export default {
           momentum: 1,
           multiplier: new Decimal(1),
           h_per_sec: 0,
-          cost: 1,
+          cost: new Decimal(1),
           softreset_cost: 2,
         },
         {
@@ -250,7 +282,7 @@ export default {
           momentum: 1,
           multiplier: new Decimal(1),
           h_per_sec: 0,
-          cost: 1,
+          cost: new Decimal(1),
           softreset_cost: 3,
         },
         {
@@ -260,19 +292,16 @@ export default {
           momentum: 1,
           multiplier: new Decimal(1),
           h_per_sec: 0,
-          cost: 1,
+          cost: new Decimal(1),
           softreset_cost: 4,
         },
       ],
     };
   },
 
-
-
-
   methods: {
     startInterval() {
-      this.gameLoopIntervalID = setInterval(
+      this.game.gameLoopIntervalID = setInterval(
         this.cycle,
         this.game.options.updateRate
       );
@@ -293,10 +322,15 @@ export default {
       var multiplier = this.getVirtueTotalMultiplier(name);
       // updates humanity per sec from virtue
       this.virtues[
-        this.virtues.findIndex((elem) => elem.name === this.game.VIRTUES_NAMES[tier])
+        this.virtues.findIndex(
+          (elem) => elem.name === this.game.VIRTUES_NAMES[tier]
+        )
       ].h_per_sec = quan.mul(multiplier);
       // calculates h per TICK
-      var updateFor = quan.mul(this.game.options.updateRate).div(1000).mul(multiplier);
+      var updateFor = quan
+        .mul(this.game.options.updateRate)
+        .div(1000)
+        .mul(multiplier);
       return updateFor;
     },
 
@@ -305,12 +339,22 @@ export default {
     },
 
     buyVirtue(name) {
-      this.humanity = this.humanity.sub(
-        this.virtues.find((virtue) => virtue.name === name).cost
-      );
-      this.virtues.find((virtue) => virtue.name === name).quantity++;
+      // spends humanity
+      var virtue = this.virtues.find((virtue) => virtue.name === name);
+      this.humanity = this.humanity.sub(virtue.cost);
+      // buys 1 virtue
+      virtue.quantity++;
 
-      if (name != 'Survival') this.virtues[this.virtues.findIndex((virtue) => virtue.name === name) -1].multiplier = this.virtues[this.virtues.findIndex((virtue) => virtue.name === name) -1].multiplier.add(0.1);
+      var index = this.virtues.findIndex((virtue) => virtue.name === name);
+      if (name != "Survival") {
+        // if virtue is not Survival, adds multiplier bonus to prev virtue
+        this.virtues[index - 1].multiplier = this.virtues[index - 1].multiplier.add(0.1);
+      }
+
+      // verifies if 10 virtues been bought and updates virtue cost
+      if (virtue.quantity % 10 === 0) {
+        virtue.cost = virtue.cost.mul(this.game.cost_multiplier[index]);
+      }
     },
   },
 
@@ -319,7 +363,9 @@ export default {
 
   computed: {
     humanity_with_decimals() {
-      return (this.virtues.find((virtue) => virtue.name === 'Survival').quantity < 10);
+      return (
+        this.virtues.find((virtue) => virtue.name === "Survival").quantity < 10
+      );
     },
     total_humanity_persec() {
       var total = new Decimal(0);
@@ -329,15 +375,14 @@ export default {
       return total;
     },
     collapse1() {
-      return (this.collapses >= 1);
-    }
+      return this.collapses >= 1;
+    },
   },
 
 
 
 
   mounted() {
-    this.humanity = this.game.humanity;
     this.startInterval();
   },
 };
