@@ -189,32 +189,10 @@ export default {
   data() {
     return {
       game: {
-        gameLoopIntervalID: null,
-        VIRTUES_NAMES: [
-          null,
-          "Survival",
-          "Military",
-          "Knowledge",
-          "Culture",
-          "Cooperation",
-          "Faith",
-          "Ethics",
-        ],
-        cost_multiplier: [
-          new Decimal(1e3),
-          new Decimal(1e4),
-          new Decimal(1e5),
-          new Decimal(1e6),
-          new Decimal(1e8),
-          new Decimal(1e10),
-          new Decimal(1e12),
-          new Decimal(1e15),
-        ],
-
-        survival_cost: new Decimal(10),
-        options: {
-          updateRate: 50,
-        },
+        gameLoopIntervalID: this.$store.getters.gameLoopIntervalID,
+        VIRTUES_NAMES: this.$store.getters.VIRTUES_NAMES,
+        cost_multiplier: this.$store.getters.cost_multiplier,
+        options: this.$store.getters.options,
       },
 
       humanity: new Decimal(10),

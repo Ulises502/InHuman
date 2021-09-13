@@ -1,6 +1,9 @@
 import Vue from "vue";
 import Vuex from "vuex";
 
+import game from './modules/game.js';
+import player from './modules/player.js';
+
 Vue.use(Vuex);
 
 
@@ -9,7 +12,10 @@ const store = new Vuex.Store({
     getters: {},
     mutations: {},
     actions: {},
-    modules: {},
+    modules: {
+        game,
+        player,
+    },
 });
 
 export default store;
