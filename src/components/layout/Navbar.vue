@@ -47,21 +47,21 @@
           v-model="group"
           active-class="deep-purple--text text--accent-4"
         >
-          <v-list-item>
+          <v-list-item to="/">
             <v-list-item-icon>
               <v-icon>mdi-human</v-icon>
             </v-list-item-icon>
             <v-list-item-title>Humanity</v-list-item-title>
           </v-list-item>
 
-          <v-list-item>
+          <v-list-item to="/achievements">
             <v-list-item-icon>
               <v-icon>mdi-trophy</v-icon>
             </v-list-item-icon>
             <v-list-item-title>Achievements</v-list-item-title>
           </v-list-item>
 
-          <v-list-item>
+          <v-list-item to="/settings">
             <v-list-item-icon>
               <v-icon>mdi-cog</v-icon>
             </v-list-item-icon>

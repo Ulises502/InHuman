@@ -1,5 +1,7 @@
 import Decimal from "decimal.js";
 
+import options from "./options.js"
+
 export default {
     state: {
         gameLoopIntervalID: null,
@@ -24,7 +26,7 @@ export default {
             new Decimal(1e15),
         ],
         options: {
-            updateRate: 50,
+
         },
     },
     getters: {
@@ -56,5 +58,6 @@ export default {
         },
     },
     actions: {
-    }
+    },
+    modules: { options }
 }

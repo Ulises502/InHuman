@@ -14,17 +14,17 @@ const routes = [
         path: '',
         name: 'Humanity',
         component: HumanityView,
+      },
+      {
+        path: '/settings',
+        name: 'Settings',
+        // route level code-splitting
+        // this generates a separate chunk (settings.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () => import(/* webpackChunkName: "nav" */ '../views/Settings.vue')
       }
     ]
   },
-  /*{
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" *//* '../views/About.vue')
-  }*/
 ]
 
 const router = new VueRouter({
