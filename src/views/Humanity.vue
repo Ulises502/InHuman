@@ -53,7 +53,7 @@
             <tr
               v-for="row in virtues"
               :key="row.name"
-
+              v-show="soft_resets >= row.softreset_cost"
             >
               <td>
                 <!-- VIRTUES NAME -->
@@ -192,85 +192,13 @@ export default {
         options: this.$store.getters.options,
       },
 
-      humanity: new Decimal(10),
-      wellbeing: new Decimal(0),
-      soft_resets: new Decimal(0),
-      collapses: new Decimal(0),
-      wellbeing_cost: new Decimal(10000),
-      virtues_bonus: new Decimal(0),
-
-      virtues: [
-        {
-          name: "Survival",
-          color: "virtue1",
-          quantity: 0,
-          momentum: 1,
-          multiplier: new Decimal(1),
-          h_per_sec: 0,
-          cost: new Decimal(10),
-          softreset_cost: 0,
-        },
-        {
-          name: "Military",
-          color: "virtue2",
-          quantity: 0,
-          momentum: 1,
-          multiplier: new Decimal(1),
-          h_per_sec: 0,
-          cost: new Decimal(100),
-          softreset_cost: 0,
-        },
-        {
-          name: "Knowledge",
-          color: "virtue3",
-          quantity: 0,
-          momentum: 1,
-          multiplier: new Decimal(1),
-          h_per_sec: 0,
-          cost: new Decimal(100000),
-          softreset_cost: 0,
-        },
-        {
-          name: "Culture",
-          color: "virtue4",
-          quantity: 0,
-          momentum: 1,
-          multiplier: new Decimal(1),
-          h_per_sec: 0,
-          cost: new Decimal(1),
-          softreset_cost: 1,
-        },
-        {
-          name: "Cooperation",
-          color: "virtue5",
-          quantity: 0,
-          momentum: 1,
-          multiplier: new Decimal(1),
-          h_per_sec: 0,
-          cost: new Decimal(1),
-          softreset_cost: 2,
-        },
-        {
-          name: "Faith",
-          color: "virtue6",
-          quantity: 0,
-          momentum: 1,
-          multiplier: new Decimal(1),
-          h_per_sec: 0,
-          cost: new Decimal(1),
-          softreset_cost: 3,
-        },
-        {
-          name: "Ethics",
-          color: "virtue7",
-          quantity: 0,
-          momentum: 1,
-          multiplier: new Decimal(1),
-          h_per_sec: 0,
-          cost: new Decimal(1),
-          softreset_cost: 4,
-        },
-      ],
+      humanity: this.$store.getters.humanity,
+      wellbeing: this.$store.getters.wellbeing,
+      soft_resets: this.$store.getters.soft_resets,
+      collapses: this.$store.getters.collapses,
+      wellbeing_cost: this.$store.getters.wellbeing_cost,
+      virtues_bonus: this.$store.getters.virtues_bonus,
+      virtues: this.$store.getters.virtues,
     };
   },
 
