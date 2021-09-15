@@ -8,14 +8,14 @@
         value="100"
         :thumb-size="45"
         thumb-label="always"
-        thumb-color="blue"
-        color="orange darken-3"
+        thumb-color="primary"
+        color="secondary"
         ><template v-slot:thumb-label> History </template></v-slider
       >
     </v-col>
     <v-chip
       class="ma-1 mt-2"
-      color="orange darken-3"
+      color="info"
       label
       style="position: absolute; top: 0; left: 50%;"
     >

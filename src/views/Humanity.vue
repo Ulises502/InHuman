@@ -51,9 +51,9 @@
           </thead>
           <tbody>
             <tr
-              v-for="(row, index) in virtues"
+              v-for="row in virtues"
               :key="row.name"
-              v-show="soft_resets >= row.softreset_cost"
+
             >
               <td>
                 <!-- VIRTUES NAME -->
@@ -90,17 +90,12 @@
                   <v-divider />
                 </div>
                 <div class="d-flex justify-center">
-                  <div v-if="virtues[index + 1]">
+                  <div>
                     <v-chip
                       label
                       small
-                      :color="virtues[index + 1].color"
+                      color="secondary"
                       class="my-1"
-                      >x {{ row.multiplier }}
-                    </v-chip>
-                  </div>
-                  <div v-else>
-                    <v-chip label small color="success" class="my-1"
                       >x {{ row.multiplier }}
                     </v-chip>
                   </div>
@@ -119,7 +114,7 @@
                   small
                   block
                   class="mx-2"
-                  :color="row.color"
+                  color="primary"
                   :disabled="humanity.lt(row.cost)"
                   @click="buyVirtue(row.name)"
                 >
@@ -158,6 +153,7 @@
               elevation="8"
               large
               class="text-caption text-md-button"
+              color="terciary"
             >
               Catastrophe<v-icon class="ms-2">mdi-weather-lightning</v-icon>
             </v-btn>
@@ -171,6 +167,7 @@
               elevation="8"
               large
               class="text-caption text-md-button"
+              color="terciary"
             >
               Ruins<v-icon class="ms-2">mdi-gate-open</v-icon>
             </v-btn>
@@ -205,7 +202,7 @@ export default {
       virtues: [
         {
           name: "Survival",
-          color: "grey lighten-5",
+          color: "virtue1",
           quantity: 0,
           momentum: 1,
           multiplier: new Decimal(1),
@@ -215,7 +212,7 @@ export default {
         },
         {
           name: "Military",
-          color: "grey lighten-4",
+          color: "virtue2",
           quantity: 0,
           momentum: 1,
           multiplier: new Decimal(1),
@@ -225,7 +222,7 @@ export default {
         },
         {
           name: "Knowledge",
-          color: "grey lighten-3",
+          color: "virtue3",
           quantity: 0,
           momentum: 1,
           multiplier: new Decimal(1),
@@ -235,7 +232,7 @@ export default {
         },
         {
           name: "Culture",
-          color: "grey lighten-2",
+          color: "virtue4",
           quantity: 0,
           momentum: 1,
           multiplier: new Decimal(1),
@@ -245,7 +242,7 @@ export default {
         },
         {
           name: "Cooperation",
-          color: "grey lighten-1",
+          color: "virtue5",
           quantity: 0,
           momentum: 1,
           multiplier: new Decimal(1),
@@ -255,7 +252,7 @@ export default {
         },
         {
           name: "Faith",
-          color: "grey",
+          color: "virtue6",
           quantity: 0,
           momentum: 1,
           multiplier: new Decimal(1),
@@ -265,7 +262,7 @@ export default {
         },
         {
           name: "Ethics",
-          color: "grey darken-1",
+          color: "virtue7",
           quantity: 0,
           momentum: 1,
           multiplier: new Decimal(1),

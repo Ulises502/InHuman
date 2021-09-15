@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-app-bar dark dense elevate-on-scroll app>
+    <v-app-bar dark dense app>
       <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
       <v-toolbar-title class="text-body-2 text-sm-body-1 d-none d-sm-block"
         >InHuman</v-toolbar-title
@@ -13,7 +13,7 @@
         elevation="4"
         class="ma-2"
         :outlined="reset_1_outlined"
-        color="orange"
+        color="primary"
         rounded
       >
         Soft Reset
@@ -23,7 +23,7 @@
         small
         class="ma-2"
         :outlined="reset_2_outlined"
-        color="indigo"
+        color="primary"
         elevation="4"
       >
         Collapse
