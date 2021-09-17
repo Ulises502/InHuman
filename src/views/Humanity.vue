@@ -205,7 +205,7 @@ export default {
     buyVirtue(name) {
       // spends humanity
       var virtue = this.virtues.find((virtue) => virtue.name === name);
-      this.humanity = this.humanity.sub(virtue.cost);
+      this.$store.commit('SET_HUMANITY', this.humanity.sub(virtue.cost));
       // buys 1 virtue
       virtue.quantity++;
 

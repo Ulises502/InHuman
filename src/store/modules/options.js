@@ -1,6 +1,6 @@
 export default {
     state: {
-        updateRate: 4000,
+        updateRate: 50,
         themeDark: false,
     },
     getters: {
