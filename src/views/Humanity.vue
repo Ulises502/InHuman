@@ -245,13 +245,5 @@ export default {
       return this.collapses >= 1;
     },
   },
-
-
-
-
-  mounted() {
-    this.$store.dispatch('startInterval');
-    this.$store.dispatch('saveInterval');
-  },
 };
 </script>

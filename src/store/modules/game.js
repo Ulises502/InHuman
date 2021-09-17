@@ -24,6 +24,7 @@ export default {
         ],
         save_timer: 30000,
         saveLoopIntervalID: 0,
+        notifySave: false,
     },
     getters: {
         gameLoopIntervalID(state) {
@@ -34,6 +35,9 @@ export default {
         },
         cost_multiplier(state) {
             return state.cost_multiplier;
+        },
+        notifySave(state) {
+            return state.notifySave;
         },
     },
     mutations: {
@@ -48,6 +52,9 @@ export default {
         },
         SET_SAVELOOPINTERVALID(state, saveLoopIntervalID) {
             state.saveLoopIntervalID = saveLoopIntervalID;
+        },
+        SET_NOTIFYSAVE(state, notifySave) {
+            state.notifySave = notifySave;
         }
     },
     actions: {
@@ -91,13 +98,24 @@ export default {
 
         saveInterval({ commit, dispatch, state }) {
             var ID = setInterval(async () => {
-                dispatch('save')
+                dispatch('save_game', true)
             }, state.save_timer);
             commit('SET_GAMELOOPINTERVALID', ID)
         },
-        save({ rootState }) {
+        save_game({ commit, rootState }, isSilent) {
             localStorage.setItem('inhumanSave', Buffer.from(JSON.stringify(rootState.player)).toString('base64'));
+            if (!isSilent) {
+                console.log("mostramos el cartel");
+                commit('SET_NOTIFYSAVE', true);
+            }
         },
+
+
+        get_save() {
+            try {
+                console.log(JSON.parse(Buffer.from(localStorage.getItem('inhumanSave'), 'base64').toString('ascii')));
+            } catch(e) { console.log("No save:", e); }
+        }
     },
     modules: {}
 }

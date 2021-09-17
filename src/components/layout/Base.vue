@@ -8,6 +8,18 @@
         <!-- If using vue-router -->
         <router-view></router-view>
       </v-container>
+      <v-snackbar
+        :timeout="timeout"
+        :value="notify_save"
+        absolute
+        right
+        top
+        shaped
+        outlined
+        color="success"
+      >
+        Game Saved.
+      </v-snackbar>
     </v-main>
 
     <Footer />
@@ -24,5 +36,22 @@ export default {
     Navbar,
     Footer,
   },
+  data() {
+    return { timeout: 3000 };
+  },
+  computed: {
+    notify_save() {
+      return this.$store.getters.notifySave;
+    },
+  },
+  watch: {
+    notify_save() {
+      console.log("cambio!");
+      if (this.notify_save) {
+        console.log("contando...");
+        setTimeout(async () => {this.$store.commit('SET_NOTIFYSAVE', false)}, 4000);
+      }
+    }
+  }
 };
 </script>
