@@ -22,6 +22,8 @@ export default {
             new Decimal(1e12),
             new Decimal(1e15),
         ],
+        save_timer: 30000,
+        saveLoopIntervalID: 0,
     },
     getters: {
         gameLoopIntervalID(state) {
@@ -44,6 +46,9 @@ export default {
         SET_COSTMULTIPLIER(state, cost_multiplier) {
             state.cost_multiplier = cost_multiplier;
         },
+        SET_SAVELOOPINTERVALID(state, saveLoopIntervalID) {
+            state.saveLoopIntervalID = saveLoopIntervalID;
+        }
     },
     actions: {
         startInterval({ commit, rootState, dispatch }) {
@@ -81,6 +86,17 @@ export default {
         },
         getVirtueTotalMultiplier({rootState}, virtue) {
             return rootState.player.virtues[virtue].multiplier;
+        },
+
+
+        saveInterval({ commit, dispatch, state }) {
+            var ID = setInterval(async () => {
+                dispatch('save')
+            }, state.save_timer);
+            commit('SET_GAMELOOPINTERVALID', ID)
+        },
+        save({ rootState }) {
+            localStorage.setItem('inhumanSave', Buffer.from(JSON.stringify(rootState.player)).toString('base64'));
         },
     },
     modules: {}

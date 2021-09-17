@@ -251,6 +251,7 @@ export default {
 
   mounted() {
     this.$store.dispatch('startInterval');
+    this.$store.dispatch('saveInterval');
   },
 };
 </script>
