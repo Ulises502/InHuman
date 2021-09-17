@@ -1,5 +1,7 @@
 import Decimal from "decimal.js";
 
+import options from "./options.js"
+
 export default {
     state: {
         humanity: new Decimal(10),
@@ -101,16 +103,14 @@ export default {
         }
     },
     mutations: {
-        SET_FIRSTNAME(state, firstName) {
-            state.firstName = firstName;
+        SET_HUMANITY(state, humanity) {
+            state.humanity = humanity;
         },
-        SET_LASTNAME(state, lastName) {
-            state.lastName = lastName;
-        }
+        SET_VIRTUEPROP(state, getter) {
+            state.virtues[getter[0]][getter[1]] = getter[2];
+        },
     },
     actions: {
-        setFirstName({ commit }, firstName) {
-            commit('SET_FIRSTNAME', firstName);
-        }
-    }
+    },
+    modules: {options}
 }

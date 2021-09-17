@@ -192,7 +192,6 @@ export default {
         options: this.$store.getters.options,
       },
 
-      humanity: this.$store.getters.humanity,
       wellbeing: this.$store.getters.wellbeing,
       soft_resets: this.$store.getters.soft_resets,
       collapses: this.$store.getters.collapses,
@@ -203,44 +202,6 @@ export default {
   },
 
   methods: {
-    startInterval() {
-      this.game.gameLoopIntervalID = setInterval(
-        this.cycle,
-        this.game.options.updateRate
-      );
-    },
-
-    cycle() {
-      for (var i = 1; i < 8; i++) {
-        this.humanity = this.humanity.add(this.getVirtueProductionPerSec(i));
-      }
-    },
-
-    getVirtueProductionPerSec(tier) {
-      var name = this.game.VIRTUES_NAMES[tier];
-      var quan = new Decimal(
-        this.virtues.find((virtue) => virtue.name === name).quantity
-      );
-
-      var multiplier = this.getVirtueTotalMultiplier(name);
-      // updates humanity per sec from virtue
-      this.virtues[
-        this.virtues.findIndex(
-          (elem) => elem.name === this.game.VIRTUES_NAMES[tier]
-        )
-      ].h_per_sec = quan.mul(multiplier);
-      // calculates h per TICK
-      var updateFor = quan
-        .mul(this.game.options.updateRate)
-        .div(1000)
-        .mul(multiplier);
-      return updateFor;
-    },
-
-    getVirtueTotalMultiplier(name) {
-      return this.virtues.find((virtue) => virtue.name === name).multiplier;
-    },
-
     buyVirtue(name) {
       // spends humanity
       var virtue = this.virtues.find((virtue) => virtue.name === name);
@@ -265,6 +226,9 @@ export default {
 
 
   computed: {
+    humanity() {
+        return this.$store.getters.humanity;
+      },
     humanity_with_decimals() {
       return (
         this.virtues.find((virtue) => virtue.name === "Survival").quantity < 10
@@ -286,7 +250,7 @@ export default {
 
 
   mounted() {
-    this.startInterval();
+    this.$store.dispatch('startInterval');
   },
 };
 </script>

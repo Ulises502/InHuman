@@ -1,12 +1,9 @@
 import Decimal from "decimal.js";
 
-import options from "./options.js"
-
 export default {
     state: {
-        gameLoopIntervalID: null,
+        gameLoopIntervalID: 0,
         VIRTUES_NAMES: [
-            null,
             "Survival",
             "Military",
             "Knowledge",
@@ -25,9 +22,6 @@ export default {
             new Decimal(1e12),
             new Decimal(1e15),
         ],
-        options: {
-
-        },
     },
     getters: {
         gameLoopIntervalID(state) {
@@ -39,9 +33,6 @@ export default {
         cost_multiplier(state) {
             return state.cost_multiplier;
         },
-        options(state) {
-            return state.options;
-        }
     },
     mutations: {
         SET_GAMELOOPINTERVALID(state, gameLoopIntervalID) {
@@ -53,11 +44,44 @@ export default {
         SET_COSTMULTIPLIER(state, cost_multiplier) {
             state.cost_multiplier = cost_multiplier;
         },
-        SET_OPTIONS(state, options) {
-            state.options = options;
-        },
     },
     actions: {
+        startInterval({ commit, rootState, dispatch }) {
+            var ID = setInterval(async () => {
+                dispatch('cycle')
+                }, rootState.player.options.updateRate);
+            commit('SET_GAMELOOPINTERVALID', ID)
+        },
+        cycle({ commit, rootState, dispatch }) {
+            for (var i = 0; i < 7; i++) {
+                dispatch('getVirtueProductionPerSec', i).then((response) => {
+                    commit('SET_HUMANITY', rootState.player.humanity.add(response));
+                })
+            }
+        },
+        getVirtueProductionPerSec({ commit, rootState, dispatch }, tier) {
+            var quan = new Decimal(
+                rootState.player.virtues[tier].quantity
+            );
+            var updateFor;
+            
+            return new Promise((resolve) => {
+                dispatch('getVirtueTotalMultiplier', tier).then(response => {
+                var multiplier = response;
+                // updates humanity per sec from virtue
+                commit('SET_VIRTUEPROP', [tier, 'h_per_sec', quan.mul(multiplier)]);
+                // calculates h per TICK
+                updateFor = quan
+                    .times(rootState.player.options.updateRate)
+                    .div(1000)
+                    .mul(multiplier);
+                resolve(updateFor);
+            })})
+            
+        },
+        getVirtueTotalMultiplier({rootState}, virtue) {
+            return rootState.player.virtues[virtue].multiplier;
+        },
     },
-    modules: { options }
+    modules: {}
 }
