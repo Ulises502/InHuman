@@ -135,7 +135,7 @@
       </div>
     </v-container>
 
-    <v-divider></v-divider>
+    <v-divider class="my-1"></v-divider>
 
     <v-container>
       <!-- **************************************************************
