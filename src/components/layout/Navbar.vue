@@ -16,19 +16,19 @@
         small
         elevation="4"
         class="ma-2"
-        :outlined="reset_1_outlined"
+        :disabled="disabled_soft"
         color="primary"
         rounded
       >
-        Soft Reset
+        New Society
       </v-btn>
 
       <v-btn
         small
         class="ma-2"
-        :outlined="reset_2_outlined"
-        color="primary"
+        color="error"
         elevation="4"
+        :disabled="disabled_collapse"
       >
         Collapse
       </v-btn>
@@ -70,8 +70,8 @@
 export default {
   data() {
     return {
-      reset_1_outlined: false,
-      reset_2_outlined: false,
+      disabled_soft: true,
+      disabled_collapse: true,
 
       drawer: false,
       group: null,
