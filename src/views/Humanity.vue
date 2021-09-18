@@ -181,23 +181,17 @@
         right
         direction="bottom"
         open-on-hover
-        transition="slide-y-reverse-transition"
+        transition="slide-y-transition"
         class="mb-5"
       >
         <template v-slot:activator>
           <v-btn v-model="fab" color="terciary" dark fab>
             <v-icon v-if="fab"> mdi-close </v-icon>
-            <v-icon v-else> mdi-account-circle </v-icon>
+            <v-icon v-else> mdi-compass </v-icon>
           </v-btn>
         </template>
-        <v-btn fab dark small color="green">
-          <v-icon>mdi-pencil</v-icon>
-        </v-btn>
-        <v-btn fab dark small color="indigo">
-          <v-icon>mdi-plus</v-icon>
-        </v-btn>
-        <v-btn fab dark small color="red">
-          <v-icon>mdi-delete</v-icon>
+        <v-btn v-for="action in actions" :key="action.name" :color="action.color" :v-show="action.show" fab dark small>
+          <v-icon>{{ action.icon }}</v-icon>
         </v-btn>
       </v-speed-dial>
     </v-container>
@@ -211,6 +205,11 @@ export default {
   data() {
     return {
       fab: false,
+
+      actions: [
+        {name: "Ruins", color: "green", icon: "mdi-gate-open", show: true},
+        {name: "Attack", color: "red", icon: "mdi-gate-open", show: true},
+      ],
 
       game: {
         gameLoopIntervalID: this.$store.getters.gameLoopIntervalID,
