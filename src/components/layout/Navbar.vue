@@ -1,10 +1,7 @@
 <template>
   <div>
     <v-app-bar dark dense app>
-      <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
-      <v-toolbar-title class="text-body-2 text-sm-body-1 d-none d-sm-block"
-        >InHuman</v-toolbar-title
-      >
+      <v-toolbar-title class="text-body-2 text-sm-body-1 d-none d-sm-block">InHuman</v-toolbar-title>
 
       <v-spacer></v-spacer>
 
@@ -30,19 +27,8 @@
       </v-btn>
     </v-app-bar>
 
-    <v-navigation-drawer v-model="drawer" fixed temporary app>
+    <v-navigation-drawer v-model="drawer" permanent app expand-on-hover>
       <v-list nav dense>
-        <div class="d-flex d-sm-none">
-          <v-list-item>
-            <v-list-item-content>
-              <v-list-item-title class="text-subtitle-1">
-                InHuman
-              </v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-
-          <v-divider></v-divider>
-        </div>
         <v-list-item-group
           v-model="group"
           active-class="deep-purple--text text--accent-4"
