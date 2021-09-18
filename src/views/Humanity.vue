@@ -91,11 +91,7 @@
                 </div>
                 <div class="d-flex justify-center">
                   <div>
-                    <v-chip
-                      label
-                      small
-                      color="secondary"
-                      class="my-1"
+                    <v-chip label small color="secondary" class="my-1"
                       >x {{ row.multiplier }}
                     </v-chip>
                   </div>
@@ -175,6 +171,35 @@
           <v-col cols="8"></v-col>
         </v-row>
       </div>
+
+      <!-- **************************************************************
+      ******************** ACTIONS FLOAT BUTTONS ************************** -->
+      <v-speed-dial
+        absolute
+        v-model="fab"
+        top
+        right
+        direction="bottom"
+        open-on-hover
+        transition="slide-y-reverse-transition"
+        class="mb-5"
+      >
+        <template v-slot:activator>
+          <v-btn v-model="fab" color="terciary" dark fab>
+            <v-icon v-if="fab"> mdi-close </v-icon>
+            <v-icon v-else> mdi-account-circle </v-icon>
+          </v-btn>
+        </template>
+        <v-btn fab dark small color="green">
+          <v-icon>mdi-pencil</v-icon>
+        </v-btn>
+        <v-btn fab dark small color="indigo">
+          <v-icon>mdi-plus</v-icon>
+        </v-btn>
+        <v-btn fab dark small color="red">
+          <v-icon>mdi-delete</v-icon>
+        </v-btn>
+      </v-speed-dial>
     </v-container>
   </div>
 </template>
@@ -185,6 +210,8 @@ import Decimal from "decimal.js";
 export default {
   data() {
     return {
+      fab: false,
+
       game: {
         gameLoopIntervalID: this.$store.getters.gameLoopIntervalID,
         VIRTUES_NAMES: this.$store.getters.VIRTUES_NAMES,
@@ -205,14 +232,15 @@ export default {
     buyVirtue(name) {
       // spends humanity
       var virtue = this.virtues.find((virtue) => virtue.name === name);
-      this.$store.commit('SET_HUMANITY', this.humanity.sub(virtue.cost));
+      this.$store.commit("SET_HUMANITY", this.humanity.sub(virtue.cost));
       // buys 1 virtue
       virtue.quantity++;
 
       var index = this.virtues.findIndex((virtue) => virtue.name === name);
       if (name != "Survival") {
         // if virtue is not Survival, adds multiplier bonus to prev virtue
-        this.virtues[index - 1].multiplier = this.virtues[index - 1].multiplier.add(0.1);
+        this.virtues[index - 1].multiplier =
+          this.virtues[index - 1].multiplier.add(0.1);
       }
 
       // verifies if 10 virtues been bought and updates virtue cost
@@ -222,13 +250,10 @@ export default {
     },
   },
 
-
-
-
   computed: {
     humanity() {
-        return this.$store.getters.humanity;
-      },
+      return this.$store.getters.humanity;
+    },
     humanity_with_decimals() {
       return (
         this.virtues.find((virtue) => virtue.name === "Survival").quantity < 10
