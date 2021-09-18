@@ -98,24 +98,43 @@ export default {
 
         saveInterval({ commit, dispatch, state }) {
             var ID = setInterval(async () => {
-                dispatch('save_game', true)
+                dispatch('save_game', false)
             }, state.save_timer);
             commit('SET_GAMELOOPINTERVALID', ID)
         },
         save_game({ commit, rootState }, isSilent) {
+            //console.log(rootState.player);
             localStorage.setItem('inhumanSave', Buffer.from(JSON.stringify(rootState.player)).toString('base64'));
             if (!isSilent) {
-                console.log("mostramos el cartel");
                 commit('SET_NOTIFYSAVE', true);
             }
         },
 
 
-        get_save() {
+        get_save({ dispatch }) {
             try {
-                console.log(JSON.parse(Buffer.from(localStorage.getItem('inhumanSave'), 'base64').toString('ascii')));
+                if(localStorage.getItem('inhumanSave')) {
+                    var player_save = JSON.parse(Buffer.from(localStorage.getItem('inhumanSave'), 'base64').toString('ascii'));
+                    dispatch('load_game', player_save);
+                }
+                
             } catch(e) { console.log("No save:", e); }
+        },
+        load_game({ commit }, player_save) {
+            commit('SET_HUMANITY', new Decimal(player_save['humanity']));
+            commit('SET_WELLBEING', new Decimal(player_save['wellbeing']));
+            commit('SET_SOFTRESETS', new Decimal(player_save['soft_resets']));
+            commit('SET_COLLAPSES', new Decimal(player_save['collapses']));
+            commit('SET_WELLBEINGCOST', new Decimal(player_save['wellbeing_cost']));
+            commit('SET_VIRTUESBONUS', new Decimal(player_save['virtues_bonus']));
+            for (var i = 0; i < 7; i++) {
+                commit('SET_VIRTUEPROP', [i, 'quantity', player_save['virtues'][i]['quantity']]);
+                commit('SET_VIRTUEPROP', [i, 'momentum', player_save['virtues'][i]['momentum']]);
+                commit('SET_VIRTUEPROP', [i, 'multiplier', new Decimal(player_save['virtues'][i]['multiplier'])]);
+                commit('SET_VIRTUEPROP', [i, 'h_per_sec', player_save['virtues'][i]['h_per_sec']]);
+                commit('SET_VIRTUEPROP', [i, 'cost', new Decimal(player_save['virtues'][i]['cost'])]);
+                commit('SET_VIRTUEPROP', [i, 'softreset_cost', player_save['virtues'][i]['softreset_cost']]);
+            }
         }
     },
-    modules: {}
 }

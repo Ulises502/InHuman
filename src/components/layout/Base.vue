@@ -46,9 +46,7 @@ export default {
   },
   watch: {
     notify_save() {
-      console.log("cambio!");
       if (this.notify_save) {
-        console.log("contando...");
         setTimeout(async () => {this.$store.commit('SET_NOTIFYSAVE', false)}, 4000);
       }
     }

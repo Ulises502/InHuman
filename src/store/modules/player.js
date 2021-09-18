@@ -106,7 +106,26 @@ export default {
         SET_HUMANITY(state, humanity) {
             state.humanity = humanity;
         },
+        SET_WELLBEING(state, wellbeing) {
+            state.wellbeing = wellbeing;
+        },
+        SET_SOFTRESETS(state, soft_resets) {
+            state.soft_resets = soft_resets;
+        },
+        SET_COLLAPSES(state, collapses) {
+            state.collapses = collapses;
+        },
+        SET_WELLBEINGCOST(state, wellbeing_cost) {
+            state.wellbeing_cost = wellbeing_cost;
+        },
+        SET_VIRTUESBONUS(state, virtues_bonus) {
+            state.virtues_bonus = virtues_bonus;
+        },
+        SET_VIRTUES(state, virtues) {
+            state.virtues = virtues;
+        },
         SET_VIRTUEPROP(state, getter) {
+            // getter is an array with [virtue index, prop, value]
             state.virtues[getter[0]][getter[1]] = getter[2];
         },
     },
