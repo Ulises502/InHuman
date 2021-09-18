@@ -1,5 +1,12 @@
 <template>
   <div>
+    <v-system-bar app
+      dark
+    >
+      <v-spacer></v-spacer>
+      <v-icon>mdi-message-alert</v-icon>
+      <v-icon>mdi-close</v-icon>
+    </v-system-bar>
     <v-app-bar dark dense app>
       <v-toolbar-title class="text-body-2 text-sm-body-1 d-none d-sm-block">InHuman</v-toolbar-title>
 
