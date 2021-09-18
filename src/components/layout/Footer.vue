@@ -17,7 +17,7 @@
       class="ma-1 mt-2"
       color="info"
       label
-      style="position: absolute; top: 0; left: 50%;"
+      style="position: absolute; top: 0; left: 48%;"
     >
       {{ 100-value }} %
     </v-chip>
