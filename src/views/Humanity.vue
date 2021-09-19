@@ -58,7 +58,7 @@
               <td>
                 <!-- VIRTUES NAME -->
                 <p class="text-caption text-md-body-2 ma-0 text-center">
-                  {{ row.name }}
+                  <b>{{ row.name }}</b>
                 </p>
                 <p class="text-caption text-md-body-2 ma-0 text-center">
                   ({{ row.quantity }})
@@ -91,7 +91,7 @@
                 </div>
                 <div class="d-flex justify-center">
                   <div>
-                    <v-chip label small color="secondary" class="my-1"
+                    <v-chip label small color="secondary" :class="{'my-1': true, 'shake': row.multiplier_shake}"
                       >x {{ row.multiplier }}
                     </v-chip>
                   </div>
@@ -246,6 +246,12 @@ export default {
       if (virtue.quantity % 10 === 0) {
         virtue.cost = virtue.cost.mul(this.game.cost_multiplier[index]);
       }
+
+      // shake multiplier handler
+      if (name != "Survival") {
+        this.virtues[index-1].multiplier_shake = true;
+        setTimeout(() => {this.virtues[index-1].multiplier_shake = false}, 500)
+      }
     },
   },
 
@@ -271,3 +277,24 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.shake {
+  animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+  transform: translate3d(0, 0, 0);
+}
+@keyframes shake {
+  10%, 90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+  20%, 80% {
+    transform: translate3d(2px, 0, 0);
+  }
+  30%, 50%, 70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+  40%, 60% {
+    transform: translate3d(4px, 0, 0);
+  }
+}
+</style>

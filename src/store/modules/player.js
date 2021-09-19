@@ -19,6 +19,7 @@ export default {
                 h_per_sec: 0,
                 cost: new Decimal(10),
                 softreset_cost: 0,
+                multiplier_shake: false,
             },
             {
                 name: "Military",
@@ -28,6 +29,7 @@ export default {
                 h_per_sec: 0,
                 cost: new Decimal(100),
                 softreset_cost: 0,
+                multiplier_shake: false,
             },
             {
                 name: "Knowledge",
@@ -37,6 +39,7 @@ export default {
                 h_per_sec: 0,
                 cost: new Decimal(100000),
                 softreset_cost: 0,
+                multiplier_shake: false,
             },
             {
                 name: "Culture",
@@ -46,6 +49,7 @@ export default {
                 h_per_sec: 0,
                 cost: new Decimal(1),
                 softreset_cost: 1,
+                multiplier_shake: false,
             },
             {
                 name: "Cooperation",
@@ -55,6 +59,7 @@ export default {
                 h_per_sec: 0,
                 cost: new Decimal(1),
                 softreset_cost: 2,
+                multiplier_shake: false,
             },
             {
                 name: "Faith",
@@ -64,6 +69,7 @@ export default {
                 h_per_sec: 0,
                 cost: new Decimal(1),
                 softreset_cost: 3,
+                multiplier_shake: false,
             },
             {
                 name: "Ethics",
@@ -73,6 +79,7 @@ export default {
                 h_per_sec: 0,
                 cost: new Decimal(1),
                 softreset_cost: 4,
+                multiplier_shake: false,
             },
         ],
     },
