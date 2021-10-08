@@ -173,8 +173,9 @@
       </div>
 
       <!-- **************************************************************
-      ******************** ACTIONS FLOAT BUTTONS ************************** -->
+      ******************** ACTIONs FLOAT BUTTON ************************** -->
       <v-speed-dial
+        v-show="humanity1000"
         absolute
         v-model="fab"
         top
@@ -270,6 +271,9 @@ export default {
         total = total.add(this.virtues[i].h_per_sec);
       }
       return total;
+    },
+    humanity1000() {
+      return this.humanity.gte(1000)
     },
     collapse1() {
       return this.collapses >= 1;
