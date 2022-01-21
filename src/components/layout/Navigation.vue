@@ -1,19 +1,15 @@
 <template>
-  <v-navigation-drawer
-    class="dark accent-4"
-    dark
-    permanent
-    app
-  >
-  <!-- src="@/../public/city-of-brass.png" -->
-    <template v-slot:img="props">
-      <v-img
-        v-bind="props"
-        gradient="to right, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)"
-      ></v-img>
-    </template>
-    <v-list>
-      <v-list-item v-for="item in items" :key="item.title" :to="item.link" link>
+  <v-navigation-drawer v-model="drawer" :mini-variant.sync="mini" app permanent>
+    <v-list-item class="px-2">
+      <v-btn icon @click.stop="mini = !mini">
+        <v-icon>mdi-chevron-left</v-icon>
+      </v-btn>
+    </v-list-item>
+
+    <v-divider></v-divider>
+
+    <v-list dense>
+      <v-list-item v-for="item in items" :key="item.title" link>
         <v-list-item-icon>
           <v-icon>{{ item.icon }}</v-icon>
         </v-list-item-icon>
@@ -23,12 +19,6 @@
         </v-list-item-content>
       </v-list-item>
     </v-list>
-
-    <template v-slot:append>
-      <div class="pa-2">
-        <v-btn class="deep-orange" block> Logout </v-btn>
-      </div>
-    </template>
   </v-navigation-drawer>
 </template>
 
@@ -36,12 +26,14 @@
 export default {
   data() {
     return {
+      drawer: true,
       items: [
-        { title: "Home", icon: "mdi-home", link: "/" },
-        { title: "Datos", icon: "mdi-access-point", link: "/api" },
-        { title: "Formulario", icon: "mdi-information", link: "/form" },
+        { title: "Home", icon: "mdi-home-city" },
+        { title: "My Account", icon: "mdi-account" },
+        { title: "Users", icon: "mdi-account-group-outline" },
+        { title: "Theme", icon: "mdi-weather-night" },
       ],
-      right: null,
+      mini: true,
     };
   },
 };
