@@ -1,9 +1,14 @@
 <template>
   <div id="app">
-    <router-view />
+    <Base />
   </div>
 </template>
 
-<script lang="ts">
-export default {};
+<script>
+import Base from '@/components/layout/Base.vue';
+export default {
+  components: {
+    Base,
+  },
+};
 </script>
