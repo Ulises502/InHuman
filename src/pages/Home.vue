@@ -23,5 +23,9 @@ export default {
       return this.$store.getters.doneTodosCount;
     },
   },
+  mounted() {
+    // calls the action startInterval inside game module (which is namespaced)
+    this.$store.dispatch("game/startInterval");
+  },
 };
 </script>

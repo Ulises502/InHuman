@@ -1,11 +1,9 @@
-import Vue from "vue";
-import Vuex from "vuex";
-
-Vue.use(Vuex);
-
-const player = new Vuex.Store({
+const player = {
+    namespaced: true,
     state: {
-        
+        options: {
+            updateRate: 1000,
+        },
     },
     getters: {
         
@@ -17,6 +15,6 @@ const player = new Vuex.Store({
         
     },
     modules: {},
-});
+};
 
 export default player;
