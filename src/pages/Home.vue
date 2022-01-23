@@ -27,9 +27,5 @@ export default {
       humanityPerSec: (state) => state.player.humanityPerSec,
     }),
   },
-  mounted() {
-    // calls the action startInterval inside game module (which is namespaced)
-    this.$store.dispatch("game/startInterval");
-  },
 };
 </script>
