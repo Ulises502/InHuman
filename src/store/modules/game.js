@@ -4,7 +4,7 @@ const game = {
         gameLoopIntervalId: null,
     },
     getters: {
-        
+
     },
     mutations: {
         setGameLoopIntervalId(state, id) {
@@ -13,8 +13,10 @@ const game = {
     },
     actions: {
         startInterval({ commit, rootState }) {
-            var gameLoopIntervalId = setInterval(console.log('hola'), rootState.player.options.updateRate);
-            commit('setGameLoopIntervalId', gameLoopIntervalId);
+            // set game interval from a commit, because commit's are synchronous
+            commit("setGameLoopIntervalId", setInterval(() => {
+                console.log('hola')
+            }, rootState.player.options.updateRate));
         }
     },
     modules: {},
