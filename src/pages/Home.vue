@@ -1,11 +1,17 @@
 <template>
-  <div>
-    <p>Humanity: {{ humanity }}</p>
-    <v-btn @click="contar">Contar</v-btn>
-  </div>
+  <v-card elevation="2" width="300">
+    <v-card-text>
+      <p>
+        Humanity: {{ humanity }}
+        <span class="text--success ms-2">(+ {{ humanityPerSec }}/sec)</span>
+      </p>
+      <v-btn small @click="contar">Live</v-btn>
+    </v-card-text>
+  </v-card>
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
   methods: {
     contar() {
@@ -16,15 +22,10 @@ export default {
     },
   },
   computed: {
-    humanity() {
-      return this.$store.state.player.humanity;
-    },
-    count() {
-      return this.$store.state.count;
-    },
-    doneTodosCount() {
-      return this.$store.getters.doneTodosCount;
-    },
+    ...mapState({
+      humanity: (state) => state.player.humanity,
+      humanityPerSec: (state) => state.player.humanityPerSec,
+    }),
   },
   mounted() {
     // calls the action startInterval inside game module (which is namespaced)
