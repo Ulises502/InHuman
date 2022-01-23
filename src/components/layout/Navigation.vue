@@ -19,6 +19,18 @@
         </v-list-item-content>
       </v-list-item>
     </v-list>
+
+    <v-list dense>
+      <v-list-item link @click="$vuetify.theme.dark = !$vuetify.theme.dark">
+        <v-list-item-icon>
+          <v-icon>mdi-weather-night</v-icon>
+        </v-list-item-icon>
+
+        <v-list-item-content>
+          <v-list-item-title>Theme</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+    </v-list>
   </v-navigation-drawer>
 </template>
 
@@ -30,8 +42,7 @@ export default {
       items: [
         { title: "Home", icon: "mdi-home-city" },
         { title: "My Account", icon: "mdi-account" },
-        { title: "Users", icon: "mdi-account-group-outline" },
-        { title: "Theme", icon: "mdi-weather-night" },
+        { title: "Users", icon: "mdi-account-group-outline" }
       ],
       mini: true,
     };

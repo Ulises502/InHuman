@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-app-bar color="white accent-4" dense app>
+    <v-app-bar dense app>
       <v-toolbar-title>InHuman</v-toolbar-title>
 
       <v-spacer></v-spacer>
