@@ -1,7 +1,9 @@
+import Decimal from 'decimal.js';
+
 const player = {
     namespaced: true,
     state: {
-        humanity: 0,
+        humanity: new Decimal(10),
         options: {
             updateRate: 1000,
         },

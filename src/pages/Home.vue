@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p>Humanity : {{ humanity }}</p>
+    <p>Humanity: {{ humanity }}</p>
     <v-btn @click="contar">Contar</v-btn>
   </div>
 </template>
@@ -17,7 +17,7 @@ export default {
   },
   computed: {
     humanity() {
-      return this.$store.state.humanity;
+      return this.$store.state.player.humanity;
     },
     count() {
       return this.$store.state.count;
