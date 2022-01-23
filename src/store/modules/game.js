@@ -7,6 +7,7 @@ const game = {
 
     },
     mutations: {
+        // save interval id
         setGameLoopIntervalId(state, id) {
             state.gameLoopIntervalId = id
         }
