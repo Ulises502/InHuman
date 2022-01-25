@@ -25,6 +25,8 @@
 
 <script>
 import { mapState } from "vuex";
+import Decimal from "decimal.js";
+
 export default {
   methods: {
     live() {
@@ -38,8 +40,8 @@ export default {
   },
   computed: {
     ...mapState({
-      humanity: (state) => state.player.humanity,
-      humanityPerSec: (state) => state.player.humanityPerSec,
+      humanity: (state) => new Decimal(state.player.humanity),
+      humanityPerSec: (state) => new Decimal(state.player.humanityPerSec),
       virtues: (state) => state.player.virtues,
     }),
 
@@ -49,13 +51,13 @@ export default {
     },
     // Show the survival button if the player has enough humanity
     survivalShow() {
-      return this.humanity >= 25 || this.virtues.survival.bought >= 1;
+      return this.humanity.gte(25) || this.virtues.survival.bought.gte(1);
     },
 
     // Disabled section
     // Disable the button if the player doesn't have enough humanity
     survivalBuyDisabled() {
-      return this.humanity < this.virtues.survival.cost;
+      return this.humanity.lt(this.virtues.survival.cost);
     },
   },
 };
