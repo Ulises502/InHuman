@@ -23,7 +23,7 @@ const game = {
 
         // increase humanity when live button pressed
         live({ commit }) {
-            commit("player/increaseHumanity", { amount: 1 }, { root: true });
+            commit("player/increaseHumanity", { bought: 1 }, { root: true });
         },
         // buy virtue when cost chip is pressed
         buy({ commit }, virtue) {

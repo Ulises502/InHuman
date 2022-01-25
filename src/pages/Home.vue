@@ -6,12 +6,12 @@
         <span class="success--text mx-2">(+ {{ humanityPerSec }}/sec)</span>
         <v-btn small @click="live" class="mt-n1">Live</v-btn>
       </p>
-      <v-divider class="mx-3 mb-3"></v-divider>
-      <p>
-        Survival: {{ survival.points }}
-        <span class="info--text mx-2"> ({{ survival.amount }}) </span
+      <v-divider class="mx-3 mb-3" v-show="virtueDividerShow"></v-divider>
+      <p v-show="survivalShow">
+        Survival: {{ virtues.survival.amount }}
+        <span class="info--text mx-2"> ({{ virtues.survival.bought }}) </span
         ><v-chip small class="ms-3" @click="buy('survival')"
-          >Cost: {{ survival.cost }}
+          >Cost: {{ virtues.survival.cost }}
         </v-chip>
       </p>
     </v-card-text>
@@ -26,15 +26,26 @@ export default {
       this.$store.dispatch("game/live");
     },
     buy(virtue) {
-      this.$store.dispatch("game/buy", virtue);
+      if (this.humanity >= this.virtues[virtue].cost) {
+        this.$store.dispatch("game/buy", virtue);
+      }
     },
   },
   computed: {
     ...mapState({
       humanity: (state) => state.player.humanity,
       humanityPerSec: (state) => state.player.humanityPerSec,
-      survival: (state) => state.player.survival,
+      virtues: (state) => state.player.virtues,
     }),
+
+    // Show Section
+    virtueDividerShow() {
+      return this.survivalShow == true;
+    },
+    // Show the survival button if the player has enough humanity
+    survivalShow() {
+      return (this.humanity >= 25 || this.virtues.survival.bought >= 1);
+    },
   },
 };
 </script>
