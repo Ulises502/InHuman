@@ -61,7 +61,15 @@ const player = {
         },
     },
     getters: {
-        
+        // calculate total humanity per second
+        getHumanityPerSec: (state) => {
+            let humanityPerSec = new Decimal(0)
+            for (let virtue in state.virtues) {
+                // use the whole virtue object to enter itself and get the amount
+                humanityPerSec = humanityPerSec.plus(state.virtues[virtue].amount.times(state.virtues[virtue].bought))
+            }
+            return humanityPerSec
+        }
     },
     mutations: {
         // increase humanity by amount bought
@@ -72,12 +80,13 @@ const player = {
         buyVirtue(state, virtue) {
             state.humanity = state.humanity.minus(state.virtues[virtue]['cost'])
             state.virtues[virtue]['bought'] = state.virtues[virtue]['bought'].plus(1)
+            state.virtues[virtue]['amount'] = state.virtues[virtue]['amount'].plus(1)
             state.virtues[virtue]['cost'] = state.virtues[virtue]['cost'].times(1.5)
         },
         // show virtue
         showVirtue(state, virtue) {
             state.virtues[virtue]['show'] = true
-        }
+        },
     },
     actions: {
         showVirtue({ commit }, virtue) {
