@@ -87,6 +87,10 @@ const player = {
         showVirtue(state, virtue) {
             state.virtues[virtue]['show'] = true
         },
+        // set humanity per second
+        setHumanityPerSec(state, payload) {
+            state.humanityPerSec = payload.amount
+        }
     },
     actions: {
         showVirtue({ commit }, virtue) {

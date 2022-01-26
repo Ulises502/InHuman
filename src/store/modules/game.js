@@ -27,6 +27,7 @@ const game = {
         gameLoop({ rootGetters, commit }) {
             // If the module of the getter you're accessing is namespaced, you'll need to use rootGetters['moduleName/getterName'] 
             let Hsec = rootGetters['player/getHumanityPerSec']
+            commit("player/setHumanityPerSec", { amount: Hsec }, { root: true })
             commit("player/increaseHumanity", { bought: Hsec }, { root: true })
             //commit("increaseVirtues")
         },
