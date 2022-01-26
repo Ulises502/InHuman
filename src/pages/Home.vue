@@ -7,18 +7,20 @@
         <v-btn small @click="live" class="mt-n1">Live</v-btn>
       </p>
       <v-divider class="mx-3 mb-3" v-show="virtueDividerShow"></v-divider>
-      <p v-show="survivalShow">
-        Survival: {{ virtues.survival.amount }}
-        <span class="info--text mx-2"> ({{ virtues.survival.bought }}) </span
-        ><v-chip
-          small
-          class="ms-3"
-          @click="buy('survival')"
-          :disabled="survivalBuyDisabled"
-        >
-          Cost: {{ virtues.survival.cost }}
-        </v-chip>
-      </p>
+      <div v-for="virtue in virtues" v-bind:key="virtue.name">
+        <div v-show="virtue.show">
+          {{virtue.name}} : {{ virtue.amount }}
+          <span class="info--text mx-2"> ({{ virtue.bought }}) </span
+          ><v-chip
+            small
+            class="ms-3"
+            @click="buy(virtue.name)"
+            :disabled="survivalBuyDisabled"
+          >
+            Cost: {{ virtue.cost }}
+          </v-chip>
+        </div>
+      </div>
     </v-card-text>
   </v-card>
 </template>
@@ -49,16 +51,21 @@ export default {
     virtueDividerShow() {
       return this.survivalShow == true;
     },
-    // Show the survival button if the player has enough humanity
-    survivalShow() {
-      return this.humanity.gte(25) || this.virtues.survival.bought.gte(1);
-    },
 
     // Disabled section
     // Disable the button if the player doesn't have enough humanity
     survivalBuyDisabled() {
-      return this.humanity.lt(this.virtues.survival.cost);
+      return this.humanity.lt(this.virtues.Survival.cost);
     },
   },
+  watch: {
+    humanity() {
+      for (let name in this.virtues) {
+        if (this.humanity.gte(this.virtues[name].cost/2)) {
+          this.$store.dispatch("player/showVirtue", name);
+        }
+      }
+    }
+  }
 };
 </script>

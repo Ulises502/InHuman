@@ -11,15 +11,24 @@ const game = {
         setGameLoopIntervalId(state, id) {
             state.gameLoopIntervalId = id
         },
+
     },
     actions: {
         // start game loop interval when page is mounted
         startInterval({ commit, rootState }) {
             // set game interval from a commit, because commit's are synchronous
             commit("setGameLoopIntervalId", setInterval(() => {
-                console.log('hola')
+                // dispatch game loop action
+                //dispatch("gameLoop")
             }, rootState.player.options.updateRate));
         },
+        // do one game loop
+        //gameLoop({ commit, dispatch }) {
+            //commit("getHumanityPerSec")
+            //dispatch("increaseHumanity")
+            //commit("increaseVirtues")
+        //},
+
 
         // increase humanity when live button pressed
         live({ commit }) {
