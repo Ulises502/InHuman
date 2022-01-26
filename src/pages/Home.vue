@@ -35,7 +35,7 @@ export default {
       this.$store.dispatch("game/live");
     },
     buy(virtue) {
-      if (this.humanity >= this.virtues[virtue].cost) {
+      if (this.humanity.gte(this.virtues[virtue].cost)) {
         this.$store.dispatch("game/buy", virtue);
       }
     },
