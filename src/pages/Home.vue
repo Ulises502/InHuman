@@ -2,7 +2,7 @@
   <v-card elevation="2" width="300">
     <v-card-text>
       <p>
-        Humanity: {{ humanity }}
+        Humanity: {{ (humanity.lt(25)) ? humanity.toFixed(2) : humanity.toFixed(0) }}
         <span class="success--text mx-2">(+ {{ humanityPerSec }}/sec)</span>
         <v-btn small @click="live" class="mt-n1">Live</v-btn>
       </p>
