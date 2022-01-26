@@ -41,6 +41,7 @@ export default {
     },
 
     // **************Show Section**************
+    // show virtue when bought or have enough humanity
     showVirtue(name) {
       return this.humanity.gte(this.virtues[name].cost/2) || this.virtues[name].bought.gte(1);
     }
