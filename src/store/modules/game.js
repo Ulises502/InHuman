@@ -24,11 +24,12 @@ const game = {
             }, rootState.player.options.updateRate));
         },
         // do one game loop
-        gameLoop({ rootGetters, commit }) {
+        gameLoop({ rootState, rootGetters, commit }) {
             // If the module of the getter you're accessing is namespaced, you'll need to use rootGetters['moduleName/getterName'] 
             let Hsec = rootGetters['player/getHumanityPerSec']
             commit("player/setHumanityPerSec", { amount: Hsec }, { root: true })
-            commit("player/increaseHumanity", { bought: Hsec }, { root: true })
+            let HPerLoop = Hsec.times(rootState.player.options.updateRate).div(1000)
+            commit("player/increaseHumanity", { bought: HPerLoop }, { root: true })
             //commit("increaseVirtues")
         },
 

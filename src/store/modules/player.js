@@ -57,7 +57,7 @@ const player = {
             },
         },
         options: {
-            updateRate: 1000,
+            updateRate: 500,
         },
     },
     getters: {
