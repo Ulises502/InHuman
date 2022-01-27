@@ -5,7 +5,7 @@
 
       <v-spacer></v-spacer>
 
-      
+      <v-btn depressed disabled > Collapse </v-btn>
     </v-app-bar>
   </div>
 </template>
