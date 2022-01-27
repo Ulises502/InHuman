@@ -1,5 +1,6 @@
 <template>
   <v-row>
+    <!-- *********** VIRTUE CARD ************* -->
     <v-col cols="3">
       <v-card elevation="2">
         <v-card-text>
@@ -30,6 +31,7 @@
       </v-card>
     </v-col>
 
+    <!-- *********** BUTTONs CARD ************* -->
     <v-col cols="3">
       <v-card elevation="2">
         <v-card-text>
@@ -38,6 +40,7 @@
       </v-card>
     </v-col>
 
+    <!-- *********** TEXT AREA CARD ************* -->
     <v-col cols="3">
       <v-card elevation="2">
         <v-card-text>
