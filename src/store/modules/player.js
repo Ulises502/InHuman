@@ -3,7 +3,7 @@ import Decimal from 'decimal.js';
 const player = {
     namespaced: true,
     state: {
-        humanity: new Decimal(10),
+        humanity: new Decimal(0),
         humanityPerSec: new Decimal(0),
         virtues: {
             Survival: {
@@ -23,35 +23,35 @@ const player = {
             Knowledge: {
                 name: "Knowledge",
                 amount: new Decimal(0),
-                cost: new Decimal(50),
+                cost: new Decimal(1.2e5),
                 bought: new Decimal(0),
                 //show: false,
             },
             Culture: {
                 name: "Culture",
                 amount: new Decimal(0),
-                cost: new Decimal(50),
+                cost: new Decimal(5e6),
                 bought: new Decimal(0),
                 //show: false,
             },
             Cooperation: {
                 name: "Cooperation",
                 amount: new Decimal(0),
-                cost: new Decimal(50),
+                cost: new Decimal(2e8),
                 bought: new Decimal(0),
                 //show: false,
             },
             Faith: {
                 name: "Faith",
                 amount: new Decimal(0),
-                cost: new Decimal(50),
+                cost: new Decimal(7.5e9),
                 bought: new Decimal(0),
                 //show: false,
             },
             Ethics: {
                 name: "Ethics",
                 amount: new Decimal(0),
-                cost: new Decimal(5000),
+                cost: new Decimal(3e11),
                 bought: new Decimal(0),
                 //show: false,
             },
