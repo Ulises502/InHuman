@@ -50,7 +50,7 @@
           <v-textarea
             v-model="messages"
             outlined
-            disabled
+            readonly
             no-resize
             rows="15"
             name="input-7-4"
