@@ -35,7 +35,8 @@
     <v-col cols="3">
       <v-card elevation="2">
         <v-card-text>
-          <v-btn small @click="live" class="mt-n1">Live</v-btn>
+          <v-btn small @click="live" class="mt-n1">Live <v-icon right>mdi-account-multiple</v-icon></v-btn>
+          <v-btn small class="mt-n1 ms-2">Ruins <v-icon right>mdi-gate-open</v-icon></v-btn>
         </v-card-text>
       </v-card>
     </v-col>
@@ -46,6 +47,7 @@
         <v-card-text>
           <v-textarea
             outlined
+            disabled
             no-resize
             rows="15"
             name="input-7-4"
