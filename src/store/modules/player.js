@@ -16,7 +16,7 @@ const player = {
             Military: {
                 name: "Military",
                 amount: new Decimal(0),
-                cost: new Decimal(50),
+                cost: new Decimal(2000),
                 bought: new Decimal(0),
                 //show: false,
             },
@@ -81,7 +81,7 @@ const player = {
             state.humanity = state.humanity.minus(state.virtues[virtue]['cost'])
             state.virtues[virtue]['bought'] = state.virtues[virtue]['bought'].plus(1)
             state.virtues[virtue]['amount'] = state.virtues[virtue]['amount'].plus(1)
-            state.virtues[virtue]['cost'] = state.virtues[virtue]['cost'].times(1.5)
+            state.virtues[virtue]['cost'] = state.virtues[virtue]['cost'].times(1.5).round()
         },
         // show virtue
         showVirtue(state, virtue) {
