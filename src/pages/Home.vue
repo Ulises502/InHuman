@@ -1,18 +1,20 @@
 <template>
   <v-row>
-        <!-- *********** BUTTONs CARD ************* -->
+    <!-- *********** BUTTONs CARD ************* -->
     <v-col cols="3">
       <v-card elevation="2">
         <v-card-text>
-          <v-btn small @click="live" class="mt-n1">Live <v-icon right>mdi-account-multiple</v-icon></v-btn>
-          <v-btn small class="mt-n1 ms-2" v-show="false">Ruins <v-icon right>mdi-gate-open</v-icon></v-btn>
+          <v-btn small @click="live" class="mt-n1"
+            >Live <v-icon right>mdi-account-multiple</v-icon></v-btn
+          >
+          <v-btn small class="mt-n1 ms-2" v-show="false"
+            >Ruins <v-icon right>mdi-gate-open</v-icon></v-btn
+          >
         </v-card-text>
       </v-card>
-    </v-col>
 
     <!-- *********** VIRTUE CARD ************* -->
-    <v-col cols="3">
-      <v-card elevation="2">
+      <v-card elevation="2" v-show="showHumanity()" class="mt-2">
         <v-card-text>
           <p>
             Humanity:
@@ -42,11 +44,11 @@
     </v-col>
 
     <!-- *********** TEXT AREA CARD ************* -->
-    <v-col cols="3" v-show="showVirtue('Survival')">
+    <v-col cols="3">
       <v-card elevation="2">
         <v-card-text>
           <v-textarea
-            v-model="ruins"
+            v-model="messages"
             outlined
             disabled
             no-resize
@@ -68,14 +70,27 @@ export default {
   methods: {
     live() {
       this.$store.dispatch("game/live");
+      // show first message if humanity is 0
+      if (this.humanity.lte(1)) {
+        this.$store.dispatch("game/sendMessage", "People exist, then live. \n");
+      }
     },
     buy(virtue) {
       if (this.humanity.gte(this.virtues[virtue].cost)) {
         this.$store.dispatch("game/buy", virtue);
       }
+      // show message if first survival bought
+      if (this.virtues.Survival.amount.equals(1)) {
+        this.$store.dispatch("game/sendMessage", "People first instict is to survive. \n");
+      }
     },
 
     // **************Show Section**************
+    // show humanity count
+    showHumanity() {
+      return this.humanity.gte(1);
+    },
+
     // show virtue when bought or have enough humanity
     showVirtue(name) {
       return (
@@ -89,6 +104,7 @@ export default {
       humanity: (state) => new Decimal(state.player.humanity),
       humanityPerSec: (state) => new Decimal(state.player.humanityPerSec),
       virtues: (state) => state.player.virtues,
+      messages: (state) => state.game.messages,
     }),
   },
   /*watch: {

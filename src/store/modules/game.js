@@ -2,6 +2,7 @@ const game = {
     namespaced: true,
     state: {
         gameLoopIntervalId: null,
+        messages: "",
     },
     getters: {
 
@@ -11,6 +12,10 @@ const game = {
         setGameLoopIntervalId(state, id) {
             state.gameLoopIntervalId = id
         },
+        // save message
+        setMessage(state, message) {
+            state.messages += message
+        }
     },
     actions: {
         // start game loop interval when page is mounted
@@ -41,6 +46,9 @@ const game = {
         // buy virtue when cost chip is pressed
         buy({ commit }, virtue) {
             commit("player/buyVirtue", virtue, { root: true });
+        },
+        sendMessage({ commit }, message) {
+            commit("setMessage", message);
         }
     },
     modules: {},
