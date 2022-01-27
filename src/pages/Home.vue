@@ -1,5 +1,15 @@
 <template>
   <v-row>
+        <!-- *********** BUTTONs CARD ************* -->
+    <v-col cols="3">
+      <v-card elevation="2">
+        <v-card-text>
+          <v-btn small @click="live" class="mt-n1">Live <v-icon right>mdi-account-multiple</v-icon></v-btn>
+          <v-btn small class="mt-n1 ms-2" v-show="false">Ruins <v-icon right>mdi-gate-open</v-icon></v-btn>
+        </v-card-text>
+      </v-card>
+    </v-col>
+
     <!-- *********** VIRTUE CARD ************* -->
     <v-col cols="3">
       <v-card elevation="2">
@@ -15,7 +25,7 @@
           ></v-divider>
           <div v-for="virtue in virtues" v-bind:key="virtue.name">
             <div v-show="showVirtue(virtue.name)">
-              {{ virtue.name }} : {{ virtue.amount }}
+              {{ virtue.name }}: {{ virtue.amount }}
               <span class="info--text mx-2"> ({{ virtue.bought }}) </span
               ><v-chip
                 small
@@ -31,28 +41,18 @@
       </v-card>
     </v-col>
 
-    <!-- *********** BUTTONs CARD ************* -->
-    <v-col cols="3">
-      <v-card elevation="2">
-        <v-card-text>
-          <v-btn small @click="live" class="mt-n1">Live <v-icon right>mdi-account-multiple</v-icon></v-btn>
-          <v-btn small class="mt-n1 ms-2">Ruins <v-icon right>mdi-gate-open</v-icon></v-btn>
-        </v-card-text>
-      </v-card>
-    </v-col>
-
     <!-- *********** TEXT AREA CARD ************* -->
-    <v-col cols="3">
+    <v-col cols="3" v-show="showVirtue('Survival')">
       <v-card elevation="2">
         <v-card-text>
           <v-textarea
+            v-model="ruins"
             outlined
             disabled
             no-resize
             rows="15"
             name="input-7-4"
-            label="Outlined textarea"
-            value="The Woodman set to work at once, and so sharp was his axe that the tree was soon chopped nearly through."
+            label="Stories"
           ></v-textarea>
         </v-card-text>
       </v-card>
