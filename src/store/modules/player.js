@@ -14,22 +14,22 @@ const player = {
                 bought: new Decimal(0),
                 //show: false,
             },
-            Military: {
-                name: "Military",
+            Might: {
+                name: "Might",
                 amount: new Decimal(0),
                 cost: new Decimal(2000),
                 bought: new Decimal(0),
                 //show: false,
             },
-            Knowledge: {
-                name: "Knowledge",
+            Faith: {
+                name: "Faith",
                 amount: new Decimal(0),
                 cost: new Decimal(1.2e5),
                 bought: new Decimal(0),
                 //show: false,
             },
-            Culture: {
-                name: "Culture",
+            Knowledge: {
+                name: "Knowledge",
                 amount: new Decimal(0),
                 cost: new Decimal(5e6),
                 bought: new Decimal(0),
@@ -42,8 +42,8 @@ const player = {
                 bought: new Decimal(0),
                 //show: false,
             },
-            Faith: {
-                name: "Faith",
+            Culture: {
+                name: "Culture",
                 amount: new Decimal(0),
                 cost: new Decimal(7.5e9),
                 bought: new Decimal(0),
