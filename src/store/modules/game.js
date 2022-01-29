@@ -49,6 +49,15 @@ const game = {
         },
         sendMessage({ commit }, message) {
             commit("setMessage", message);
+        },
+        ruin({ commit, dispatch, rootState }) {
+            // if ruins is less than 1, then send message
+            new Promise((resolve) => {
+                if (rootState.player.ruins == 0) {
+                    dispatch("sendMessage", "There is some people in this ancient ruin. And some old tools.\n");
+                }
+                resolve()
+            }).then(() => commit("player/increaseRuins", { amount: 1 }, { root: true }))
         }
     },
     modules: {},

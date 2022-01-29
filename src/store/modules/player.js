@@ -5,6 +5,7 @@ const player = {
     state: {
         humanity: new Decimal(0),
         humanityPerSec: new Decimal(0),
+        ruins: new Decimal(0),
         virtues: {
             Survival: {
                 name: "Survival",
@@ -75,6 +76,10 @@ const player = {
         // increase humanity by amount bought
         increaseHumanity(state, payload) {
             state.humanity = state.humanity.plus(payload.bought)
+        },
+        // increase ruins by amount
+        increaseRuins(state, payload) {
+            state.ruins = state.ruins.plus(payload.amount)
         },
         // increase virtue bought, pay humanity cost, update next virtue cost
         buyVirtue(state, virtue) {

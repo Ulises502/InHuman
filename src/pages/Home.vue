@@ -4,10 +4,10 @@
     <v-col cols="3">
       <v-card elevation="2">
         <v-card-text>
-          <v-btn small @click="live" class="mt-n1"
+          <v-btn small @click="live" class="mt-n1" v-show="showLive()"
             >Live <v-icon right>mdi-account-multiple</v-icon></v-btn
           >
-          <v-btn small class="mt-n1 ms-2" v-show="false"
+          <v-btn small class="mt-n1 ms-2" v-show="showRuin()" @click="ruin"
             >Ruins <v-icon right>mdi-gate-open</v-icon></v-btn
           >
         </v-card-text>
@@ -68,11 +68,14 @@ import Decimal from "decimal.js";
 
 export default {
   methods: {
+    ruin() {
+      this.$store.dispatch("game/ruin");
+    },
     live() {
       this.$store.dispatch("game/live");
       // show first message if humanity is 0
       if (this.humanity.lte(1)) {
-        this.$store.dispatch("game/sendMessage", "People exist, then live. \n");
+        this.$store.dispatch("game/sendMessage", "People exist, then live.\n");
       }
     },
     buy(virtue) {
@@ -81,16 +84,22 @@ export default {
       }
       // show message if first survival bought
       if (this.virtues.Survival.amount.equals(1)) {
-        this.$store.dispatch("game/sendMessage", "People first instict is to survive. \n");
+        this.$store.dispatch("game/sendMessage", "People's first instict is to survive.\n");
       }
     },
 
     // **************Show Section**************
+    // show live button
+    showLive() {
+      return this.ruins.gte(1);
+    },
+    showRuin() {
+      return this.ruins.lt(1);
+    },
     // show humanity count
     showHumanity() {
       return this.humanity.gte(1);
     },
-
     // show virtue when bought or have enough humanity
     showVirtue(name) {
       return (
@@ -103,6 +112,7 @@ export default {
     ...mapState({
       humanity: (state) => new Decimal(state.player.humanity),
       humanityPerSec: (state) => new Decimal(state.player.humanityPerSec),
+      ruins: (state) => new Decimal(state.player.ruins),
       virtues: (state) => state.player.virtues,
       messages: (state) => state.game.messages,
     }),
