@@ -129,3 +129,9 @@ export default {
   }*/
 };
 </script>
+
+<style scoped>
+  .v-textarea {
+    font-size: 1em;
+  }
+</style>
