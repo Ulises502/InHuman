@@ -12,49 +12,63 @@ const player = {
                 amount: new Decimal(0),
                 cost: new Decimal(50),
                 bought: new Decimal(0),
-                //show: false,
+                show: true,
+                multiplier: new Decimal(1),
+                costMult: new Decimal(1e3),
             },
             Might: {
                 name: "Might",
                 amount: new Decimal(0),
-                cost: new Decimal(2000),
+                cost: new Decimal(250),
                 bought: new Decimal(0),
-                //show: false,
+                show: false,
+                multiplier: new Decimal(2),
+                costMult: new Decimal(1e4),
             },
             Faith: {
                 name: "Faith",
                 amount: new Decimal(0),
-                cost: new Decimal(1.2e5),
+                cost: new Decimal(1e3),
                 bought: new Decimal(0),
-                //show: false,
+                show: false,
+                multiplier: new Decimal(4),
+                costMult: new Decimal(1e5),
             },
             Knowledge: {
                 name: "Knowledge",
                 amount: new Decimal(0),
                 cost: new Decimal(5e6),
                 bought: new Decimal(0),
-                //show: false,
+                show: false,
+                multiplier: new Decimal(8),
+                costMult: new Decimal(1e6),
             },
             Cooperation: {
                 name: "Cooperation",
                 amount: new Decimal(0),
                 cost: new Decimal(2e8),
                 bought: new Decimal(0),
-                //show: false,
+                show: false,
+                multiplier: new Decimal(16),
+                costMult: new Decimal(1e7),
             },
             Culture: {
                 name: "Culture",
                 amount: new Decimal(0),
                 cost: new Decimal(7.5e9),
                 bought: new Decimal(0),
-                //show: false,
+                show: false,
+                multiplier: new Decimal(32),
+                costMult: new Decimal(1e8),
             },
             Ethics: {
                 name: "Ethics",
                 amount: new Decimal(0),
                 cost: new Decimal(3e11),
                 bought: new Decimal(0),
-                //show: false,
+                show: false,
+                multiplier: new Decimal(64),
+                costMult: new Decimal(1e9),
             },
         },
         options: {
@@ -67,7 +81,7 @@ const player = {
             let humanityPerSec = new Decimal(0)
             for (let virtue in state.virtues) {
                 // use the whole virtue object to enter itself and get the amount
-                humanityPerSec = humanityPerSec.plus(state.virtues[virtue].amount.times(state.virtues[virtue].bought))
+                humanityPerSec = humanityPerSec.plus(state.virtues[virtue].amount.times(state.virtues[virtue].multiplier))
             }
             return humanityPerSec
         }
@@ -86,7 +100,10 @@ const player = {
             state.humanity = state.humanity.minus(state.virtues[virtue]['cost'])
             state.virtues[virtue]['bought'] = state.virtues[virtue]['bought'].plus(1)
             state.virtues[virtue]['amount'] = state.virtues[virtue]['amount'].plus(1)
-            state.virtues[virtue]['cost'] = state.virtues[virtue]['cost'].times(1.5).round()
+            state.virtues[virtue]['cost'] = state.virtues[virtue]['cost'].times(1.15).round()
+            if (state.virtues[virtue]['bought'] % 10 === 0 && state.virtues[virtue]['bought'] > 1) {
+                state.virtues[virtue]['cost'] = state.virtues[virtue]['cost'].times(state.virtues[virtue]['costMult']).round()
+            }
         },
         // show virtue
         showVirtue(state, virtue) {

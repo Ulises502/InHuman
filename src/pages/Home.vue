@@ -7,18 +7,24 @@
           <v-btn small @click="live" class="mt-n1" v-show="showLive()"
             >Live <v-icon right>mdi-account-multiple</v-icon></v-btn
           >
-          <v-btn small class="mt-n1 ms-2" v-show="showRuin()" @click="ruin"
+          <v-btn small color="error" class="mt-n1 ms-2" v-show="showRuin()" @click="ruin"
             >Ruins <v-icon right>mdi-gate-open</v-icon></v-btn
           >
         </v-card-text>
       </v-card>
 
-    <!-- *********** VIRTUE CARD ************* -->
+      <!-- *********** VIRTUE CARD ************* -->
       <v-card elevation="2" v-show="showHumanity()" class="mt-2">
         <v-card-text>
           <p>
             Humanity:
-            {{ humanity.lt(25) ? humanity.toFixed(2) : humanity.toFixed(0) }}
+            {{
+              humanity.lt(10)
+                ? humanity.toFixed(2)
+                : humanity.lt(100)
+                ? humanity.toFixed(1)
+                : humanity.toFixed(0)
+            }}
             <span class="success--text mx-2">(+ {{ humanityPerSec }}/sec)</span>
           </p>
           <v-divider
@@ -35,7 +41,9 @@
                 @click="buy(virtue.name)"
                 :disabled="humanity.lt(virtue.cost)"
               >
-                Cost: {{ virtue.cost }}
+                Cost: {{ virtue.cost.lt(10)
+                ? virtue.cost.toFixed(0)
+                : virtue.cost.toExponential() }}
               </v-chip>
             </div>
           </div>
@@ -57,6 +65,13 @@
             label="Stories"
           ></v-textarea>
         </v-card-text>
+      </v-card>
+    </v-col>
+
+    <!-- *********** CHALLENGES CARD ************* -->
+    <v-col cols="3">
+      <v-card elevation="2">
+        
       </v-card>
     </v-col>
   </v-row>
@@ -84,7 +99,10 @@ export default {
       }
       // show message if first survival bought
       if (this.virtues.Survival.amount.equals(1)) {
-        this.$store.dispatch("game/sendMessage", "People's first instict is to survive.\n");
+        this.$store.dispatch(
+          "game/sendMessage",
+          "People's first instict is to survive.\n"
+        );
       }
     },
 
@@ -103,8 +121,8 @@ export default {
     // show virtue when bought or have enough humanity
     showVirtue(name) {
       return (
-        this.humanity.gte(this.virtues[name].cost / 2) ||
-        this.virtues[name].bought.gte(1)
+        (this.humanity.gte(this.virtues[name].cost / 2) && this.virtues[name].show) ||
+        this.virtues[name].bought.gte(1) 
       );
     },
   },
@@ -131,7 +149,7 @@ export default {
 </script>
 
 <style scoped>
-  .v-textarea {
-    font-size: 1em;
-  }
+.v-textarea {
+  font-size: 1em;
+}
 </style>
