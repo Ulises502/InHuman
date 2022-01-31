@@ -42,8 +42,8 @@
                 :disabled="humanity.lt(virtue.cost)"
               >
                 Cost: {{ virtue.cost.lt(10)
-                ? virtue.cost.toFixed(0)
-                : virtue.cost.toExponential() }}
+                ? virtue.cost.toExponential()
+                : virtue.cost.toFixed(0) }}
               </v-chip>
             </div>
           </div>
@@ -88,10 +88,6 @@ export default {
     },
     live() {
       this.$store.dispatch("game/live");
-      // show first message if humanity is 0
-      if (this.humanity.lte(1)) {
-        this.$store.dispatch("game/sendMessage", "People exist, then live.\n");
-      }
     },
     buy(virtue) {
       if (this.humanity.gte(this.virtues[virtue].cost)) {
@@ -101,7 +97,7 @@ export default {
       if (this.virtues.Survival.amount.equals(1)) {
         this.$store.dispatch(
           "game/sendMessage",
-          "People's first instict is to survive.\n"
+          "- People's first instict is to survive.\n"
         );
       }
     },
