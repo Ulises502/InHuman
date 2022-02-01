@@ -7,7 +7,12 @@
           <v-btn small @click="live" class="mt-n1" v-show="showLive()"
             >Live <v-icon right>mdi-account-multiple</v-icon></v-btn
           >
-          <v-btn small color="error" class="mt-n1 ms-2" v-show="showRuin()" @click="ruin"
+          <v-btn
+            small
+            color="error"
+            class="mt-n1 ms-2"
+            v-show="showRuin()"
+            @click="ruin"
             >Ruins <v-icon right>mdi-gate-open</v-icon></v-btn
           >
         </v-card-text>
@@ -41,9 +46,12 @@
                 @click="buy(virtue.name)"
                 :disabled="humanity.lt(virtue.cost)"
               >
-                Cost: {{ virtue.cost.lt(10)
-                ? virtue.cost.toExponential()
-                : virtue.cost.toFixed(0) }}
+                Cost:
+                {{
+                  virtue.cost.lt(10)
+                    ? virtue.cost.toExponential()
+                    : virtue.cost.toFixed(0)
+                }}
               </v-chip>
             </div>
           </div>
@@ -69,9 +77,77 @@
     </v-col>
 
     <!-- *********** CHALLENGES CARD ************* -->
-    <v-col cols="3">
+    <v-col cols="2">
       <v-card elevation="2">
-        
+        <v-card-text>
+          <v-card-title>
+            Challenges
+          </v-card-title>
+          <v-col class="fill-width" align="center" justify="center">
+            <template v-for="(item, i) in items">
+              <v-row :key="i">
+                <v-hover v-slot="{ hover }">
+                  <v-card
+                    :elevation="hover ? 12 : 2"
+                    :class="{ 'on-hover': hover }"
+                  >
+                    <v-img :src="item.img" height="200px">
+                      <v-card-title class="text-h6 white--text">
+                        <v-row
+                          class="fill-height flex-column"
+                          justify="space-between"
+                        >
+                          <p class="mt-4 subheading text-left">
+                            {{ item.title }}
+                          </p>
+
+                          <div>
+                            <p
+                              class="
+                                ma-0
+                                text-body-1
+                                font-weight-bold font-italic
+                                text-left
+                              "
+                            >
+                              {{ item.text }}
+                            </p>
+                            <p
+                              class="
+                                text-caption
+                                font-weight-medium font-italic
+                                text-left
+                              "
+                            >
+                              {{ item.subtext }}
+                            </p>
+                          </div>
+
+                          <div class="align-self-center">
+                            <v-btn
+                              v-for="(icon, index) in icons"
+                              :key="index"
+                              :class="{ 'show-btns': hover }"
+                              :color="transparent"
+                              icon
+                            >
+                              <v-icon
+                                :class="{ 'show-btns': hover }"
+                                :color="transparent"
+                              >
+                                {{ icon }}
+                              </v-icon>
+                            </v-btn>
+                          </div>
+                        </v-row>
+                      </v-card-title>
+                    </v-img>
+                  </v-card>
+                </v-hover>
+              </v-row>
+            </template>
+          </v-col>
+        </v-card-text>
       </v-card>
     </v-col>
   </v-row>
@@ -82,6 +158,30 @@ import { mapState } from "vuex";
 import Decimal from "decimal.js";
 
 export default {
+  data: () => ({
+    icons: ["mdi-rewind", "mdi-play", "mdi-fast-forward"],
+    items: [
+      {
+        title: "New Releases",
+        text: `It's New Release Friday`,
+        subtext: "Newly released songs. Updated daily.",
+        img: "https://images.unsplash.com/photo-1429514513361-8fa32282fd5f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=3264&q=80",
+      },
+      {
+        title: "Rock",
+        text: "Greatest Rock Hits",
+        subtext: "Lose yourself in rock tunes.",
+        img: "https://images.unsplash.com/photo-1498038432885-c6f3f1b912ee?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2100&q=80",
+      },
+      {
+        title: "Mellow Moods",
+        text: "Ambient Bass",
+        subtext: "Chill beats to mellow you out.",
+        img: "https://images.unsplash.com/photo-1542320868-f4d80389e1c4?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=3750&q=80",
+      },
+    ],
+    transparent: "rgba(255, 255, 255, 0)",
+  }),
   methods: {
     ruin() {
       this.$store.dispatch("game/ruin");
@@ -117,8 +217,9 @@ export default {
     // show virtue when bought or have enough humanity
     showVirtue(name) {
       return (
-        (this.humanity.gte(this.virtues[name].cost / 2) && this.virtues[name].show) ||
-        this.virtues[name].bought.gte(1) 
+        (this.humanity.gte(this.virtues[name].cost / 2) &&
+          this.virtues[name].show) ||
+        this.virtues[name].bought.gte(1)
       );
     },
   },
@@ -147,5 +248,17 @@ export default {
 <style scoped>
 .v-textarea {
   font-size: 1em;
+}
+
+.v-card {
+  transition: opacity 0.4s ease-in-out;
+}
+
+.v-card:not(.on-hover) {
+  opacity: 0.6;
+}
+
+.show-btns {
+  color: rgba(255, 255, 255, 1) !important;
 }
 </style>
