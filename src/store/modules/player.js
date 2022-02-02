@@ -3,7 +3,7 @@ import Decimal from 'decimal.js';
 const player = {
     namespaced: true,
     state: {
-        humanity: new Decimal(0),
+        humanity: new Decimal(1000),
         humanityPerSec: new Decimal(0),
         ruins: new Decimal(0),
         virtues: {

@@ -48,9 +48,9 @@
               >
                 Cost:
                 {{
-                  virtue.cost.lt(10)
-                    ? virtue.cost.toExponential()
-                    : virtue.cost.toFixed(0)
+                  virtue.cost.lt(10000)
+                    ? virtue.cost.toFixed(0)
+                    : virtue.cost.toExponential()
                 }}
               </v-chip>
             </div>
@@ -60,7 +60,7 @@
     </v-col>
 
     <!-- *********** TEXT AREA CARD ************* -->
-    <v-col cols="3">
+    <v-col cols="3" v-show="ruins.gte(1)">
       <v-card elevation="2">
         <v-card-text>
           <v-textarea
@@ -77,12 +77,12 @@
     </v-col>
 
     <!-- *********** CHALLENGES CARD ************* -->
-    <v-col cols="2">
+    <v-col cols="2" v-show="virtues.Survival.bought.gte(10)">
       <v-card elevation="2">
         <v-card-text>
-          <h3 class="mb-2">Challenges</h3>
+          <h3 class="mb-2">Virtue Challenges</h3>
           <v-col class="fill-width" align="center" justify="center">
-            <template v-for="(item, i) in items">
+            <template v-for="(challenge, i) in challenges">
               <v-row :key="i">
                 <v-hover v-slot="{ hover }">
                   <v-card
@@ -90,14 +90,14 @@
                     :class="{ 'on-hover': hover }"
                     class="challange"
                   >
-                    <v-img :src="item.img" height="200px">
+                    <v-img :src="challenge.img" height="200px">
                       <v-card-title class="text-h6 white--text">
                         <v-row
                           class="fill-height flex-column"
                           justify="space-between"
                         >
                           <p class="mt-4 subheading text-left">
-                            {{ item.title }}
+                            {{ challenge.title }}
                           </p>
 
                           <div>
@@ -109,7 +109,7 @@
                                 text-left
                               "
                             >
-                              {{ item.text }}
+                              {{ challenge.text }}
                             </p>
                             <p
                               class="
@@ -118,7 +118,7 @@
                                 text-left
                               "
                             >
-                              {{ item.subtext }}
+                              {{ challenge.subtext }}
                             </p>
                           </div>
 
@@ -158,7 +158,7 @@ import Decimal from "decimal.js";
 
 export default {
   data: () => ({
-    icons: ["mdi-rewind", "mdi-play", "mdi-fast-forward"],
+    icons: ["mdi-play"],
     transparent: "rgba(255, 255, 255, 0)",
   }),
   methods: {
@@ -209,6 +209,7 @@ export default {
       ruins: (state) => new Decimal(state.player.ruins),
       virtues: (state) => state.player.virtues,
       messages: (state) => state.game.messages,
+      challenges: (state) => state.game.challenges,
     }),
   },
   /*watch: {
