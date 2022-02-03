@@ -70,7 +70,7 @@
             no-resize
             rows="15"
             name="input-7-4"
-            label="Stories"
+            label="Campfire Stories"
           ></v-textarea>
         </v-card-text>
       </v-card>
