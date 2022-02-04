@@ -52,10 +52,21 @@
                     ? virtue.cost.toFixed(0)
                     : virtue.cost.toExponential()
                 }}
+                H
               </v-chip>
             </div>
           </div>
         </v-card-text>
+        <v-card-action>
+          <v-btn block outlined text tile> Virtue Challange </v-btn>
+        </v-card-action>
+      </v-card>
+    </v-col>
+
+    <!-- *********** VIRTUE UPGRADE CARD ************* -->
+    <v-col cols="3" v-show="virtues.Survival.bought.gte(10)">
+      <v-card elevation="2">
+        <v-card-text> </v-card-text>
       </v-card>
     </v-col>
 
@@ -75,7 +86,6 @@
         </v-card-text>
       </v-card>
     </v-col>
-
   </v-row>
 </template>
 
