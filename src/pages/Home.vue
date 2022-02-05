@@ -1,7 +1,7 @@
 <template>
   <v-row>
     <!-- *********** BUTTONs CARD ************* -->
-    <v-col cols="3">
+    <v-col cols="12" sm="6" md="3">
       <v-card elevation="2">
         <v-card-text>
           <v-btn small @click="live" class="mt-n1" v-show="showLive()"
@@ -64,7 +64,7 @@
     </v-col>
 
     <!-- *********** TEXT AREA CARD ************* -->
-    <v-col cols="3" v-show="ruins.gte(1)">
+    <v-col cols="12" sm="6" md="3" v-show="ruins.gte(1)">
       <v-card elevation="2">
         <v-card-text>
           <v-textarea
