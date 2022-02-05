@@ -57,16 +57,9 @@
             </div>
           </div>
         </v-card-text>
-        <v-card-action>
+        <v-card-actions v-show="virtues.Survival.amount.gte(100)">
           <v-btn block outlined text tile> Virtue Challange </v-btn>
-        </v-card-action>
-      </v-card>
-    </v-col>
-
-    <!-- *********** VIRTUE UPGRADE CARD ************* -->
-    <v-col cols="3" v-show="virtues.Survival.bought.gte(10)">
-      <v-card elevation="2">
-        <v-card-text> </v-card-text>
+        </v-card-actions>
       </v-card>
     </v-col>
 
