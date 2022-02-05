@@ -3,6 +3,7 @@ const game = {
     state: {
         gameLoopIntervalId: null,
         messages: "",
+        drawer: false,
     },
     getters: {
 
@@ -15,6 +16,14 @@ const game = {
         // save message
         setMessage(state, message) {
             state.messages += message
+        },
+        // change drawer state
+        changeDrawer(state) {
+            state.drawer = !state.drawer
+        },
+        // set drawer state
+        setDrawer(state, drawer) {
+            state.drawer = drawer
         }
     },
     actions: {
@@ -58,6 +67,11 @@ const game = {
                 }
                 resolve()
             }).then(() => commit("player/increaseRuins", { amount: 1 }, { root: true }))
+        },
+
+        // change drawer state
+        changeDrawer({ commit }) {
+            commit("changeDrawer");
         }
     },
     modules: {},

@@ -1,6 +1,12 @@
 <template>
-  <v-navigation-drawer v-model="drawer" :mini-variant.sync="mini" app permanent>
-    <v-list-item class="px-2">
+  <v-navigation-drawer
+    v-model="drawer"
+    :mini-variant.sync="mini"
+    app
+    :permanent="!$vuetify.breakpoint.mobile"
+    bottom
+  >
+    <v-list-item class="px-2" v-if="!$vuetify.breakpoint.mobile">
       <v-btn icon @click.stop="mini = !mini">
         <v-icon>mdi-chevron-left</v-icon>
       </v-btn>
@@ -38,14 +44,38 @@
 export default {
   data() {
     return {
-      drawer: true,
       items: [
         { title: "Home", icon: "mdi-home-city" },
         { title: "My Account", icon: "mdi-account" },
-        { title: "Users", icon: "mdi-account-group-outline" }
+        { title: "Users", icon: "mdi-account-group-outline" },
       ],
-      mini: true,
+      miniOption: true,
     };
+  },
+  computed: {
+    drawer: {
+      // getter
+      get: function () {
+        return this.$store.state.game.drawer;
+      },
+
+      // setter
+      set: function (newValue) {
+        this.$store.commit("game/setDrawer", newValue);
+      },
+    },
+    mini: {
+      // getter
+      get: function () {
+        return !this.$vuetify.breakpoint.mobile && this.miniOption;
+      },
+
+      // setter
+      set: function (newValue) {
+        this.miniOption = newValue;
+      },
+      
+    },
   },
 };
 </script>
