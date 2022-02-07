@@ -50,7 +50,7 @@ const game = {
 
         // increase humanity when live button pressed
         live({ commit }) {
-            commit("player/increaseHumanity", { bought: 1 }, { root: true });
+            commit("player/consumeAllHumanity", null, { root: true });
         },
         // buy virtue when cost chip is pressed
         buy({ commit }, virtue) {
@@ -63,7 +63,8 @@ const game = {
             // if ruins is less than 1, then send message
             new Promise((resolve) => {
                 if (rootState.player.ruins == 0) {
-                    dispatch("sendMessage", "- People find some old tools in this ancient ruin.\n");
+                    dispatch("sendMessage", "- Your people find some old tools in an ancient ruin.\n");
+
                 }
                 resolve()
             }).then(() => commit("player/increaseRuins", { amount: 1 }, { root: true }))

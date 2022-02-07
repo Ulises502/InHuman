@@ -3,9 +3,10 @@ import Decimal from 'decimal.js';
 const player = {
     namespaced: true,
     state: {
-        humanity: new Decimal(1000),
+        humanity: new Decimal(0),
         humanityPerSec: new Decimal(0),
         ruins: new Decimal(0),
+        lived: new Decimal(0),
         virtues: {
             Survival: {
                 name: "Survival",
@@ -83,6 +84,9 @@ const player = {
                 // use the whole virtue object to enter itself and get the amount
                 humanityPerSec = humanityPerSec.plus(state.virtues[virtue].amount.times(state.virtues[virtue].multiplier))
             }
+            if (state.ruins.gt(0)) {
+                humanityPerSec = humanityPerSec.plus(1)
+            }
             return humanityPerSec
         }
     },
@@ -94,6 +98,11 @@ const player = {
         // increase ruins by amount
         increaseRuins(state, payload) {
             state.ruins = state.ruins.plus(payload.amount)
+        },
+        // consume All Humanity and add it in lived
+        consumeAllHumanity(state) {
+            state.lived = state.lived.plus(state.humanity)
+            state.humanity = new Decimal(0.05)
         },
         // increase virtue bought, pay humanity cost, update next virtue cost
         buyVirtue(state, virtue) {

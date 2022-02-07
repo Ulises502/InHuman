@@ -13,7 +13,7 @@
             class="mt-n1 ms-2"
             v-show="showRuin()"
             @click="ruin"
-            >Ruins <v-icon right>mdi-gate-open</v-icon></v-btn
+            >Explore Ruins <v-icon right>mdi-gate-open</v-icon></v-btn
           >
         </v-card-text>
       </v-card>
@@ -117,7 +117,7 @@ export default {
     },
     // show humanity count
     showHumanity() {
-      return this.humanity.gte(1);
+      return this.humanity.gt(0);
     },
     // show virtue when bought or have enough humanity
     showVirtue(name) {
