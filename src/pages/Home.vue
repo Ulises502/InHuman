@@ -63,6 +63,14 @@
       </v-card>
     </v-col>
 
+    <!-- *********** VIRTUE'S UPGRADES CARD ************* -->
+    <v-col cols="12" sm="6" md="3" v-show="virtues.Survival.bought.gte(1)">
+      <v-card elevation="2">
+        <v-card-title>Virtue Upgrade</v-card-title>
+        <router-view></router-view>
+      </v-card>
+    </v-col>
+
     <!-- *********** TEXT AREA CARD ************* -->
     <v-col cols="12" sm="6" md="3" v-show="ruins.gte(1)">
       <v-card elevation="2">
@@ -92,6 +100,12 @@ export default {
       this.$store.dispatch("game/ruin");
     },
     live() {
+      if (this.lived.equals(0)) {
+        this.$store.dispatch(
+          "game/sendMessage",
+          "- People live. People die.\n"
+        );
+      }
       this.$store.dispatch("game/live");
     },
     buy(virtue) {
@@ -134,6 +148,7 @@ export default {
       humanityPerSec: (state) => new Decimal(state.player.humanityPerSec),
       ruins: (state) => new Decimal(state.player.ruins),
       virtues: (state) => state.player.virtues,
+      lived: (state) => state.player.lived,
       messages: (state) => state.game.messages,
     }),
   },
