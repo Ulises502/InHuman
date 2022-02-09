@@ -8,7 +8,44 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home
+    component: Home,
+    children: [
+      {
+        path: 'survival',
+        name: 'Survival',
+        component: () => import('../components/Survival.vue')
+      },
+      {
+        path: 'might',
+        name: 'Might',
+        component: () => import('../components/Might.vue')
+      },
+      {
+        path: 'faith',
+        name: 'Faith',
+        component: () => import('../components/Faith.vue')
+      },
+      {
+        path: 'knowledge',
+        name: 'Knowledge',
+        component: () => import('../components/Knowledge.vue')
+      },
+      {
+        path: 'cooperation',
+        name: 'Cooperation',
+        component: () => import('../components/Cooperation.vue')
+      },
+      {
+        path: 'culture',
+        name: 'Culture',
+        component: () => import('../components/Culture.vue')
+      },
+      {
+        path: 'ethics',
+        name: 'Ethics',
+        component: () => import('../components/Ethics.vue')
+      }
+ ]
   },
   /*{
     path: '/about',

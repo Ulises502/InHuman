@@ -36,26 +36,47 @@
             class="mx-3 mb-3"
             v-show="showVirtue('Survival')"
           ></v-divider>
-          <div v-for="virtue in virtues" v-bind:key="virtue.name">
-            <div v-show="showVirtue(virtue.name)">
-              {{ virtue.name }}: {{ virtue.amount }}
-              <span class="info--text mx-2"> ({{ virtue.bought }}) </span
-              ><v-chip
-                small
-                class="ms-3"
-                @click="buy(virtue.name)"
-                :disabled="humanity.lt(virtue.cost)"
+          <v-row
+            v-for="virtue in virtues"
+            v-bind:key="virtue.name"
+            v-show="showVirtue(virtue.name)"
+          >
+            <v-col cols="6" class="py-1">
+              <v-list dense nav class="pa-0">
+                <v-list-item-group v-model="selectedVirtue" color="primary">
+                  <v-list-item :to="'/' + virtue.name.toLowerCase()">
+                    <v-list-item-content>
+                      <v-list-item-title>
+                        {{ virtue.name }}: {{ virtue.amount }}
+                      </v-list-item-title>
+                    </v-list-item-content>
+                  </v-list-item>
+                </v-list-item-group>
+              </v-list>
+            </v-col>
+            <v-col cols="6" class="py-1">
+              <div
+                v-show="showVirtue(virtue.name)"
+                class="mt-2"
               >
-                Cost:
-                {{
-                  virtue.cost.lt(10000)
-                    ? virtue.cost.toFixed(0)
-                    : virtue.cost.toExponential()
-                }}
-                H
-              </v-chip>
-            </div>
-          </div>
+                <span class="info--text me-1"> ({{ virtue.bought }}) </span
+                ><v-chip
+                  small
+                  class="ms-3"
+                  @click="buy(virtue.name)"
+                  :disabled="humanity.lt(virtue.cost)"
+                >
+                  Cost:
+                  {{
+                    virtue.cost.lt(10000)
+                      ? virtue.cost.toFixed(0)
+                      : virtue.cost.toExponential()
+                  }}
+                  H
+                </v-chip>
+              </div>
+            </v-col>
+          </v-row>
         </v-card-text>
         <v-card-actions v-show="virtues.Survival.amount.gte(100)">
           <v-btn block outlined text tile> Virtue Challange </v-btn>
@@ -95,6 +116,11 @@ import { mapState } from "vuex";
 import Decimal from "decimal.js";
 
 export default {
+  data() {
+    return {
+      selectedVirtue: "",
+    };
+  },
   methods: {
     ruin() {
       this.$store.dispatch("game/ruin");
