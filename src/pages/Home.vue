@@ -41,7 +41,7 @@
             v-bind:key="virtue.name"
             v-show="showVirtue(virtue.name)"
           >
-            <v-col cols="6" class="py-1">
+            <v-col cols="4" class="py-1 px-0">
               <v-list dense nav class="pa-0">
                 <v-list-item-group v-model="selectedVirtue" color="primary">
                   <v-list-item :to="'/' + virtue.name.toLowerCase()">
@@ -54,7 +54,7 @@
                 </v-list-item-group>
               </v-list>
             </v-col>
-            <v-col cols="6" class="py-1">
+            <v-col cols="8" class="py-1 px-0">
               <div
                 v-show="showVirtue(virtue.name)"
                 class="mt-2"
