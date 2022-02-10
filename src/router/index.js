@@ -11,6 +11,11 @@ const routes = [
     component: Home,
     children: [
       {
+        path: '',
+        name: 'UpgradeInfo',
+        component: () => import('../components/UpgradeInfo.vue')
+      },
+      {
         path: 'survival',
         name: 'Survival',
         component: () => import('../components/Survival.vue')
