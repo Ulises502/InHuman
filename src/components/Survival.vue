@@ -45,7 +45,9 @@ import Decimal from "decimal.js";
 export default {
   methods: {
     buyUpgrade(id) {
-      this.$store.dispatch("game/buyUpgrade", { id: id, type: "Survival" });
+      if (this.humanity.gte(this.virtueUpgrades.Survival[id].cost)) {
+        this.$store.dispatch("game/buyUpgrade", { id: id, type: "Survival" });
+      }
     },
   },
   computed: {

@@ -98,8 +98,22 @@ const game = {
             }).then(() => commit("player/increaseRuins", { amount: 1 }, { root: true }))
         },
 
-        buyUpgrade({ commit }, upgrade) {
+        buyUpgrade({ commit, state }, upgrade) {
             commit("player/changeVirtueUpgrade", upgrade, { root: true });
+            commit("player/decreaseHumanity", { amount: state.virtueUpgrades[upgrade.type][upgrade.id].cost }, { root: true });
+
+            // use name of upgrade to apply effect
+            switch (upgrade.id) {
+                case "Fire":
+                    commit("player/multiplyVirtueMultiplier", { id: upgrade.id, type: upgrade.type, amount: 2 }, { root: true });
+                    break;
+                case "Hunters":
+                    //commit("player/increaseHumanityPerSec", { amount: new Decimal(1) }, { root: true });
+                    break;
+                case "Tools":
+                    //commit("player/increaseHumanityPerSec", { amount: new Decimal(1) }, { root: true });
+                    break;
+            }
         },
     },
     modules: {},

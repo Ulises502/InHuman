@@ -111,6 +111,10 @@ const player = {
         increaseHumanity(state, payload) {
             state.humanity = state.humanity.plus(payload.bought)
         },
+        // decrease humanity by amount
+        decreaseHumanity(state, payload) {
+            state.humanity = state.humanity.minus(payload.amount)
+        },
         // increase ruins by amount
         increaseRuins(state, payload) {
             state.ruins = state.ruins.plus(payload.amount)
@@ -142,6 +146,10 @@ const player = {
         // change bought status of virtue upgrade
         changeVirtueUpgrade(state, upgrade) {
             state.virtueUpgraded[upgrade.type][upgrade.id]['bought'] = !state.virtueUpgraded[upgrade.type][upgrade.id]['bought']
+        },
+        // change virtue multiplier
+        multiplyVirtueMultiplier(state, payload) {
+            state.virtues[payload.type]['multiplier'] = state.virtues[payload.type]['multiplier'].times(payload.amount)
         },
     },
     actions: {
