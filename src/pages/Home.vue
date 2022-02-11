@@ -79,7 +79,7 @@
           </v-row>
         </v-card-text>
         <v-card-actions v-show="virtues.Survival.amount.gte(20)">
-          <v-card block outlined text tile @click="softReset()" width="100%" class="text-center">
+          <v-card block outlined text tile @click="softReset(virtueReset)" width="100%" class="text-center">
             <p class="text-uppercase mb-1">Virtue Challange</p>
             <p class="text-caption mb-0">Cost: 50 Survival</p>
           </v-card>
@@ -149,8 +149,8 @@ export default {
         );
       }
     },
-    softReset() {
-      this.$store.dispatch("game/softReset");
+    softReset(resetNumber) {
+      this.$store.dispatch("game/softReset", resetNumber);
     },
 
     // **************Show Section**************
@@ -165,7 +165,7 @@ export default {
     showHumanity() {
       return this.humanity.gt(0);
     },
-    // show virtue when bought or have enough humanity
+    // show virtue when bought or have half of its cost
     showVirtue(name) {
       return (
         (this.humanity.gte(this.virtues[name].cost / 2) &&
@@ -181,6 +181,8 @@ export default {
       ruins: (state) => new Decimal(state.player.ruins),
       virtues: (state) => state.player.virtues,
       lived: (state) => state.player.lived,
+      virtueReset: (state) => state.player.virtueReset,
+
       messages: (state) => state.game.messages,
     }),
   },

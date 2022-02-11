@@ -120,7 +120,7 @@ const game = {
 
         //************************* RESET *************************** */
         // make a soft reset
-        softReset({ commit, state, dispatch }) {
+        softReset({ commit, state, dispatch }, resetNumber) {
             // clear game interval
             clearInterval(state.gameLoopIntervalId)
             // commit clear game interval
@@ -133,6 +133,28 @@ const game = {
             commit("resetMessage", "")
             // reset drawer
             commit("setDrawer", false)
+            // make next virtue showable
+            switch(resetNumber.toFixed()) {
+                case '0':
+                    commit("player/setVirtueShowable", "Might", { root: true })
+                    break;
+                case '1':
+                    commit("player/setVirtueShowable", "Faith", { root: true })
+                    break;
+                case '2':
+                    commit("player/setVirtueShowable", "Knowledge", { root: true })
+                    break;
+                case '3':
+                    commit("player/setVirtueShowable", "Cooperation", { root: true })
+                    break;
+                case '4':
+                    commit("player/setVirtueShowable", "Culture", { root: true })
+                    break;
+                case '5':
+                    commit("player/setVirtueShowable", "Ethics", { root: true })
+                    break;
+             }
+
             // dispatch reset player state
             dispatch("player/resetPlayerState", null, { root: true }).then(() => {
                 // re-start game loop

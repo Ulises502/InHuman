@@ -88,6 +88,7 @@ const player = {
                 },
             },
         },
+        virtueReset: new Decimal(0),
         options: {
             updateRate: 50,
         },
@@ -167,6 +168,13 @@ const player = {
                 state.virtues[virtue]['bought'] = new Decimal(0)
             }
         },
+        // increase soft reset by 1
+        increaseSoftReset(state) {
+            state.virtueReset = state.virtueReset.plus(1)
+        },
+        setVirtueShowable(state, virtue) {
+            state.virtues[virtue]['show'] = true
+        },
     },
     actions: {
         // action to change virtue showable status
@@ -177,6 +185,8 @@ const player = {
         // reset player state
         resetPlayerState({ commit }) {
             commit("resetPlayerState")
+            // add 1 soft reset
+            commit("increaseSoftReset")
         },
     },
     modules: {},
