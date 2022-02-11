@@ -54,7 +54,7 @@
                 </v-list-item-group>
               </v-list>
             </v-col>
-            <v-col cols="8" class="py-1 px-0">
+            <v-col cols="8" class="py-1 px-0 ps-2">
               <div
                 v-show="showVirtue(virtue.name)"
                 class="mt-2"
@@ -87,7 +87,7 @@
     <!-- *********** VIRTUE'S UPGRADES CARD ************* -->
     <v-col cols="12" sm="6" md="3" v-show="virtues.Survival.bought.gte(1)">
       <v-card elevation="2">
-        <v-card-title>Virtue Upgrade</v-card-title>
+        <v-card-title class="pb-0">Virtue Upgrade</v-card-title>
         <router-view></router-view>
       </v-card>
     </v-col>
