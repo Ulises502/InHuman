@@ -1,9 +1,33 @@
+import Decimal from 'decimal.js';
+
 const game = {
     namespaced: true,
     state: {
         gameLoopIntervalId: null,
         messages: "",
         drawer: false,
+        virtueUpgrades: {
+            Survival: {
+                Fire: {
+                    name: "Fire",
+                    icon: "mdi-campfire",
+                    cost: new Decimal(200),
+                    description: "x2 Humanity from Survival",
+                },
+                Hunters: {
+                    name: "Hunters",
+                    icon: "mdi-bow-arrow",
+                    cost: new Decimal(1e3),
+                    description: "Gain Humanity every 30 sec",
+                },
+                Tools: {
+                    name: "Tools",
+                    icon: "mdi-spear",
+                    cost: new Decimal(2e3),
+                    description: "Gain Survival every 30 sec",
+                },
+            },
+        }
     },
     getters: {
 
@@ -27,6 +51,10 @@ const game = {
         }
     },
     actions: {
+        // change drawer state
+        changeDrawer({ commit }) {
+            commit("changeDrawer");
+        },
         // start game loop interval when page is mounted
         startInterval({ commit, dispatch, rootState }) {
             // set game interval from a commit, because commit's are synchronous
@@ -70,10 +98,9 @@ const game = {
             }).then(() => commit("player/increaseRuins", { amount: 1 }, { root: true }))
         },
 
-        // change drawer state
-        changeDrawer({ commit }) {
-            commit("changeDrawer");
-        }
+        buyUpgrade({ commit }, upgrade) {
+            commit("player/changeVirtueUpgrade", upgrade, { root: true });
+        },
     },
     modules: {},
 };

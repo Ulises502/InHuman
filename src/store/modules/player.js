@@ -3,7 +3,7 @@ import Decimal from 'decimal.js';
 const player = {
     namespaced: true,
     state: {
-        humanity: new Decimal(50),
+        humanity: new Decimal(500),
         humanityPerSec: new Decimal(0),
         ruins: new Decimal(0),
         lived: new Decimal(0),
@@ -72,6 +72,22 @@ const player = {
                 costMult: new Decimal(1e9),
             },
         },
+        virtueUpgraded: {
+            Survival: {
+                Fire: {
+                    name: "Fire",
+                    bought: false,
+                },
+                Hunters: {
+                    name: "Hunters",
+                    bought: false,
+                },
+                Tools: {
+                    name: "Tools",
+                    bought: false,
+                },
+            },
+        },
         options: {
             updateRate: 50,
         },
@@ -110,9 +126,9 @@ const player = {
             state.virtues[virtue]['bought'] = state.virtues[virtue]['bought'].plus(1)
             state.virtues[virtue]['amount'] = state.virtues[virtue]['amount'].plus(1)
             state.virtues[virtue]['cost'] = state.virtues[virtue]['cost'].times(1.15).round()
-            if (state.virtues[virtue]['bought'] % 10 === 0 && state.virtues[virtue]['bought'] > 1) {
-                state.virtues[virtue]['cost'] = state.virtues[virtue]['cost'].times(state.virtues[virtue]['costMult']).round()
-            }
+            //if (state.virtues[virtue]['bought'] % 10 === 0 && state.virtues[virtue]['bought'] > 1) {
+            //state.virtues[virtue]['cost'] = state.virtues[virtue]['cost'].times(state.virtues[virtue]['costMult']).round()
+            //}
         },
         // show virtue
         showVirtue(state, virtue) {
@@ -121,9 +137,15 @@ const player = {
         // set humanity per second
         setHumanityPerSec(state, payload) {
             state.humanityPerSec = payload.amount
-        }
+        },
+
+        // change bought status of virtue upgrade
+        changeVirtueUpgrade(state, upgrade) {
+            state.virtueUpgraded[upgrade.type][upgrade.id]['bought'] = !state.virtueUpgraded[upgrade.type][upgrade.id]['bought']
+        },
     },
     actions: {
+        // action to change virtue showable status
         showVirtue({ commit }, virtue) {
             commit("showVirtue", virtue)
         }
