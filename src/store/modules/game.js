@@ -27,7 +27,8 @@ const game = {
                     description: "Gain Survival every 30 sec",
                 },
             },
-        }
+        },
+        upgradesIntervalID: [],
     },
     getters: {
 
@@ -48,7 +49,27 @@ const game = {
         // set drawer state
         setDrawer(state, drawer) {
             state.drawer = drawer
-        }
+        },
+        // save upgrades interval id
+        saveUpgradesIntervalID(state, id) {
+            state.upgradesIntervalID.push(id)
+        },
+        // empty game loop interval
+        clearGameInterval(state) {
+            state.gameLoopIntervalId = null
+        },
+        // empty upgrades interval id
+        clearUpgradesIntervalID(state) {
+            state.upgradesIntervalID = []
+        },
+        // reset messages
+        resetMessage(state) {
+            state.messages = ""
+        },
+        // reset drawer
+        resetDrawer(state) {
+            state.drawer = false
+        },
     },
     actions: {
         // change drawer state
@@ -71,11 +92,11 @@ const game = {
             let Hsec = rootGetters['player/getHumanityPerSec']
             commit("player/setHumanityPerSec", { amount: Hsec }, { root: true })
             let HPerLoop = Hsec.times(rootState.player.options.updateRate).div(1000)
-            commit("player/increaseHumanity", { bought: HPerLoop }, { root: true })
+            commit("player/increaseHumanity", { amount: HPerLoop }, { root: true })
             //commit("increaseVirtues")
         },
 
-
+        // ****************************************************************
         // increase humanity when live button pressed
         live({ commit }) {
             commit("player/consumeAllHumanity", null, { root: true });
@@ -92,11 +113,33 @@ const game = {
             new Promise((resolve) => {
                 if (rootState.player.ruins == 0) {
                     dispatch("sendMessage", "- Your people find some old tools in an ancient ruin.\n");
-
                 }
                 resolve()
             }).then(() => commit("player/increaseRuins", { amount: 1 }, { root: true }))
         },
+
+        //************************* RESET *************************** */
+        // make a soft reset
+        softReset({ commit, state, dispatch }) {
+            // clear game interval
+            clearInterval(state.gameLoopIntervalId)
+            // commit clear game interval
+            commit("clearGameInterval")
+            // clear interval ids
+            state.upgradesIntervalID.forEach(id => clearInterval(id))
+            // commit clear interval ids
+            commit("clearUpgradesIntervalID", null)
+            // reset messages
+            commit("resetMessage", "")
+            // reset drawer
+            commit("setDrawer", false)
+            // dispatch reset player state
+            dispatch("player/resetPlayerState", null, { root: true }).then(() => {
+                // re-start game loop
+                dispatch("startInterval")
+            })
+        },
+                            
 
         buyUpgrade({ commit, state }, upgrade) {
             commit("player/changeVirtueUpgrade", upgrade, { root: true });
@@ -108,10 +151,22 @@ const game = {
                     commit("player/multiplyVirtueMultiplier", { id: upgrade.id, type: upgrade.type, amount: 2 }, { root: true });
                     break;
                 case "Hunters":
-                    //commit("player/increaseHumanityPerSec", { amount: new Decimal(1) }, { root: true });
+                    commit("saveUpgradesIntervalID", setInterval(() => {
+                        // dispatch upgrade effect. Promise allows to be independent and repeat the action
+                        new Promise(() => {
+                            // increase humanity by 1000 every 30 sec
+                            commit("player/increaseHumanity", { amount: new Decimal(1000) }, { root: true });
+                        })
+                    }, 30000));
                     break;
                 case "Tools":
-                    //commit("player/increaseHumanityPerSec", { amount: new Decimal(1) }, { root: true });
+                    commit("saveUpgradesIntervalID", setInterval(() => {
+                        // dispatch upgrade action. Promise allows to be independent and repeat the action
+                        new Promise(() => {
+                            // increase humanity by 1000 every 30 sec
+                            commit("player/increaseVirtueAmount", { type: 'Survival', amount: new Decimal(1) }, { root: true });
+                        })
+                    }, 30000));
                     break;
             }
         },

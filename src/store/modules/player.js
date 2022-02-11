@@ -3,7 +3,7 @@ import Decimal from 'decimal.js';
 const player = {
     namespaced: true,
     state: {
-        humanity: new Decimal(500),
+        humanity: new Decimal(5000),
         humanityPerSec: new Decimal(0),
         ruins: new Decimal(0),
         lived: new Decimal(0),
@@ -109,7 +109,7 @@ const player = {
     mutations: {
         // increase humanity by amount bought
         increaseHumanity(state, payload) {
-            state.humanity = state.humanity.plus(payload.bought)
+            state.humanity = state.humanity.plus(payload.amount)
         },
         // decrease humanity by amount
         decreaseHumanity(state, payload) {
@@ -151,12 +151,33 @@ const player = {
         multiplyVirtueMultiplier(state, payload) {
             state.virtues[payload.type]['multiplier'] = state.virtues[payload.type]['multiplier'].times(payload.amount)
         },
+        // increase virtue amount
+        increaseVirtueAmount(state, payload) {
+            state.virtues[payload.type]['amount'] = state.virtues[payload.type]['amount'].plus(payload.amount)
+        },
+
+
+        // reset player state
+        resetPlayerState(state) {
+            state.humanity = new Decimal(5000)
+            state.humanityPerSec = new Decimal(0)
+            for (let virtue in state.virtues) {
+                state.virtues[virtue]['amount'] = new Decimal(0)
+                state.virtues[virtue]['cost'] = new Decimal(50)
+                state.virtues[virtue]['bought'] = new Decimal(0)
+            }
+        },
     },
     actions: {
         // action to change virtue showable status
         showVirtue({ commit }, virtue) {
             commit("showVirtue", virtue)
-        }
+        },
+
+        // reset player state
+        resetPlayerState({ commit }) {
+            commit("resetPlayerState")
+        },
     },
     modules: {},
 };

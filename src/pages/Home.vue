@@ -41,7 +41,7 @@
             v-bind:key="virtue.name"
             v-show="showVirtue(virtue.name)"
           >
-            <v-col cols="4" class="py-1 px-0">
+            <v-col cols="5" class="py-1 px-0">
               <v-list dense nav class="pa-0">
                 <v-list-item-group v-model="selectedVirtue" color="primary">
                   <v-list-item :to="'/' + virtue.name.toLowerCase()">
@@ -54,7 +54,7 @@
                 </v-list-item-group>
               </v-list>
             </v-col>
-            <v-col cols="8" class="py-1 px-0 ps-2">
+            <v-col cols="7" class="py-1 px-0 ps-2">
               <div
                 v-show="showVirtue(virtue.name)"
                 class="mt-2"
@@ -78,8 +78,11 @@
             </v-col>
           </v-row>
         </v-card-text>
-        <v-card-actions v-show="virtues.Survival.amount.gte(100)">
-          <v-btn block outlined text tile> Virtue Challange </v-btn>
+        <v-card-actions v-show="virtues.Survival.amount.gte(20)">
+          <v-card block outlined text tile @click="softReset()" width="100%" class="text-center">
+            <p class="text-uppercase mb-1">Virtue Challange</p>
+            <p class="text-caption mb-0">Cost: 50 Survival</p>
+          </v-card>
         </v-card-actions>
       </v-card>
     </v-col>
@@ -145,6 +148,9 @@ export default {
           "- People's first instict is to survive.\n"
         );
       }
+    },
+    softReset() {
+      this.$store.dispatch("game/softReset");
     },
 
     // **************Show Section**************
