@@ -18,13 +18,13 @@ const game = {
                     name: "Hunters",
                     icon: "mdi-bow-arrow",
                     cost: new Decimal(1e3),
-                    description: "Gain Humanity every 30 sec",
+                    description: "Gain Humanity every 10 sec",
                 },
                 Tools: {
                     name: "Tools",
                     icon: "mdi-spear",
                     cost: new Decimal(2e3),
-                    description: "Gain Survival every 30 sec",
+                    description: "Gain Survival every 10 sec",
                 },
             },
         },
@@ -176,19 +176,19 @@ const game = {
                     commit("saveUpgradesIntervalID", setInterval(() => {
                         // dispatch upgrade effect. Promise allows to be independent and repeat the action
                         new Promise(() => {
-                            // increase humanity by 1000 every 30 sec
-                            commit("player/increaseHumanity", { amount: new Decimal(1000) }, { root: true });
+                            // increase humanity by 300 every 10 sec
+                            commit("player/increaseHumanity", { amount: new Decimal(300) }, { root: true });
                         })
-                    }, 30000));
+                    }, 10000));
                     break;
                 case "Tools":
                     commit("saveUpgradesIntervalID", setInterval(() => {
                         // dispatch upgrade action. Promise allows to be independent and repeat the action
                         new Promise(() => {
-                            // increase humanity by 1000 every 30 sec
+                            // increase survival every 10 sec
                             commit("player/increaseVirtueAmount", { type: 'Survival', amount: new Decimal(1) }, { root: true });
                         })
-                    }, 30000));
+                    }, 10000));
                     break;
             }
         },
