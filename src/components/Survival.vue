@@ -17,7 +17,7 @@
               class="mx-auto mt-n8"
               :color="
                 virtueUpgraded.Survival[upgrade.name].bought
-                  ? 'secondary'
+                  ? 'accent'
                   : 'null'
               "
               height="150"
