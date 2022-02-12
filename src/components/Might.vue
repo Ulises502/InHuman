@@ -4,7 +4,10 @@
       >-- Might --</v-card-subtitle
     >
     <v-card-text>
-      <div class="text--secondary text-center mb-5">Distribute troops to increase Humanity production from Survival (Defence) or Might (Attack). Effect is based on current Might.</div>
+      <div class="text--secondary text-center mb-5">
+        Distribute troops to increase Humanity production from Survival
+        (Defence) or Might (Attack). Effect is based on current Might.
+      </div>
 
       <v-slider
         v-model="mightBonus"
@@ -53,7 +56,7 @@ export default {
       },
       // setter
       set: function (newValue) {
-        this.$store.commit("player/setMightBonus", {amount: newValue});
+        this.$store.commit("player/setMightBonus", { amount: newValue });
       },
     },
   },

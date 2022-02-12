@@ -221,7 +221,7 @@ const player = {
 
         // set might bonus
         setMightBonus(state, payload) {
-            state.virtues.Might.mightBonus = payload.amount
+            state.virtueUpgraded.Might.mightBonus = payload.amount
         },
 
 
