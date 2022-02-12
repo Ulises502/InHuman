@@ -80,8 +80,9 @@
         </v-card-text>
         <v-card-actions v-show="virtues.Survival.amount.gte(20)">
           <v-card block outlined text tile @click="softReset(virtueReset)" width="100%" class="text-center">
-            <p class="text-uppercase mb-1">Virtue Challange</p>
-            <p class="text-caption mb-0">Cost: 50 Survival</p>
+            <p class="text-uppercase mb-1">Unlock new virtue</p>
+            <p class="text-caption mb-0">Lose Humanity progress to birth a new generation.</p>
+            <p class="text-caption mb-0">Cost: 20 Survival</p>
           </v-card>
         </v-card-actions>
       </v-card>
