@@ -6,6 +6,50 @@ const game = {
         gameLoopIntervalId: null,
         messages: "",
         drawer: false,
+        virtues: {
+            Survival: {
+                name: "Survival",
+                cost: new Decimal(50),
+                multiplier: new Decimal(1),
+                costMult: new Decimal(1e3),
+            },
+            Might: {
+                name: "Might",
+                cost: new Decimal(250),
+                multiplier: new Decimal(2),
+                costMult: new Decimal(1e4),
+            },
+            Faith: {
+                name: "Faith",
+                cost: new Decimal(1e3),
+                multiplier: new Decimal(4),
+                costMult: new Decimal(1e5),
+            },
+            Knowledge: {
+                name: "Knowledge",
+                cost: new Decimal(5e6),
+                multiplier: new Decimal(8),
+                costMult: new Decimal(1e6),
+            },
+            Cooperation: {
+                name: "Cooperation",
+                cost: new Decimal(2e8),
+                multiplier: new Decimal(16),
+                costMult: new Decimal(1e7),
+            },
+            Culture: {
+                name: "Culture",
+                cost: new Decimal(7.5e9),
+                multiplier: new Decimal(32),
+                costMult: new Decimal(1e8),
+            },
+            Ethics: {
+                name: "Ethics",
+                cost: new Decimal(3e11),
+                multiplier: new Decimal(64),
+                costMult: new Decimal(1e9),
+            },
+        },
         virtueUpgrades: {
             Survival: {
                 Fire: {

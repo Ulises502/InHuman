@@ -4,9 +4,9 @@
     <v-col cols="12" sm="6" md="3">
       <v-card elevation="2">
         <v-card-text>
-          <v-btn small @click="live" class="mt-n1" v-show="showLive()"
-            >Live <v-icon right>mdi-account-multiple</v-icon></v-btn
-          >
+          <v-btn small @click="live" class="mt-n1" v-show="showLive()">
+            Live <v-icon right>mdi-account-multiple</v-icon>
+          </v-btn>
           <v-btn
             small
             color="error"
@@ -55,12 +55,9 @@
               </v-list>
             </v-col>
             <v-col cols="7" class="py-1 px-0 ps-2">
-              <div
-                v-show="showVirtue(virtue.name)"
-                class="mt-2"
-              >
-                <span class="info--text me-1"> ({{ virtue.bought }}) </span
-                ><v-chip
+              <div class="mt-2">
+                <span class="info--text me-1"> ({{ virtue.bought }}) </span>
+                <v-chip
                   small
                   class="ms-3"
                   @click="buy(virtue.name)"
@@ -68,7 +65,7 @@
                 >
                   Cost:
                   {{
-                    virtue.cost.lt(10000)
+                    virtue.cost.lt(1e5)
                       ? virtue.cost.toFixed(0)
                       : virtue.cost.toExponential()
                   }}
@@ -79,9 +76,19 @@
           </v-row>
         </v-card-text>
         <v-card-actions v-show="virtues.Survival.amount.gte(20)">
-          <v-card block outlined text tile @click="softReset(virtueReset)" width="100%" class="text-center">
+          <v-card
+            block
+            outlined
+            text
+            tile
+            @click="softReset(virtueReset)"
+            width="100%"
+            class="text-center"
+          >
             <p class="text-uppercase mb-1">Unlock new virtue</p>
-            <p class="text-caption mb-0">Lose Humanity progress to birth a new generation.</p>
+            <p class="text-caption mb-0">
+              Lose Humanity progress to birth a new generation.
+            </p>
             <p class="text-caption mb-0">Cost: 20 Survival</p>
           </v-card>
         </v-card-actions>

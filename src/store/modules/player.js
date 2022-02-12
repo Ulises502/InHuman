@@ -3,7 +3,7 @@ import Decimal from 'decimal.js';
 const player = {
     namespaced: true,
     state: {
-        humanity: new Decimal(5000),
+        humanity: new Decimal(50000),
         humanityPerSec: new Decimal(0),
         ruins: new Decimal(0),
         lived: new Decimal(0),
@@ -231,7 +231,6 @@ const player = {
             state.humanityPerSec = new Decimal(0)
             for (let virtue in state.virtues) {
                 state.virtues[virtue]['amount'] = new Decimal(0)
-                state.virtues[virtue]['cost'] = new Decimal(50)
                 state.virtues[virtue]['bought'] = new Decimal(0)
             }
         },
@@ -250,10 +249,14 @@ const player = {
         },
 
         // reset player state
-        resetPlayerState({ commit }) {
+        resetPlayerState({ commit, rootState, state }) {
             commit("resetPlayerState")
             // add 1 soft reset
             commit("increaseSoftReset")
+            // set original costs of each virtue
+            for (let virtue in state.virtues) {
+                state.virtues[virtue]['cost'] = rootState.game.virtues[virtue]['cost']
+            }
         },
     },
     modules: {},
