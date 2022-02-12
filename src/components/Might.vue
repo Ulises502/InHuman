@@ -30,9 +30,6 @@
 
 <script>
 export default {
-  data: () => ({
-    mightBonus: 0,
-  }),
   methods: {
     decrement() {
       this.mightBonus--;
@@ -48,6 +45,16 @@ export default {
       if (this.mightBonus < 60) return "green";
       if (this.mightBonus < 80) return "orange";
       return "red";
+    },
+    mightBonus: {
+      // getter
+      get: function () {
+        return this.$store.state.player.virtueUpgraded.Might.mightBonus;
+      },
+      // setter
+      set: function (newValue) {
+        this.$store.commit("player/setMightBonus", {amount: newValue});
+      },
     },
   },
 };

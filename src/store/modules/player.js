@@ -87,6 +87,9 @@ const player = {
                     bought: false,
                 },
             },
+            Might: {
+                mightBonus: 0,
+            },
         },
         virtueReset: new Decimal(0),
         options: {
@@ -95,17 +98,76 @@ const player = {
     },
     getters: {
         // calculate total humanity per second
-        getHumanityPerSec: (state) => {
-            let humanityPerSec = new Decimal(0)
-            for (let virtue in state.virtues) {
-                // use the whole virtue object to enter itself and get the amount
-                humanityPerSec = humanityPerSec.plus(state.virtues[virtue].amount.times(state.virtues[virtue].multiplier))
-            }
+        getHumanityPerSec: (state, getters) => {
+            let humanityPerSec = new Decimal(0);
+
+            // get total humanity per second from each virtue's getter
+            humanityPerSec = humanityPerSec.plus(getters.getHumanityPerSecFromSurvival);
+            humanityPerSec = humanityPerSec.plus(getters.getHumanityPerSecFromMight);
+            humanityPerSec = humanityPerSec.plus(getters.getHumanityPerSecFromFaith);
+            humanityPerSec = humanityPerSec.plus(getters.getHumanityPerSecFromKnowledge);
+            humanityPerSec = humanityPerSec.plus(getters.getHumanityPerSecFromCooperation);
+            humanityPerSec = humanityPerSec.plus(getters.getHumanityPerSecFromCulture);
+            humanityPerSec = humanityPerSec.plus(getters.getHumanityPerSecFromEthics);
+
+            // if one ruin has been purchased, add 1 humanity per second
             if (state.ruins.gt(0)) {
                 humanityPerSec = humanityPerSec.plus(1)
             }
+
+            // return humanityPerSec
+            return humanityPerSec;
+        },
+        // calculate humanity per sec from Survival
+        getHumanityPerSecFromSurvival: (state) => {
+            let humanityPerSec = new Decimal(0)
+            humanityPerSec = humanityPerSec.plus(state.virtues['Survival'].amount.times(state.virtues['Survival'].multiplier))
+            // if the player has bought one Might virtue, add the Defence bonus to humanity from Survival
+            if (state.virtues['Might'].bought > 0) {
+                humanityPerSec = humanityPerSec.plus(humanityPerSec.times(state.virtues['Might'].amount.times((100-state.virtueUpgraded['Might'].mightBonus)/100)))
+            }
             return humanityPerSec
-        }
+        },
+        // calculate humanity per sec from Might
+        getHumanityPerSecFromMight: (state) => {
+            let humanityPerSec = new Decimal(0)
+            humanityPerSec = humanityPerSec.plus(state.virtues['Might'].amount.times(state.virtues['Might'].multiplier))
+            // if the player has bought one Might virtue, add the bonus from mightBonus
+            if (state.virtues['Might'].bought > 0) {
+                humanityPerSec = humanityPerSec.plus(humanityPerSec.times(state.virtues['Might'].amount.times((state.virtueUpgraded['Might'].mightBonus)/100)))
+            }
+            return humanityPerSec
+        },
+        // calculate humanity per sec from Faith
+        getHumanityPerSecFromFaith: (state) => {
+            let humanityPerSec = new Decimal(0)
+            humanityPerSec = humanityPerSec.plus(state.virtues['Faith'].amount.times(state.virtues['Faith'].multiplier))
+            return humanityPerSec
+        },
+        // calculate humanity per sec from Knowledge
+        getHumanityPerSecFromKnowledge: (state) => {
+            let humanityPerSec = new Decimal(0)
+            humanityPerSec = humanityPerSec.plus(state.virtues['Knowledge'].amount.times(state.virtues['Knowledge'].multiplier))
+            return humanityPerSec
+        },
+        // calculate humanity per sec from Cooperation
+        getHumanityPerSecFromCooperation: (state) => {
+            let humanityPerSec = new Decimal(0)
+            humanityPerSec = humanityPerSec.plus(state.virtues['Cooperation'].amount.times(state.virtues['Cooperation'].multiplier))
+            return humanityPerSec
+        },
+        // calculate humanity per sec from Culture
+        getHumanityPerSecFromCulture: (state) => {
+            let humanityPerSec = new Decimal(0)
+            humanityPerSec = humanityPerSec.plus(state.virtues['Culture'].amount.times(state.virtues['Culture'].multiplier))
+            return humanityPerSec
+        },
+        // calculate humanity per sec from Ethics
+        getHumanityPerSecFromEthics: (state) => {
+            let humanityPerSec = new Decimal(0)
+            humanityPerSec = humanityPerSec.plus(state.virtues['Ethics'].amount.times(state.virtues['Ethics'].multiplier))
+            return humanityPerSec
+        },
     },
     mutations: {
         // increase humanity by amount bought
@@ -155,6 +217,11 @@ const player = {
         // increase virtue amount
         increaseVirtueAmount(state, payload) {
             state.virtues[payload.type]['amount'] = state.virtues[payload.type]['amount'].plus(payload.amount)
+        },
+
+        // set might bonus
+        setMightBonus(state, payload) {
+            state.virtues.Might.mightBonus = payload.amount
         },
 
 
