@@ -14,12 +14,16 @@
         class="pb-0 font-weight-medium text-center text-subtitle-1"
         >-- Survival --</v-card-subtitle
       >
-      <v-card elevation="5" class="mx-10 mt-5">
+      <v-card elevation="8" class="mx-10 mt-5">
         <v-card-text>
           <v-row>
-            <v-col cols="4">
+            <v-col cols="6">
               <p class="mb-0 font-weight-medium text-center text-h6">
-                {{ lived }}
+                {{
+                  lived.lt(1e5)
+                    ? lived.toFixed(0)
+                    : lived.toExponential(2)
+                }}
               </p>
               <p
                 class="
@@ -31,8 +35,7 @@
                 Deaths
               </p>
             </v-col>
-            <v-col cols="4"></v-col>
-            <v-col cols="4"></v-col>
+            <v-col cols="6"></v-col>
           </v-row>
         </v-card-text>
       </v-card>
