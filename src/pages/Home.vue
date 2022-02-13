@@ -28,7 +28,9 @@
                 ? humanity.toFixed(2)
                 : humanity.lt(100)
                 ? humanity.toFixed(1)
-                : humanity.toFixed(0)
+                : humanity.lt(1e5)
+                ? humanity.toFixed(0)
+                : humanity.toExponential(2)
             }}
             <span class="success--text mx-2">(+ {{ humanityPerSec }}/sec)</span>
           </p>
@@ -67,7 +69,7 @@
                   {{
                     virtue.cost.lt(1e5)
                       ? virtue.cost.toFixed(0)
-                      : virtue.cost.toExponential()
+                      : virtue.cost.toExponential(2)
                   }}
                   H
                 </v-chip>
