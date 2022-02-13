@@ -9,12 +9,12 @@
       <v-avatar size="150">
         <img src="https://picsum.photos/510/300?random" alt="Altar" />
       </v-avatar>
-      <p class="mt-2">Offer a sacrifice:</p>
+      <p class="mt-2">Gain multiplier to Faith<v-icon color="accent" class="mt-n1 ms-2">mdi-bird</v-icon> <span class="font-weight-regular text-center text-subtitle-2">x55</span></p>
       <v-select
         background-color="accent"
         :items="items"
         label="Sacrifice"
-        hint="Gain multiplier to Faith"
+        hint="Offer a sacrifice"
         persistent-hint
         solo
       ></v-select>
