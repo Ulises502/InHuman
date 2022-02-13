@@ -6,8 +6,8 @@
       src="https://picsum.photos/510/300?random"
       :gradient="
         $vuetify.theme.dark
-          ? 'to bottom, rgba(30,30,30,1), rgba(0,0,0,0.4) 30%, rgba(30,30,30,1)'
-          : 'to bottom, rgba(255,255,255,1), rgba(255,255,255,0.4) 30%, rgba(255,255,255,1)'
+          ? 'to bottom, rgba(30,30,30,1), rgba(0,0,0,0.2) 30%, rgba(30,30,30,1)'
+          : 'to bottom, rgba(255,255,255,1), rgba(255,255,255,0.2) 30%, rgba(255,255,255,1)'
       "
     >
       <v-card-subtitle
