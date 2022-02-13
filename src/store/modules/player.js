@@ -3,7 +3,7 @@ import Decimal from 'decimal.js';
 const player = {
     namespaced: true,
     state: {
-        humanity: new Decimal(50000),
+        humanity: new Decimal(1e10),
         humanityPerSec: new Decimal(0),
         ruins: new Decimal(0),
         lived: new Decimal(0),
@@ -227,7 +227,7 @@ const player = {
 
         // reset player state
         resetPlayerState(state) {
-            state.humanity = new Decimal(5000)
+            state.humanity = new Decimal(1e10)
             state.humanityPerSec = new Decimal(0)
             for (let virtue in state.virtues) {
                 state.virtues[virtue]['amount'] = new Decimal(0)
