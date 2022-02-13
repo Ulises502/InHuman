@@ -150,7 +150,7 @@ export default {
         this.$store.dispatch("game/buy", virtue);
       }
       // show message if first survival bought
-      if (this.virtues.Survival.amount.equals(1)) {
+      if (this.virtues.Survival.amount.equals(1) && virtue === "Survival") {
         this.$store.dispatch(
           "game/sendMessage",
           "- People's first instict is to survive.\n"
