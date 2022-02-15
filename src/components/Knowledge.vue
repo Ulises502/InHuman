@@ -25,7 +25,13 @@
         <v-avatar size="250" class="mt-n5">
           <v-img src="https://picsum.photos/510/300?random" alt="Altar">
             <v-row class="align-center justify-center">
-              <v-progress-circular
+              <v-sheet
+            rounded="circle"
+            class="mx-auto"
+            height="100"
+            width="100"
+          >
+          <v-progress-circular
                 :rotate="-90"
                 :size="100"
                 :width="15"
@@ -34,7 +40,8 @@
                 class="align-center justify-center"
               >
                 286
-              </v-progress-circular>
+              </v-progress-circular></v-sheet>
+              
             </v-row>
           </v-img>
         </v-avatar>
