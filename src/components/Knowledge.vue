@@ -26,22 +26,22 @@
           <v-img src="https://picsum.photos/510/300?random" alt="Altar">
             <v-row class="align-center justify-center">
               <v-sheet
-            rounded="circle"
-            class="mx-auto"
-            height="100"
-            width="100"
-          >
-          <v-progress-circular
-                :rotate="-90"
-                :size="100"
-                :width="15"
-                :value="35"
-                :color="$vuetify.theme.dark ? '#fff' : '#000'"
-                class="align-center justify-center"
+                rounded="circle"
+                class="mx-auto"
+                height="100"
+                width="100"
               >
-                286
-              </v-progress-circular></v-sheet>
-              
+                <v-progress-circular
+                  :rotate="-90"
+                  :size="100"
+                  :width="15"
+                  :value="35"
+                  :color="$vuetify.theme.dark ? '#fff' : '#000'"
+                  class="align-center justify-center"
+                >
+                  286
+                </v-progress-circular></v-sheet
+              >
             </v-row>
           </v-img>
         </v-avatar>
