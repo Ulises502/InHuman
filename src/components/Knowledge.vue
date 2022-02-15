@@ -27,13 +27,13 @@
             <v-row class="align-center justify-center">
               <v-sheet
                 rounded="circle"
-                class="mx-auto"
-                height="100"
-                width="100"
+                class="mx-auto align-center justify-center"
+                height="148"
+                width="148"
               >
                 <v-progress-circular
                   :rotate="-90"
-                  :size="100"
+                  :size="150"
                   :width="15"
                   :value="35"
                   :color="$vuetify.theme.dark ? '#fff' : '#000'"
@@ -55,9 +55,69 @@
         </v-btn>
       </v-row>
     </v-img>
+
+    <v-card-text>
+      <v-select
+        v-model="e1"
+        :items="states"
+        menu-props="auto"
+        label="Select"
+        hide-details
+        prepend-icon="mdi-eye-outline"
+        single-line
+      ></v-select>
+      <v-select
+        v-model="e2"
+        :items="states"
+        menu-props="auto"
+        label="Select"
+        hide-details
+        prepend-icon="mdi-lightbulb-on-outline"
+        single-line
+      ></v-select>
+      <v-select
+        v-model="e3"
+        :items="states"
+        menu-props="auto"
+        label="Select"
+        hide-details
+        prepend-icon="mdi-test-tube"
+        single-line
+      ></v-select>
+      <v-select
+        v-model="e4"
+        :items="states"
+        menu-props="auto"
+        label="Select"
+        hide-details
+        prepend-icon="mdi-flare"
+        single-line
+      ></v-select>
+    </v-card-text>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      states: [
+          'Alabama', 'Alaska', 'American Samoa', 'Arizona',
+          'Arkansas', 'California', 'Colorado', 'Connecticut',
+          'Delaware', 'District of Columbia', 'Federated States of Micronesia',
+          'Florida', 'Georgia', 'Guam', 'Hawaii', 'Idaho',
+          'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky',
+          'Louisiana', 'Maine', 'Marshall Islands', 'Maryland',
+          'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi',
+          'Missouri', 'Montana', 'Nebraska', 'Nevada',
+          'New Hampshire', 'New Jersey', 'New Mexico', 'New York',
+          'North Carolina', 'North Dakota', 'Northern Mariana Islands', 'Ohio',
+          'Oklahoma', 'Oregon', 'Palau', 'Pennsylvania', 'Puerto Rico',
+          'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee',
+          'Texas', 'Utah', 'Vermont', 'Virgin Island', 'Virginia',
+          'Washington', 'West Virginia', 'Wisconsin', 'Wyoming',
+        ],
+    };
+  },
+};
 </script>
