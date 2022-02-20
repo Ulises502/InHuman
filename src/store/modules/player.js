@@ -91,7 +91,7 @@ const player = {
                 mightBonus: 0,
             },
             Faith: {
-                faithBonus: 0,
+                faithBonus: 1,
                 bonus: {
                     Humanity: 1.5,
                     Survival: 2.5,
@@ -177,6 +177,8 @@ const player = {
         getHumanityPerSecFromFaith: (state) => {
             let humanityPerSec = new Decimal(0)
             humanityPerSec = humanityPerSec.plus(state.virtues['Faith'].amount.times(state.virtues['Faith'].multiplier))
+            // multiply humanityPerSec by the sacrifice bonus
+            humanityPerSec = humanityPerSec.times(state.virtueUpgraded['Faith'].faithBonus)
             return humanityPerSec
         },
         // calculate humanity per sec from Knowledge
