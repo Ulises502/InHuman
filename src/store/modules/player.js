@@ -90,6 +90,19 @@ const player = {
             Might: {
                 mightBonus: 0,
             },
+            Faith: {
+                faithBonus: 0,
+                bonus: {
+                    Humanity: 1.5,
+                    Survival: 2.5,
+                    Might: 3.5,
+                    Faith: 4.5,
+                    Knowledge: 5.5,
+                    Cooperation: 6.5,
+                    Culture: 7.5,
+                    Ethics: 8.5,
+                }
+            },
             Knowledge: {
                 "1": {
                     name: "Agriculture",
@@ -244,6 +257,10 @@ const player = {
         // set might bonus
         setMightBonus(state, payload) {
             state.virtueUpgraded.Might.mightBonus = payload.amount
+        },
+        // set faith bonus
+        setFaithBonus(state, payload) {
+            state.virtueUpgraded.Faith.faithBonus = payload.amount
         },
 
 
