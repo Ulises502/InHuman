@@ -3,12 +3,9 @@
     <v-card-subtitle class="font-weight-medium text-center text-subtitle-1"
       >-- Knowledge --</v-card-subtitle
     >
-    <v-card-text class="pb-0">
-      <v-select :items="states" label="Discover" outlined></v-select>
-    </v-card-text>
     <v-img
       class="d-flex align-center text-center"
-      height="350px"
+      height="300px"
       src="https://picsum.photos/510/300?random"
       :gradient="
         $vuetify.theme.dark
@@ -16,86 +13,106 @@
           : 'to bottom, rgba(255,255,255,0.5), rgba(255,255,255,0.5)'
       "
     >
-      <v-row class="justify-center mb-n5">
-        <v-btn style="z-index: 100" elevation="8" fab>
-          <v-icon> mdi-eye-outline </v-icon>
-        </v-btn>
-      </v-row>
+      <v-card-text class="text-uppercase">Progress</v-card-text>
       <v-row class="align-center justify-center">
-        <v-btn style="z-index: 100" elevation="8" fab class="mt-n5 ms-8 me-n8">
-          <v-icon> mdi-flare </v-icon>
-        </v-btn>
         <v-avatar size="250" class="mt-n5">
-          <v-img src="https://picsum.photos/510/300?random" alt="Altar">
-            <v-row class="align-center justify-center">
-              <v-sheet
-                rounded="circle"
-                class="mx-auto align-center justify-center"
-                height="148"
-                width="148"
+          <v-row class="align-center justify-center">
+            <v-sheet
+              rounded="circle"
+              class="mx-auto align-center justify-center"
+              height="150"
+              width="150"
+            >
+              <v-progress-circular
+                :rotate="-90"
+                :size="150"
+                :width="25"
+                :value="35"
+                :color="$vuetify.theme.dark ? '#fff' : '#000'"
+                class="align-center justify-center"
               >
-                <v-progress-circular
-                  :rotate="-90"
-                  :size="150"
-                  :width="15"
-                  :value="35"
-                  :color="$vuetify.theme.dark ? '#fff' : '#000'"
-                  class="align-center justify-center"
-                >
-                  286
-                </v-progress-circular></v-sheet
-              >
-            </v-row>
-          </v-img>
+                35 %
+              </v-progress-circular></v-sheet
+            >
+          </v-row>
         </v-avatar>
-        <v-btn elevation="8" fab class="mt-n5 me-8 ms-n8">
-          <v-icon> mdi-lightbulb-on-outline </v-icon>
-        </v-btn>
-      </v-row>
-      <v-row class="justify-center mt-n8">
-        <v-btn elevation="8" fab>
-          <v-icon> mdi-test-tube </v-icon>
-        </v-btn>
       </v-row>
     </v-img>
 
+    <v-card elevation="8" class="mx-10 mt-n5 mb-5">
+      <v-card-text>
+        <v-row>
+          <v-col cols="6">
+            <p class="mb-0 font-weight-bold text-center text-h6">124</p>
+            <p
+              class="
+                mb-0
+                font-weight-regular
+                text-center text-caption text--disabled
+              "
+            >
+              Observations
+            </p>
+          </v-col>
+          <v-col cols="6">
+            <p class="mb-0 font-weight-bold text-center text-h6">1</p>
+            <p
+              class="
+                mb-0
+                font-weight-regular
+                text-center text-caption text--disabled
+              "
+            >
+              Techs
+            </p>
+          </v-col>
+        </v-row>
+      </v-card-text>
+    </v-card>
+
     <v-card-text>
-      <v-select
-        v-model="e1"
-        :items="states"
-        menu-props="auto"
-        label="Select"
-        hide-details
-        prepend-icon="mdi-eye-outline"
-        single-line
-      ></v-select>
-      <v-select
-        v-model="e2"
-        :items="states"
-        menu-props="auto"
-        label="Select"
-        hide-details
-        prepend-icon="mdi-lightbulb-on-outline"
-        single-line
-      ></v-select>
-      <v-select
-        v-model="e3"
-        :items="states"
-        menu-props="auto"
-        label="Select"
-        hide-details
-        prepend-icon="mdi-test-tube"
-        single-line
-      ></v-select>
-      <v-select
-        v-model="e4"
-        :items="states"
-        menu-props="auto"
-        label="Select"
-        hide-details
-        prepend-icon="mdi-flare"
-        single-line
-      ></v-select>
+      <v-row>
+        <v-col cols="6" class="d-flex align-center">
+          <v-btn block>Discover</v-btn>
+        </v-col>
+        <v-col cols="6">
+          <p
+            class="mb-0 font-weight-medium text-center text--secondary text-h6"
+          >
+            x 3
+          </p>
+          <p
+            class="
+              mb-0
+              font-weight-regular
+              text-center text-caption text--disabled
+            "
+          >
+            Knowledge Bonus
+          </p>
+        </v-col>
+      </v-row>
+    </v-card-text>
+
+    <v-divider></v-divider>
+
+    <v-card-text>
+      <v-card @click="buyTech()" elevation="8">
+        <v-card-text
+          class="font-weight-medium text-center text--primary text-uppercase"
+        >
+          Agriculture
+          <p
+            class="
+              mb-0
+              font-weight-regular
+              text-center text-caption text--disabled
+            "
+          >
+            Unlock: 50 Knowledge
+          </p>
+        </v-card-text>
+      </v-card>
     </v-card-text>
   </div>
 </template>
@@ -165,10 +182,6 @@ export default {
         "Wisconsin",
         "Wyoming",
       ],
-      e1: "",
-      e2: "",
-      e3: "",
-      e4: "",
     };
   },
 };
