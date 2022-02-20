@@ -90,6 +90,28 @@ const player = {
             Might: {
                 mightBonus: 0,
             },
+            Knowledge: {
+                "1": {
+                    name: "Agriculture",
+                    bought: false,
+                },
+                "2": {
+                    name: "Pottery",
+                    bought: false,
+                },
+                "3": {
+                    name: "Husbundry",
+                    bought: false,
+                },
+                "4": {
+                    name: "Archery",
+                    bought: false,
+                },
+                "5": {
+                    name: "Mining",
+                    bought: false,
+                },
+            },
         },
         virtueReset: new Decimal(0),
         options: {

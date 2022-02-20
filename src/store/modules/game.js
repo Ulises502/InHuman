@@ -71,6 +71,33 @@ const game = {
                     description: "Gain Survival/10 sec",
                 },
             },
+            Knowledge: {
+                "1": {
+                    name: "Agriculture",
+                    cost: new Decimal(50),
+                    icon: "mdi-seed",
+                },
+                "2": {
+                    name: "Pottery",
+                    cost: new Decimal(1e6),
+                    icon: "mdi-pot",
+                },
+                "3": {
+                    name: "Husbundry",
+                    cost: new Decimal(1e7),
+                    icon: "mdi-baby",
+                },
+                "4": {
+                    name: "Archery",
+                    cost: new Decimal(1e8),
+                    icon: "mdi-bow-arrow",
+                },
+                "5": {
+                    name: "Mining",
+                    cost: new Decimal(1e9),
+                    icon: "mdi-pick",
+                },
+            },
         },
         upgradesIntervalID: [],
     },

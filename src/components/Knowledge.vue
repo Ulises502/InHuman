@@ -96,12 +96,15 @@
 
     <v-divider></v-divider>
 
-    <v-card-text>
-      <v-card @click="buyTech()" elevation="8">
+    <v-card-text
+      v-for="tech in virtueUpgrades.Knowledge"
+      v-bind:key="tech.name"
+    >
+      <v-card @click="buyTech()" v-show="virtues.Knowledge.bought.gt(tech.cost.dividedBy(2))" elevation="8">
         <v-card-text
           class="font-weight-medium text-center text--primary text-uppercase"
         >
-          Agriculture
+          {{ tech.name }} <v-icon>{{ tech.icon }} </v-icon>
           <p
             class="
               mb-0
@@ -109,7 +112,7 @@
               text-center text-caption text--disabled
             "
           >
-            Unlock: 50 Knowledge
+            Unlock: {{ tech.cost }} Knowledge
           </p>
         </v-card-text>
       </v-card>
@@ -118,6 +121,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
   data() {
     return {
@@ -183,6 +187,13 @@ export default {
         "Wyoming",
       ],
     };
+  },
+  computed: {
+    ...mapState({
+      virtueUpgrades: (state) => state.game.virtueUpgrades,
+      virtueUpgraded: (state) => state.player.virtueUpgraded,
+      virtues: (state) => state.player.virtues,
+    }),
   },
 };
 </script>
