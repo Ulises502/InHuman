@@ -28,7 +28,6 @@ import { mapState } from 'vuex';
 export default {
   data: () => {
     return {
-      sacrifice: null,
       items: ["Humanity", "Survival", "Might"],
     };
   },
@@ -41,6 +40,16 @@ export default {
       // setter
       set: function (newValue) {
         this.$store.commit("player/setFaithBonus", { amount: newValue });
+      },
+    },
+    sacrifice: {
+      // getter
+      get: function () {
+        return this.$store.state.player.virtueUpgraded.Faith.sacrifice;
+      },
+      // setter
+      set: function (newValue) {
+        this.$store.commit("player/setFaithSacrifice", { amount: newValue });
       },
     },
     ...mapState({

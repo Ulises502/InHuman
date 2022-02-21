@@ -92,6 +92,8 @@ const player = {
             },
             Faith: {
                 faithBonus: 1,
+                sacrifice: "",
+                consumption: new Decimal(1),
                 bonus: {
                     Humanity: 1.5,
                     Survival: 2.5,
@@ -263,6 +265,10 @@ const player = {
         // set faith bonus
         setFaithBonus(state, payload) {
             state.virtueUpgraded.Faith.faithBonus = payload.amount
+        },
+        // set faith sacrifice
+        setFaithSacrifice(state, payload) {
+            state.virtueUpgraded.Faith.sacrifice = payload.amount
         },
 
 
