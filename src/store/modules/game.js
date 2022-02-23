@@ -100,6 +100,7 @@ const game = {
             },
         },
         upgradesIntervalID: [],
+        faithIntervalID: null,
     },
     getters: {
 
@@ -140,6 +141,16 @@ const game = {
         // reset drawer
         resetDrawer(state) {
             state.drawer = false
+        },
+
+        // save faith interval id
+        saveFaithIntervalID(state, id) {
+            state.faithIntervalID = id
+        },
+        // empty faith interval id
+        clearFaithInterval(state) {
+            clearInterval(state.faithIntervalID)
+            state.faithIntervalID = null
         },
     },
     actions: {
@@ -205,7 +216,7 @@ const game = {
             // reset drawer
             commit("setDrawer", false)
             // make next virtue showable
-            switch(resetNumber.toFixed()) {
+            switch (resetNumber.toFixed()) {
                 case '0':
                     commit("player/setVirtueShowable", "Might", { root: true })
                     break;
@@ -224,7 +235,7 @@ const game = {
                 case '5':
                     commit("player/setVirtueShowable", "Ethics", { root: true })
                     break;
-             }
+            }
 
             // dispatch reset player state
             dispatch("player/resetPlayerState", null, { root: true }).then(() => {
@@ -232,7 +243,7 @@ const game = {
                 dispatch("startInterval")
             })
         },
-                            
+
 
         buyUpgrade({ commit, state }, upgrade) {
             commit("player/changeVirtueUpgrade", upgrade, { root: true });
@@ -263,6 +274,47 @@ const game = {
                     break;
             }
         },
+
+        // start sacrifice loop
+        loopSacrifice({ commit, dispatch }, sacrifice) {
+            // clear previous faith interval
+            commit("clearFaithInterval")
+            commit("saveFaithIntervalID", setInterval(() => {
+                // dispatch sacrifice action. Promise allows to be independent and repeat the action
+                new Promise(() => {
+                    dispatch("makeSelectedSacrifice", sacrifice)
+                })
+            }, 1000));
+        },
+        // make selected sacrifice
+        makeSelectedSacrifice({ commit }, sacrifice) {
+            switch (sacrifice) {
+                case "Humanity":
+                    commit("player/decreaseHumanity", { amount: new Decimal(25) }, { root: true });
+                    break;
+                case "Survival":
+                    commit("player/decreaseVirtueAmount", { type: 'Survival', amount: new Decimal(2) }, { root: true });
+                    break;
+                case "Might":
+                    commit("player/decreaseVirtueAmount", { type: 'Might', amount: new Decimal(2) }, { root: true });
+                    break;
+                case "Faith":
+                    commit("player/decreaseVirtueAmount", { type: 'Faith', amount: new Decimal(1) }, { root: true });
+                    break;
+                case "Knowledge":
+                    commit("player/decreaseVirtueAmount", { type: 'Knowledge', amount: new Decimal(1) }, { root: true });
+                    break;
+                case "Cooperation":
+                    commit("player/decreaseVirtueAmount", { type: 'Cooperation', amount: new Decimal(1) }, { root: true });
+                    break;
+                case "Culture":
+                    commit("player/decreaseVirtueAmount", { type: 'Culture', amount: new Decimal(1) }, { root: true });
+                    break;
+                case "Ethics":
+                    commit("player/decreaseVirtueAmount", { type: 'Ethics', amount: new Decimal(1) }, { root: true });
+                    break;
+            }
+        }
     },
     modules: {},
 };

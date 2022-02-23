@@ -161,7 +161,7 @@ const player = {
             humanityPerSec = humanityPerSec.plus(state.virtues['Survival'].amount.times(state.virtues['Survival'].multiplier))
             // if the player has bought one Might virtue, add the Defence bonus to humanity from Survival
             if (state.virtues['Might'].bought > 0) {
-                humanityPerSec = humanityPerSec.plus(humanityPerSec.times(state.virtues['Might'].amount.times((100-state.virtueUpgraded['Might'].mightBonus)/100)))
+                humanityPerSec = humanityPerSec.plus(humanityPerSec.times(state.virtues['Might'].amount.times((100 - state.virtueUpgraded['Might'].mightBonus) / 100)))
             }
             return humanityPerSec
         },
@@ -171,7 +171,7 @@ const player = {
             humanityPerSec = humanityPerSec.plus(state.virtues['Might'].amount.times(state.virtues['Might'].multiplier))
             // if the player has bought one Might virtue, add the bonus from mightBonus
             if (state.virtues['Might'].bought > 0) {
-                humanityPerSec = humanityPerSec.plus(humanityPerSec.times(state.virtues['Might'].amount.times((state.virtueUpgraded['Might'].mightBonus)/100)))
+                humanityPerSec = humanityPerSec.plus(humanityPerSec.times(state.virtues['Might'].amount.times((state.virtueUpgraded['Might'].mightBonus) / 100)))
             }
             return humanityPerSec
         },
@@ -287,6 +287,11 @@ const player = {
         },
         setVirtueShowable(state, virtue) {
             state.virtues[virtue]['show'] = true
+        },
+
+        // decrease virtue amount
+        decreaseVirtueAmount(state, payload) {
+            state.virtues[payload.type]['amount'] = state.virtues[payload.type]['amount'].minus(payload.amount)
         },
     },
     actions: {

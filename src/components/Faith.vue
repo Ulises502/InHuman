@@ -9,7 +9,14 @@
       <v-avatar size="150">
         <img src="https://picsum.photos/510/300?random" alt="Altar" />
       </v-avatar>
-      <p class="mt-2">Gain multiplier to Faith<v-icon color="accent" class="mt-n1 ms-2">mdi-bird</v-icon> <span class="font-weight-regular text-center text-subtitle-2">x {{faithBonus}} </span></p>
+      <p class="mt-2">
+        Gain multiplier to Faith<v-icon color="accent" class="mt-n1 ms-2"
+          >mdi-bird</v-icon
+        >
+        <span class="font-weight-regular text-center text-subtitle-2"
+          >x {{ faithBonus }}
+        </span>
+      </p>
       <v-select
         v-model="sacrifice"
         background-color="accent"
@@ -24,7 +31,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState } from "vuex";
 export default {
   data: () => {
     return {
@@ -50,6 +57,7 @@ export default {
       // setter
       set: function (newValue) {
         this.$store.commit("player/setFaithSacrifice", { amount: newValue });
+        this.$store.dispatch("game/loopSacrifice", newValue);
       },
     },
     ...mapState({
@@ -62,6 +70,6 @@ export default {
         this.faithBonus = this.virtueUpgraded.Faith.bonus[newValue];
       }
     },
-  }
+  },
 };
 </script>
