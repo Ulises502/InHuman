@@ -15,7 +15,7 @@ const player = {
                 bought: new Decimal(0),
                 show: true,
                 multiplier: new Decimal(1),
-                costMult: new Decimal(1e3),
+                costMult: new Decimal(1.15),
             },
             Might: {
                 name: "Might",
@@ -24,7 +24,7 @@ const player = {
                 bought: new Decimal(0),
                 show: false,
                 multiplier: new Decimal(2),
-                costMult: new Decimal(1e4),
+                costMult: new Decimal(1.25),
             },
             Faith: {
                 name: "Faith",
@@ -33,7 +33,7 @@ const player = {
                 bought: new Decimal(0),
                 show: false,
                 multiplier: new Decimal(4),
-                costMult: new Decimal(1e5),
+                costMult: new Decimal(1.35),
             },
             Knowledge: {
                 name: "Knowledge",
@@ -42,7 +42,7 @@ const player = {
                 bought: new Decimal(0),
                 show: false,
                 multiplier: new Decimal(8),
-                costMult: new Decimal(1e6),
+                costMult: new Decimal(1.45),
             },
             Cooperation: {
                 name: "Cooperation",
@@ -51,7 +51,7 @@ const player = {
                 bought: new Decimal(0),
                 show: false,
                 multiplier: new Decimal(16),
-                costMult: new Decimal(1e7),
+                costMult: new Decimal(1.6),
             },
             Culture: {
                 name: "Culture",
@@ -60,7 +60,7 @@ const player = {
                 bought: new Decimal(0),
                 show: false,
                 multiplier: new Decimal(32),
-                costMult: new Decimal(1e8),
+                costMult: new Decimal(1.75),
             },
             Ethics: {
                 name: "Ethics",
@@ -69,7 +69,7 @@ const player = {
                 bought: new Decimal(0),
                 show: false,
                 multiplier: new Decimal(64),
-                costMult: new Decimal(1e9),
+                costMult: new Decimal(2),
             },
         },
         virtueUpgraded: {
@@ -93,7 +93,16 @@ const player = {
             Faith: {
                 faithBonus: 1,
                 sacrifice: "",
-                consumption: new Decimal(1),
+                consumption: {
+                    Humanity: 25,
+                    Survival: 2,
+                    Might: 2,
+                    Faith: 1,
+                    Knowledge: 1,
+                    Cooperation: 1,
+                    Culture: 1,
+                    Ethics: 1,
+                },
                 bonus: {
                     Humanity: 1.5,
                     Survival: 2.5,
@@ -106,26 +115,29 @@ const player = {
                 }
             },
             Knowledge: {
-                "1": {
-                    name: "Agriculture",
-                    bought: false,
+                technologies: {
+                    "1": {
+                        name: "Agriculture",
+                        bought: false,
+                    },
+                    "2": {
+                        name: "Pottery",
+                        bought: false,
+                    },
+                    "3": {
+                        name: "Husbundry",
+                        bought: false,
+                    },
+                    "4": {
+                        name: "Archery",
+                        bought: false,
+                    },
+                    "5": {
+                        name: "Mining",
+                        bought: false,
+                    },
                 },
-                "2": {
-                    name: "Pottery",
-                    bought: false,
-                },
-                "3": {
-                    name: "Husbundry",
-                    bought: false,
-                },
-                "4": {
-                    name: "Archery",
-                    bought: false,
-                },
-                "5": {
-                    name: "Mining",
-                    bought: false,
-                },
+                discoveryBonus: 1,
             },
         },
         virtueReset: new Decimal(0),
@@ -231,7 +243,7 @@ const player = {
             state.humanity = state.humanity.minus(state.virtues[virtue]['cost'])
             state.virtues[virtue]['bought'] = state.virtues[virtue]['bought'].plus(1)
             state.virtues[virtue]['amount'] = state.virtues[virtue]['amount'].plus(1)
-            state.virtues[virtue]['cost'] = state.virtues[virtue]['cost'].times(1.15).round()
+            state.virtues[virtue]['cost'] = state.virtues[virtue]['cost'].times(state.virtues[virtue]['costMult']).round()
             //if (state.virtues[virtue]['bought'] % 10 === 0 && state.virtues[virtue]['bought'] > 1) {
             //state.virtues[virtue]['cost'] = state.virtues[virtue]['cost'].times(state.virtues[virtue]['costMult']).round()
             //}
