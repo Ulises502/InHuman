@@ -280,7 +280,7 @@ const player = {
         },
         // set faith sacrifice
         setFaithSacrifice(state, payload) {
-            state.virtueUpgraded.Faith.sacrifice = payload.amount
+            state.virtueUpgraded.Faith.sacrifice = payload.type
         },
 
 

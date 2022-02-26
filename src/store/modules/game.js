@@ -295,7 +295,11 @@ const game = {
                 case "Humanity":
                     // if humanity amount is more than 25, then sacrifice 25
                     if (rootState.player.humanity.gte(rootState.player.virtueUpgraded.Faith.consumption.Humanity)) {
+                        commit("player/setFaithBonus", { amount: rootState.player.virtueUpgraded.Faith.bonus[sacrifice] }, { root: true });
                         commit("player/decreaseHumanity", { amount: 25 }, { root: true });
+                    } else {
+                        // set faith bonus to 1
+                        commit("player/setFaithBonus", { amount: 1 }, { root: true });
                     }
                     break;
                 case "Survival":

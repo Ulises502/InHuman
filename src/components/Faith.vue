@@ -57,7 +57,7 @@ export default {
       },
       // setter
       set: function (newValue) {
-        this.$store.commit("player/setFaithSacrifice", { amount: newValue });
+        this.$store.commit("player/setFaithSacrifice", { type: newValue });
         this.$store.dispatch("game/loopSacrifice", newValue);
       },
     },
