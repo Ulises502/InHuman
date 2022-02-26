@@ -276,42 +276,69 @@ const game = {
         },
 
         // start sacrifice loop
-        loopSacrifice({ commit, dispatch }, sacrifice) {
-            // clear previous faith interval
-            commit("clearFaithInterval")
-            commit("saveFaithIntervalID", setInterval(() => {
-                // dispatch sacrifice action. Promise allows to be independent and repeat the action
-                new Promise(() => {
-                    dispatch("makeSelectedSacrifice", sacrifice)
-                })
-            }, 1000));
+        loopSacrifice({ commit, dispatch, rootState }, sacrifice) {
+            // if faith is more than 0 then start a new sacrifice interval
+            if (rootState.player.virtues.Faith.amount.gt(0)) {
+                // clear previous faith interval
+                commit("clearFaithInterval")
+                commit("saveFaithIntervalID", setInterval(() => {
+                    // dispatch sacrifice action. Promise allows to be independent and repeat the action
+                    new Promise(() => {
+                        dispatch("makeSelectedSacrifice", sacrifice)
+                    })
+                }, 1000));
+            }
         },
         // make selected sacrifice
-        makeSelectedSacrifice({ commit }, sacrifice) {
+        makeSelectedSacrifice({ commit, rootState }, sacrifice) {
             switch (sacrifice) {
                 case "Humanity":
-                    commit("player/decreaseHumanity", { amount: new Decimal(25) }, { root: true });
+                    // if humanity amount is more than 25, then sacrifice 25
+                    if (rootState.player.humanity.gte(rootState.player.virtueUpgraded.Faith.consumption.Humanity)) {
+                        commit("player/decreaseHumanity", { amount: 25 }, { root: true });
+                    }
                     break;
                 case "Survival":
-                    commit("player/decreaseVirtueAmount", { type: 'Survival', amount: new Decimal(2) }, { root: true });
+                    // if survival amount is more than 2, then sacrifice 2
+                    if (rootState.player.virtues.Survival.amount.gte(rootState.player.virtueUpgraded.Faith.consumption.Survival)) {
+                        commit("player/decreaseVirtueAmount", { type: 'Survival', amount: 2 }, { root: true });
+                    }
                     break;
                 case "Might":
-                    commit("player/decreaseVirtueAmount", { type: 'Might', amount: new Decimal(2) }, { root: true });
+                    // if might amount is more than 2, then sacrifice 2
+                    if (rootState.player.virtues.Might.amount.gte(rootState.player.virtueUpgraded.Faith.consumption.Might)) {
+                        commit("player/decreaseVirtueAmount", { type: 'Might', amount: 2 }, { root: true });
+                    }
                     break;
                 case "Faith":
-                    commit("player/decreaseVirtueAmount", { type: 'Faith', amount: new Decimal(1) }, { root: true });
+                    // if faith amount is more than 1, then sacrifice 1
+                    if (rootState.player.virtues.Faith.amount.gte(rootState.player.virtueUpgraded.Faith.consumption.Faith)) {
+                        commit("player/decreaseVirtueAmount", { type: 'Faith', amount: 1 }, { root: true });
+                    }
                     break;
                 case "Knowledge":
-                    commit("player/decreaseVirtueAmount", { type: 'Knowledge', amount: new Decimal(1) }, { root: true });
+                    // if knowledge amount is more than 1, then sacrifice 1
+                    if (rootState.player.virtues.Knowledge.amount.gte(rootState.player.virtueUpgraded.Faith.consumption.Knowledge)) {
+                        commit("player/decreaseVirtueAmount", { type: 'Knowledge', amount: 1 }, { root: true });
+                    }
                     break;
                 case "Cooperation":
-                    commit("player/decreaseVirtueAmount", { type: 'Cooperation', amount: new Decimal(1) }, { root: true });
+                    // if cooperation amount is more than 1, then sacrifice 1
+                    if (rootState.player.virtues.Cooperation.amount.gte(rootState.player.virtueUpgraded.Faith.consumption.Cooperation)) {
+                        commit("player/decreaseVirtueAmount", { type: 'Cooperation', amount: 1 }, { root: true });
+                    }
                     break;
                 case "Culture":
-                    commit("player/decreaseVirtueAmount", { type: 'Culture', amount: new Decimal(1) }, { root: true });
+                    // if culture amount is more than 1, then sacrifice 1
+                    if (rootState.player.virtues.Culture.amount.gte(rootState.player.virtueUpgraded.Faith.consumption.Culture)) {
+                        commit("player/decreaseVirtueAmount", { type: 'Culture', amount: 1 }, { root: true });
+                    }
                     break;
                 case "Ethics":
-                    commit("player/decreaseVirtueAmount", { type: 'Ethics', amount: new Decimal(1) }, { root: true });
+                    // if ethics amount is more than 1, then sacrifice 1
+                    if (rootState.player.virtues.Ethics.amount.gte(rootState.player.virtueUpgraded.Faith.consumption.Ethics)) {
+                        commit("player/decreaseVirtueAmount", { type: 'Ethics', amount: 1 }, { root: true });
+                    }
                     break;
             }
         }
