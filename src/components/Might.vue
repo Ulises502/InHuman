@@ -16,6 +16,7 @@
         always-dirty
         min="0"
         max="100"
+        disabled
       >
         <template v-slot:prepend>
           <v-icon :color="color" @click="decrement">
