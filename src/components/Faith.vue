@@ -25,6 +25,7 @@
         hint="Offer a sacrifice"
         persistent-hint
         solo
+        :disabled="!virtues.Faith.bought.gt(0)"
       ></v-select>
     </v-card-text>
   </div>
@@ -62,6 +63,7 @@ export default {
     },
     ...mapState({
       virtueUpgraded: (state) => state.player.virtueUpgraded,
+      virtues: (state) => state.player.virtues,
     }),
   },
   watch: {
