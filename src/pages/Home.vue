@@ -98,7 +98,7 @@
     </v-col>
 
     <!-- *********** VIRTUE'S UPGRADES CARD ************* -->
-    <v-col cols="12" sm="6" md="3" v-show="virtues.Survival.bought.gte(1)">
+    <v-col cols="12" sm="6" md="3" v-if="virtues.Survival.bought.gte(1)">
       <v-card elevation="2">
         <v-card-title class="pb-0">Virtue Upgrade</v-card-title>
         <router-view></router-view>
