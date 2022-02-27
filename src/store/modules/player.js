@@ -140,6 +140,7 @@ const player = {
                 discoveryBonus: 1,
                 progress: new Decimal(0),
                 progressPerSec: new Decimal(1),
+                observations: new Decimal(0),
             },
         },
         virtueReset: new Decimal(0),
@@ -311,6 +312,11 @@ const player = {
         // progress discovery 
         progressDiscovery(state) {
             state.virtueUpgraded.Knowledge.progress = state.virtueUpgraded.Knowledge.progress.plus(state.virtueUpgraded.Knowledge.progressPerSec.div(10));
+            // if knowledge progress is 100, increase discoveries by 1
+            if (state.virtueUpgraded.Knowledge.progress.gte(100)) {
+                state.virtueUpgraded.Knowledge.observations = state.virtueUpgraded.Knowledge.observations.plus(1)
+                state.virtueUpgraded.Knowledge.progress = new Decimal(0)
+            }
         },
     },
     actions: {

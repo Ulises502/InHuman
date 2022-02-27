@@ -43,7 +43,7 @@
       <v-card-text>
         <v-row>
           <v-col cols="6">
-            <p class="mb-0 font-weight-bold text-center text-h6">124</p>
+            <p class="mb-0 font-weight-bold text-center text-h6"> {{virtueUpgraded.Knowledge.observations}} </p>
             <p
               class="
                 mb-0
