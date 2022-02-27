@@ -335,7 +335,7 @@ const player = {
         },
         // increase discovery bonus according current discoveries
         increaseDiscoveryBonus(state) {
-            state.virtueUpgraded.Knowledge.discoveryBonus = state.virtueUpgraded.Knowledge.discoveryBonus.plus(Decimal.log(state.virtueUpgraded.Knowledge.observations))
+            state.virtueUpgraded.Knowledge.discoveryBonus = state.virtueUpgraded.Knowledge.discoveryBonus.plus(Decimal.log(state.virtueUpgraded.Knowledge.observations.plus(1)))
         },
         // consume observation
         consumeObservation(state) {
