@@ -1,5 +1,13 @@
 <template>
-  <v-card-text>
+  <v-card-text class="mt-3">
+    <v-select
+      v-model="items[0]"
+      :items="items"
+      filled
+      disabled
+      prepend-icon="mdi-crown"
+      class="mb-n10"
+    ></v-select>
     <div id="chart">
       <apexchart
         type="radar"
@@ -16,10 +24,11 @@ import VueApexCharts from "vue-apexcharts";
 export default {
   data() {
     return {
+      items: ["Egalitarianism", "Theocracy", "Tyranny", "Monarchy"],
       series: [
         {
           name: "Series 1",
-          data: [80, 50, 30, 40, 100, 20],
+          data: [50, 50, 80, 0, 20, 20],
         },
       ],
       chartOptions: {
@@ -42,13 +51,13 @@ export default {
             "Territory",
           ],
         },
+        fill: {
+          opacity: 0.6,
+        },
         plotOptions: {
           radar: {
             polygons: {
-              strokeColor: "#e8e8e8",
-              fill: {
-                colors: ["#f8f8f8", "#fff"],
-              },
+              strokeColor: "#707070",
             },
           },
         },
