@@ -27,7 +27,7 @@
                 :rotate="-90"
                 :size="150"
                 :width="25"
-                :value="virtueUpgraded.Knowledge.progress.toNumber()"
+                :value="virtueUpgraded.Knowledge.progress.toString()"
                 :color="$vuetify.theme.dark ? '#fff' : '#000'"
                 class="align-center justify-center"
               >

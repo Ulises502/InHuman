@@ -156,6 +156,10 @@ const game = {
         // set discovery loop interval id
         saveDiscoveryIntervalID(state, id) {
             state.discoveryIntervalID = id
+        },
+        // empty discovery interval id
+        clearDiscoveryIntervalID(state) {
+            state.discoveryIntervalID = null
         }
     },
     actions: {
@@ -220,10 +224,22 @@ const game = {
             clearInterval(state.gameLoopIntervalId)
             // commit clear game interval
             commit("clearGameInterval")
-            // clear interval ids
+            // stop upgrade interval ids
             state.upgradesIntervalID.forEach(id => clearInterval(id))
             // commit clear interval ids
             commit("clearUpgradesIntervalID", null)
+            // stop discovery interval
+            new Promise((resolve) => {
+                if (state.discoveryIntervalID) {
+                    console.log("holaa")
+                    clearInterval(state.discoveryIntervalID)
+                }
+                resolve()
+            }).then(() => {
+                commit("clearDiscoveryIntervalID")
+            })
+            // clear discovery interval id
+            commit("clearDiscoveryIntervalID")
             // reset messages
             commit("resetMessage", "")
             // reset drawer

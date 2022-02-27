@@ -295,6 +295,10 @@ const player = {
                 state.virtues[virtue]['amount'] = new Decimal(0)
                 state.virtues[virtue]['bought'] = new Decimal(0)
             }
+            state.virtueUpgraded.Knowledge.discoveryBonus = 1;
+            state.virtueUpgraded.Knowledge.progress = new Decimal(0);
+            state.virtueUpgraded.Knowledge.progressPerSec = new Decimal(1);
+            state.virtueUpgraded.Knowledge.observations = new Decimal(0);
         },
         // increase soft reset by 1
         increaseSoftReset(state) {
