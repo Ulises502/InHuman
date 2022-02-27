@@ -193,13 +193,13 @@ const game = {
             commit("player/consumeAllHumanity", null, { root: true });
         },
         // buy virtue when cost chip is pressed
-        buy({ commit, dispatch, rootState }, virtue) {
+        buy({ commit, dispatch, state, rootState }, virtue) {
             new Promise((resolve) => {
                 commit("player/buyVirtue", virtue, { root: true });
                 resolve();
             }).then(() => {
                 // if knowledge bought is 1, dispatch loopDiscovery local action
-                if (rootState.player.virtues.Knowledge.bought.equals(1)) {
+                if (rootState.player.virtues.Knowledge.bought.equals(1) && state.discoveryIntervalID == null) {
                     dispatch("loopDiscovery");
                 }
             });

@@ -137,7 +137,7 @@ const player = {
                         bought: false,
                     },
                 },
-                discoveryBonus: 1,
+                discoveryBonus: new Decimal(1),
                 progress: new Decimal(0),
                 progressPerSec: new Decimal(1),
                 observations: new Decimal(0),
@@ -202,6 +202,8 @@ const player = {
         getHumanityPerSecFromKnowledge: (state) => {
             let humanityPerSec = new Decimal(0)
             humanityPerSec = humanityPerSec.plus(state.virtues['Knowledge'].amount.times(state.virtues['Knowledge'].multiplier))
+            // multiply humanityPerSec by the discovery bonus
+            humanityPerSec = humanityPerSec.times(state.virtueUpgraded['Knowledge'].discoveryBonus).round()
             return humanityPerSec
         },
         // calculate humanity per sec from Cooperation
@@ -304,7 +306,7 @@ const player = {
                 state.virtues[virtue]['amount'] = new Decimal(0)
                 state.virtues[virtue]['bought'] = new Decimal(0)
             }
-            state.virtueUpgraded.Knowledge.discoveryBonus = 1;
+            state.virtueUpgraded.Knowledge.discoveryBonus = new Decimal(1);
             state.virtueUpgraded.Knowledge.progress = new Decimal(0);
             state.virtueUpgraded.Knowledge.progressPerSec = new Decimal(1);
             state.virtueUpgraded.Knowledge.observations = new Decimal(0);
@@ -331,6 +333,14 @@ const player = {
                 state.virtueUpgraded.Knowledge.progress = new Decimal(0)
             }
         },
+        // increase discovery bonus according current discoveries
+        increaseDiscoveryBonus(state) {
+            state.virtueUpgraded.Knowledge.discoveryBonus = state.virtueUpgraded.Knowledge.discoveryBonus.plus(Decimal.log(state.virtueUpgraded.Knowledge.observations))
+        },
+        // consume observation
+        consumeObservation(state) {
+            state.virtueUpgraded.Knowledge.observations = new Decimal(0)
+        },
     },
     actions: {
         // action to change virtue showable status
@@ -347,6 +357,12 @@ const player = {
             for (let virtue in state.virtues) {
                 state.virtues[virtue]['cost'] = rootState.game.virtues[virtue]['cost']
             }
+        },
+
+        // discover action: consume all observations and turn them into discoveryBonus
+        discover({ commit }) {
+            commit("increaseDiscoveryBonus")
+            commit("consumeObservation")
         },
     },
     modules: {},

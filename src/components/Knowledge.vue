@@ -73,13 +73,13 @@
     <v-card-text>
       <v-row>
         <v-col cols="6" class="d-flex align-center">
-          <v-btn block>Discover</v-btn>
+          <v-btn block @click="discover()">Discover</v-btn>
         </v-col>
         <v-col cols="6">
           <p
             class="mb-0 font-weight-medium text-center text--secondary text-h6"
           >
-            x 3
+            x {{virtueUpgraded.Knowledge.discoveryBonus.toFixed(2)}}
           </p>
           <p
             class="
@@ -123,70 +123,13 @@
 <script>
 import { mapState } from "vuex";
 export default {
-  data() {
-    return {
-      states: [
-        "Alabama",
-        "Alaska",
-        "American Samoa",
-        "Arizona",
-        "Arkansas",
-        "California",
-        "Colorado",
-        "Connecticut",
-        "Delaware",
-        "District of Columbia",
-        "Federated States of Micronesia",
-        "Florida",
-        "Georgia",
-        "Guam",
-        "Hawaii",
-        "Idaho",
-        "Illinois",
-        "Indiana",
-        "Iowa",
-        "Kansas",
-        "Kentucky",
-        "Louisiana",
-        "Maine",
-        "Marshall Islands",
-        "Maryland",
-        "Massachusetts",
-        "Michigan",
-        "Minnesota",
-        "Mississippi",
-        "Missouri",
-        "Montana",
-        "Nebraska",
-        "Nevada",
-        "New Hampshire",
-        "New Jersey",
-        "New Mexico",
-        "New York",
-        "North Carolina",
-        "North Dakota",
-        "Northern Mariana Islands",
-        "Ohio",
-        "Oklahoma",
-        "Oregon",
-        "Palau",
-        "Pennsylvania",
-        "Puerto Rico",
-        "Rhode Island",
-        "South Carolina",
-        "South Dakota",
-        "Tennessee",
-        "Texas",
-        "Utah",
-        "Vermont",
-        "Virgin Island",
-        "Virginia",
-        "Washington",
-        "West Virginia",
-        "Wisconsin",
-        "Wyoming",
-      ],
-    };
+  methods: {
+    discover() {
+      this.$store.dispatch("player/discover");
+    },
+    buyTech() {
+      //this.$store.dispatch("game/buyTech");
+    },
   },
   computed: {
     ...mapState({
