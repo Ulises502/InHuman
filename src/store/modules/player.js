@@ -44,15 +44,6 @@ const player = {
                 multiplier: new Decimal(8),
                 costMult: new Decimal(1.45),
             },
-            Cooperation: {
-                name: "Cooperation",
-                amount: new Decimal(0),
-                cost: new Decimal(2e8),
-                bought: new Decimal(0),
-                show: false,
-                multiplier: new Decimal(16),
-                costMult: new Decimal(1.6),
-            },
             Culture: {
                 name: "Culture",
                 amount: new Decimal(0),
@@ -61,6 +52,15 @@ const player = {
                 show: false,
                 multiplier: new Decimal(32),
                 costMult: new Decimal(1.75),
+            },
+            Cooperation: {
+                name: "Cooperation",
+                amount: new Decimal(0),
+                cost: new Decimal(2e8),
+                bought: new Decimal(0),
+                show: false,
+                multiplier: new Decimal(16),
+                costMult: new Decimal(1.6),
             },
             Ethics: {
                 name: "Ethics",
@@ -99,8 +99,8 @@ const player = {
                     Might: 2,
                     Faith: 1,
                     Knowledge: 1,
-                    Cooperation: 1,
                     Culture: 1,
+                    Cooperation: 1,
                     Ethics: 1,
                 },
                 bonus: {
@@ -109,8 +109,8 @@ const player = {
                     Might: 3.5,
                     Faith: 4.5,
                     Knowledge: 5.5,
-                    Cooperation: 6.5,
                     Culture: 7.5,
+                    Cooperation: 6.5,
                     Ethics: 8.5,
                 }
             },
@@ -158,8 +158,8 @@ const player = {
             humanityPerSec = humanityPerSec.plus(getters.getHumanityPerSecFromMight);
             humanityPerSec = humanityPerSec.plus(getters.getHumanityPerSecFromFaith);
             humanityPerSec = humanityPerSec.plus(getters.getHumanityPerSecFromKnowledge);
-            humanityPerSec = humanityPerSec.plus(getters.getHumanityPerSecFromCooperation);
             humanityPerSec = humanityPerSec.plus(getters.getHumanityPerSecFromCulture);
+            humanityPerSec = humanityPerSec.plus(getters.getHumanityPerSecFromCooperation);
             humanityPerSec = humanityPerSec.plus(getters.getHumanityPerSecFromEthics);
 
             // if one ruin has been purchased, add 1 humanity per second
@@ -206,16 +206,16 @@ const player = {
             humanityPerSec = humanityPerSec.times(state.virtueUpgraded['Knowledge'].discoveryBonus).round()
             return humanityPerSec
         },
-        // calculate humanity per sec from Cooperation
-        getHumanityPerSecFromCooperation: (state) => {
-            let humanityPerSec = new Decimal(0)
-            humanityPerSec = humanityPerSec.plus(state.virtues['Cooperation'].amount.times(state.virtues['Cooperation'].multiplier))
-            return humanityPerSec
-        },
         // calculate humanity per sec from Culture
         getHumanityPerSecFromCulture: (state) => {
             let humanityPerSec = new Decimal(0)
             humanityPerSec = humanityPerSec.plus(state.virtues['Culture'].amount.times(state.virtues['Culture'].multiplier))
+            return humanityPerSec
+        },
+        // calculate humanity per sec from Cooperation
+        getHumanityPerSecFromCooperation: (state) => {
+            let humanityPerSec = new Decimal(0)
+            humanityPerSec = humanityPerSec.plus(state.virtues['Cooperation'].amount.times(state.virtues['Cooperation'].multiplier))
             return humanityPerSec
         },
         // calculate humanity per sec from Ethics

@@ -31,17 +31,17 @@ const game = {
                 multiplier: new Decimal(8),
                 costMult: new Decimal(1e6),
             },
-            Cooperation: {
-                name: "Cooperation",
-                cost: new Decimal(2e8),
-                multiplier: new Decimal(16),
-                costMult: new Decimal(1e7),
-            },
             Culture: {
                 name: "Culture",
                 cost: new Decimal(7.5e9),
                 multiplier: new Decimal(32),
                 costMult: new Decimal(1e8),
+            },
+            Cooperation: {
+                name: "Cooperation",
+                cost: new Decimal(2e8),
+                multiplier: new Decimal(16),
+                costMult: new Decimal(1e7),
             },
             Ethics: {
                 name: "Ethics",
@@ -256,10 +256,10 @@ const game = {
                     commit("player/setVirtueShowable", "Knowledge", { root: true })
                     break;
                 case '3':
-                    commit("player/setVirtueShowable", "Cooperation", { root: true })
+                    commit("player/setVirtueShowable", "Culture", { root: true })
                     break;
                 case '4':
-                    commit("player/setVirtueShowable", "Culture", { root: true })
+                    commit("player/setVirtueShowable", "Cooperation", { root: true })
                     break;
                 case '5':
                     commit("player/setVirtueShowable", "Ethics", { root: true })
@@ -355,16 +355,16 @@ const game = {
                         commit("player/decreaseVirtueAmount", { type: 'Knowledge', amount: 1 }, { root: true });
                     }
                     break;
-                case "Cooperation":
-                    // if cooperation amount is more than 1, then sacrifice 1
-                    if (rootState.player.virtues.Cooperation.amount.gte(rootState.player.virtueUpgraded.Faith.consumption.Cooperation)) {
-                        commit("player/decreaseVirtueAmount", { type: 'Cooperation', amount: 1 }, { root: true });
-                    }
-                    break;
                 case "Culture":
                     // if culture amount is more than 1, then sacrifice 1
                     if (rootState.player.virtues.Culture.amount.gte(rootState.player.virtueUpgraded.Faith.consumption.Culture)) {
                         commit("player/decreaseVirtueAmount", { type: 'Culture', amount: 1 }, { root: true });
+                    }
+                    break;
+                case "Cooperation":
+                    // if cooperation amount is more than 1, then sacrifice 1
+                    if (rootState.player.virtues.Cooperation.amount.gte(rootState.player.virtueUpgraded.Faith.consumption.Cooperation)) {
+                        commit("player/decreaseVirtueAmount", { type: 'Cooperation', amount: 1 }, { root: true });
                     }
                     break;
                 case "Ethics":
