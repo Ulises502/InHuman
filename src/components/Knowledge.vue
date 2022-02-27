@@ -55,7 +55,7 @@
             </p>
           </v-col>
           <v-col cols="6">
-            <p class="mb-0 font-weight-bold text-center text-h6">1</p>
+            <p class="mb-0 font-weight-bold text-center text-h6"> {{techs}} </p>
             <p
               class="
                 mb-0
@@ -194,6 +194,9 @@ export default {
       virtueUpgraded: (state) => state.player.virtueUpgraded,
       virtues: (state) => state.player.virtues,
     }),
+    techs() {
+      return this.$store.getters['player/countTechs'];
+    },
   },
 };
 </script>

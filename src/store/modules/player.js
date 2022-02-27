@@ -222,6 +222,15 @@ const player = {
             humanityPerSec = humanityPerSec.plus(state.virtues['Ethics'].amount.times(state.virtues['Ethics'].multiplier))
             return humanityPerSec
         },
+        countTechs: (state) => {
+            let count = 0;
+            for (let key in state.virtueUpgraded['Knowledge'].technologies) {
+                if (state.virtueUpgraded['Knowledge'].technologies[key].bought) {
+                    count++
+                }
+            }
+            return count
+        },
     },
     mutations: {
         // increase humanity by amount bought
