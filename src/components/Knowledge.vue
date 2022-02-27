@@ -27,11 +27,11 @@
                 :rotate="-90"
                 :size="150"
                 :width="25"
-                :value="35"
+                :value="virtueUpgraded.Knowledge.progress.toNumber()"
                 :color="$vuetify.theme.dark ? '#fff' : '#000'"
                 class="align-center justify-center"
               >
-                35 %
+                {{ virtueUpgraded.Knowledge.progress }} %
               </v-progress-circular></v-sheet
             >
           </v-row>

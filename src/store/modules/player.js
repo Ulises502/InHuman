@@ -138,6 +138,8 @@ const player = {
                     },
                 },
                 discoveryBonus: 1,
+                progress: new Decimal(0),
+                progressPerSec: new Decimal(1),
             },
         },
         virtueReset: new Decimal(0),
@@ -304,6 +306,11 @@ const player = {
         // decrease virtue amount
         decreaseVirtueAmount(state, payload) {
             state.virtues[payload.type]['amount'] = state.virtues[payload.type]['amount'].minus(payload.amount)
+        },
+
+        // progress discovery 
+        progressDiscovery(state) {
+            state.virtueUpgraded.Knowledge.progress = state.virtueUpgraded.Knowledge.progress.plus(state.virtueUpgraded.Knowledge.progressPerSec.div(10));
         },
     },
     actions: {

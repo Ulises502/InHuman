@@ -101,6 +101,7 @@ const game = {
         },
         upgradesIntervalID: [],
         faithIntervalID: null,
+        discoveryIntervalID: null,
     },
     getters: {
 
@@ -152,6 +153,10 @@ const game = {
             clearInterval(state.faithIntervalID)
             state.faithIntervalID = null
         },
+        // set discovery loop interval id
+        saveDiscoveryIntervalID(state, id) {
+            state.discoveryIntervalID = id
+        }
     },
     actions: {
         // change drawer state
@@ -184,8 +189,16 @@ const game = {
             commit("player/consumeAllHumanity", null, { root: true });
         },
         // buy virtue when cost chip is pressed
-        buy({ commit }, virtue) {
-            commit("player/buyVirtue", virtue, { root: true });
+        buy({ commit, dispatch, rootState }, virtue) {
+            new Promise((resolve) => {
+                commit("player/buyVirtue", virtue, { root: true });
+                resolve();
+            }).then(() => {
+                // if knowledge bought is 1, dispatch loopDiscovery local action
+                if (rootState.player.virtues.Knowledge.bought.equals(1)) {
+                    dispatch("loopDiscovery");
+                }
+            });
         },
         sendMessage({ commit }, message) {
             commit("setMessage", message);
@@ -345,7 +358,16 @@ const game = {
                     }
                     break;
             }
-        }
+        },
+        // loop discovery action
+        loopDiscovery({ commit }) {
+            commit("saveDiscoveryIntervalID", setInterval(() => {
+                // dispatch progress action. Promise allows to be independent and repeat the action
+                new Promise(() => {
+                    commit("player/progressDiscovery", null, { root: true });
+                })
+            }, 100));
+        },
     },
     modules: {},
 };
